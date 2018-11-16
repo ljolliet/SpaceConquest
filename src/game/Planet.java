@@ -61,13 +61,17 @@ public class Planet {
         if(total_production >= model.necessary_production){
             total_production -= model.necessary_production;
             on_ground_spaceships.add(model);
-            //System.out.println("ADDED NEW SPACESHIP");
+            System.out.println("ADDED NEW SPACESHIP");
         }
     }
     
     public boolean collide(Planet p) {
     	double centerDistance = Math.sqrt(Math.pow(this.posX - p.posX, 2) + Math.pow(this.posY - p.posY, 2));    		
 		return centerDistance < this.radius + p.radius;
+    }
+    
+    public double distantOf(double[] pos) {
+    	return Math.sqrt(Math.pow(this.posX - pos[0], 2) + Math.pow(this.posY - pos[1], 2));    		
     }
 
     public String toString(){

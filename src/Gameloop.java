@@ -9,6 +9,7 @@ import javafx.stage.Stage;
 import utils.Utils;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import controllers.ComputerController;
 import controllers.Controller;
@@ -65,12 +66,37 @@ public class Gameloop extends AnimationTimer{
     //give random position at a good distance
     public void initPlayerPlanets(){
         for(int i = 0; i < controllers.size(); i ++){
-            Planet p = new Planet(i*50,100, 50, false, 1, new LittleSpaceship()); // add color
+        	double[] pos = getPlayerPos();
+            Planet p = new Planet(pos[0],pos[1], Utils.PLAYER_PLANET_RADIUS, false, 1, new LittleSpaceship()); // add color
             controllers.get(i).getPlanets().add(p);
             p.setOwner(controllers.get(i));
             planets.add(p);
         }
     }
+    
+    public double[] getPlayerPos(){
+    	double[] pos = new double[2];
+    	int maxX = Utils.WINDOW_WIDTH - Utils.PLAYER_PLANET_RADIUS;
+    	int maxY = Utils.WINDOW_HEIGHT - Utils.PLAYER_PLANET_RADIUS;
+    	int min = Utils.PLAYER_PLANET_RADIUS;
+    	
+    	pos[0] = new Random().nextInt(maxX + 1 - min) + min; 
+    	pos[1] = new Random().nextInt(maxY + 1 - min) + min; 		
+    	
+    	boolean isFree = true;
+    	
+    	for(Planet p : planets) {
+    		if(p.distantOf(pos) < Utils.DISTANCE_BETWEEN_PLAYERS) {
+    			isFree = false;
+    		}
+    	}
+    	
+    	if(isFree) {
+    		return pos;
+    	}else {
+    		return getPlayerPos();
+    	}
+       }
 
     //give totally random position but not on another planet
     public void initNeutralPlanets(){
@@ -80,14 +106,12 @@ public class Gameloop extends AnimationTimer{
     }
     
     public void addRandomNeutralPlanet() {
-    	double randX = (Math.random() * Main.WINDOW_WIDTH);
-		double randY = (Math.random() * Main.WINDOW_HEIGHT);
-		if(randX - Utils.NEUTRAL_PLANET_RADIUS < 0) {
-			randX += Utils.NEUTRAL_PLANET_RADIUS;
-		}
-		if(randY - Utils.NEUTRAL_PLANET_RADIUS < 0) {
-			randY += Utils.NEUTRAL_PLANET_RADIUS;
-		}
+    	int maxX = Utils.WINDOW_WIDTH - Utils.NEUTRAL_PLANET_RADIUS;
+    	int maxY = Utils.WINDOW_HEIGHT - Utils.NEUTRAL_PLANET_RADIUS;
+    	int min = Utils.NEUTRAL_PLANET_RADIUS;
+    	
+    	double randX = new Random().nextInt(maxX + 1 - min) + min; 
+    	double randY = new Random().nextInt(maxY + 1 - min) + min; 			
 		
 		boolean isPosFree = true;
 		Planet tmp = new Planet(randX, randY, Utils.NEUTRAL_PLANET_RADIUS, true, 0, new LittleSpaceship());
