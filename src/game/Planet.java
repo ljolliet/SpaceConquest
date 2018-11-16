@@ -21,7 +21,7 @@ public class Planet {
 
     private Controller owner;
 
-    public Planet(int posX, int posY, boolean neutral, float production_rate, Spaceship model){
+    public Planet(double posX, double posY, int radius, boolean neutral, float production_rate, Spaceship model){
         this.posX = posX;
         this.posY = posY;
         this.neutral = neutral;

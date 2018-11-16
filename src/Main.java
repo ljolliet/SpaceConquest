@@ -7,16 +7,18 @@ import javafx.stage.Stage;
 public class Main extends Application {
 
     public static Gameloop GAMELOOP;
+    public static int WINDOW_HEIGHT = 512;
+    public static int WINDOW_WIDTH = 512;
 
     @Override
     public void start(Stage primaryStage){
         primaryStage.setTitle("Hello World");
         Group root = new Group();
         Scene theScene = new Scene( root );
-        primaryStage.setScene( theScene );
+        primaryStage.setScene(theScene);
 
-        Canvas canvas = new Canvas( 512, 512 );
-        root.getChildren().add( canvas );
+        Canvas canvas = new Canvas(WINDOW_WIDTH, WINDOW_HEIGHT);
+        root.getChildren().add(canvas);
 
         GAMELOOP = new Gameloop(canvas);
         GAMELOOP.start();

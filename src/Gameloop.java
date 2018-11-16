@@ -14,6 +14,9 @@ public class Gameloop extends AnimationTimer{
     //this class will update all graphics change
     //ex : ships' deplacement
 
+	public static int NB_NEUTRAL_PLANET = 5;
+	public static int NEUTRAL_PLANET_RADIUS = 25;
+	
     private Canvas canvas;
 
     private ArrayList<Controller> controllers = new ArrayList<>();
@@ -36,7 +39,7 @@ public class Gameloop extends AnimationTimer{
                 p.addProduction();
             }
         }
-        //System.out.println(planets);
+        System.out.println(planets);
     }
 
     public void init(){
@@ -60,7 +63,7 @@ public class Gameloop extends AnimationTimer{
     //give random position at a good distance
     public void initPlayerPlanets(){
         for(int i = 0; i < controllers.size(); i ++){
-            Planet p = new Planet(i*50,100,false, 1, new LittleSpaceship());
+            Planet p = new Planet(i*50,100, 50, false, 1, new LittleSpaceship());
             controllers.get(i).getPlanets().add(p);
             p.setOwner(controllers.get(i));
             planets.add(p);
@@ -69,7 +72,34 @@ public class Gameloop extends AnimationTimer{
 
     //give totally random position but not on another planet
     public void initNeutralPlanets(){
-
+    	for(int i = 0; i < NB_NEUTRAL_PLANET; i++) {
+    		addRandomNeutralPlanet();    		
+    	}
+    }
+    
+    public void addRandomNeutralPlanet() {
+    	double randX = (Math.random() * Main.WINDOW_WIDTH);
+		double randY = (Math.random() * Main.WINDOW_HEIGHT);
+		if(randX - NEUTRAL_PLANET_RADIUS < 0) {
+			randX += NEUTRAL_PLANET_RADIUS;
+		}
+		if(randY - NEUTRAL_PLANET_RADIUS < 0) {
+			randY += NEUTRAL_PLANET_RADIUS;
+		}
+		
+		boolean isPosFree = true;
+		Planet tmp = new Planet(randX, randY, NEUTRAL_PLANET_RADIUS, true, 0, new LittleSpaceship());
+		for(Planet p : planets) {
+			if(tmp.collide(p)) {
+				isPosFree = false;
+			}
+		}
+		
+		if(isPosFree) {
+			planets.add(tmp);
+		}else {
+			addRandomNeutralPlanet();
+		}
     }
 
 
