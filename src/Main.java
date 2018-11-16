@@ -19,7 +19,7 @@ public class Main extends Application {
         Canvas canvas = new Canvas(Utils.WINDOW_WIDTH, Utils.WINDOW_HEIGHT);
         root.getChildren().add(canvas);
 
-        GAMELOOP = new Gameloop(root);
+        GAMELOOP = new Gameloop(root, scene);
         GAMELOOP.start();
 
         stage.show();

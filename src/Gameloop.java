@@ -2,7 +2,10 @@ import game.Planet;
 import game.Squadron;
 import game.spaceships.LittleSpaceship;
 import javafx.animation.AnimationTimer;
+import javafx.event.EventHandler;
 import javafx.scene.Group;
+import javafx.scene.Scene;
+import javafx.scene.input.MouseEvent;
 import utils.Utils;
 import java.util.ArrayList;
 import java.util.Random;
@@ -15,13 +18,14 @@ public class Gameloop extends AnimationTimer{
     //ex : ships' deplacement
 
     private Group root;
-
+    private Scene scene;
 
     private ArrayList<Controller> controllers = new ArrayList<>();
     private ArrayList<Planet> planets = new ArrayList<>();
 
-    public Gameloop(Group root){
+    public Gameloop(Group root, Scene scene){
         this.root = root;
+        this.scene = scene;
         init();
     }
 
@@ -32,17 +36,12 @@ public class Gameloop extends AnimationTimer{
         actualizeProduction();
     }
 
-    public void actualizeProduction(){
-        for(Controller c : controllers){
-            for(Planet p : c.getPlanets()){
-                p.addProduction();
-            }
-        }
-    }
+    //--------------------INIT-------------//
 
     public void init(){
         initPlayers();
         initPlanets();
+        initEvents();
     }
 
     public void initPlayers(){
@@ -122,6 +121,31 @@ public class Gameloop extends AnimationTimer{
 			addRandomNeutralPlanet();
 		}
     }
+
+    public void initEvents(){
+        HumanController hc = (HumanController)controllers.get(0);
+
+        scene.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if(hc.isOnHumanPlanet(event.getX(), event.getY())){
+                    Planet selected = hc.getPlanetClic(event.getX(), event.getY());
+                    //System.out.println("x : " + event.getX() + ", y : " + event.getY() + " : PLAYER'S PLANET");
+                }
+            }
+        });
+    }
+
+    //-------------PROCESS---------------------//
+
+    public void actualizeProduction(){
+        for(Controller c : controllers){
+            for(Planet p : c.getPlanets()){
+                p.addProduction();
+            }
+        }
+    }
+
     public void draw(){
         root.getChildren().removeAll(root.getChildren()); // clear root
 
