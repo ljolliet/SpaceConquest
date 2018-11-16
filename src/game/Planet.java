@@ -3,6 +3,7 @@ package game;
 import controllers.Controller;
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 
 import java.util.ArrayList;
@@ -23,14 +24,16 @@ public class Planet {
     private float total_production;
 
     private Controller owner;
+    private Color color;
 
-    public Planet(double posX, double posY, int radius, boolean neutral, float production_rate, Spaceship model){
+    public Planet(double posX, double posY, int radius, boolean neutral, float production_rate, Spaceship model, Color color){
         this.posX = posX;
         this.posY = posY;
         this.neutral = neutral;
         this.production_rate = production_rate;
         this.model = model;
         this.radius = radius;
+        this.color = color;
 
     }
 
@@ -81,7 +84,7 @@ public class Planet {
 
     public void draw(Group root) {
         Circle c = new Circle(posX,posY,radius);
-        c.setFill(Color.BLUEVIOLET);
+        c.setFill(color);
         root.getChildren().add(c);
 
     }
