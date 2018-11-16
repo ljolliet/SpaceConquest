@@ -1,5 +1,7 @@
 package game;
 
+import javafx.scene.Group;
+
 import java.util.ArrayList;
 
 public class Squadron {
@@ -34,4 +36,7 @@ public class Squadron {
 		this.spaceships = spaceships;
 	}
 
+    public void draw(Group root) {
+
+    }
 }

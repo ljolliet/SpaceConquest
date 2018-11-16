@@ -1,7 +1,11 @@
 import game.Planet;
+import game.Squadron;
 import game.spaceships.LittleSpaceship;
 import javafx.animation.AnimationTimer;
+import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
+import javafx.stage.Stage;
 import utils.Utils;
 
 import java.util.ArrayList;
@@ -13,20 +17,22 @@ import controllers.HumanController;
 public class Gameloop extends AnimationTimer{
     //this class will update all graphics change
     //ex : ships' deplacement
-	
-    private Canvas canvas;
+
+    private Group root;
+
 
     private ArrayList<Controller> controllers = new ArrayList<>();
     private ArrayList<Planet> planets = new ArrayList<>();
 
-    public Gameloop(Canvas canvas){
-        this.canvas = canvas;
+    public Gameloop(Group root){
+        this.root = root;
         init();
     }
 
     @Override
     public void handle(long now) {
         //code here is repeated
+        draw();
         actualizeProduction();
     }
 
@@ -36,7 +42,6 @@ public class Gameloop extends AnimationTimer{
                 p.addProduction();
             }
         }
-        System.out.println(planets);
     }
 
     public void init(){
@@ -60,7 +65,7 @@ public class Gameloop extends AnimationTimer{
     //give random position at a good distance
     public void initPlayerPlanets(){
         for(int i = 0; i < controllers.size(); i ++){
-            Planet p = new Planet(i*50,100, 50, false, 1, new LittleSpaceship());
+            Planet p = new Planet(i*50,100, 50, false, 1, new LittleSpaceship()); // add color
             controllers.get(i).getPlanets().add(p);
             p.setOwner(controllers.get(i));
             planets.add(p);
@@ -97,6 +102,16 @@ public class Gameloop extends AnimationTimer{
 		}else {
 			addRandomNeutralPlanet();
 		}
+    }
+    public void draw(){
+        root.getChildren().removeAll(root.getChildren()); // clear root
+
+        for(Planet p : planets) // draw all planets
+            p.draw(root);
+
+        for(Controller c : controllers)
+            for(Squadron s : c.getSquadrons()) // draw all squadrons
+                s.draw(root);
     }
 
 

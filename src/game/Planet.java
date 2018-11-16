@@ -1,6 +1,9 @@
 package game;
 
 import controllers.Controller;
+import javafx.scene.Group;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 
 import java.util.ArrayList;
 
@@ -27,6 +30,8 @@ public class Planet {
         this.neutral = neutral;
         this.production_rate = production_rate;
         this.model = model;
+        this.radius = radius;
+
     }
 
     //----------------NOT TESTED-------------------------------//
@@ -50,10 +55,6 @@ public class Planet {
     	}
     }
 
-    public void setPosition(int x, int y){
-        posX = x;
-        posY = y;
-    }
 
     public void addProduction(){
         total_production += production_rate;
@@ -72,8 +73,16 @@ public class Planet {
     public String toString(){
         return "[Planet] position : " + posX + ";" + posY + ", production :" + total_production;
     }
+    //---------------------DRAW-------------------//
 
+    public void draw(Group root) {
+        Circle c = new Circle(posX,posY,radius);
+        c.setFill(Color.BLUEVIOLET);
+        root.getChildren().add(c);
+
+    }
     //---------------------GETTER/SETTER-------------------//
+
     public Controller getOwner() {
         return owner;
     }
