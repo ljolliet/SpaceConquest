@@ -1,5 +1,4 @@
 import game.Planet;
-import game.Player;
 import game.spaceships.LittleSpaceship;
 import javafx.animation.AnimationTimer;
 import javafx.scene.canvas.Canvas;
@@ -7,13 +6,17 @@ import utils.Utils;
 
 import java.util.ArrayList;
 
+import controllers.ComputerController;
+import controllers.Controller;
+import controllers.HumanController;
+
 public class Gameloop extends AnimationTimer{
     //this class will update all graphics change
     //ex : ships' deplacement
 
     private Canvas canvas;
 
-    private ArrayList<Player> players = new ArrayList<>();
+    private ArrayList<Controller> controllers = new ArrayList<>();
     private ArrayList<Planet> planets = new ArrayList<>();
 
     public Gameloop(Canvas canvas){
@@ -28,8 +31,8 @@ public class Gameloop extends AnimationTimer{
     }
 
     public void actualizeProduction(){
-        for(Player pl : players){
-            for(Planet p : pl.getController().getPlanets()){
+        for(Controller c : controllers){
+            for(Planet p : c.getPlanets()){
                 p.addProduction();
             }
         }
@@ -42,10 +45,10 @@ public class Gameloop extends AnimationTimer{
     }
 
     public void initPlayers(){
-        players.add(new Player(true));
+        controllers.add(new HumanController());
         //start at 1 because 0 is the human
         for(int i = 1; i < Utils.NB_PLAYER; i++){
-            players.add(new Player(false));
+            controllers.add(new ComputerController());
         }
     }
 
@@ -56,10 +59,10 @@ public class Gameloop extends AnimationTimer{
 
     //give random position at a good distance
     public void initPlayerPlanets(){
-        for(int i = 0; i < players.size(); i ++){
+        for(int i = 0; i < controllers.size(); i ++){
             Planet p = new Planet(i*50,100,false, 1, new LittleSpaceship());
-            players.get(i).getController().getPlanets().add(p);
-            p.setOwner(players.get(i).getController());
+            controllers.get(i).getPlanets().add(p);
+            p.setOwner(controllers.get(i));
             planets.add(p);
         }
     }

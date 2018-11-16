@@ -6,9 +6,9 @@ import java.util.ArrayList;
 
 public class Planet {
 
-    private int posX;
-    private int posY;
-    private int size; //optional
+    private double posX;
+    private double posY;
+    private int radius; //optional
     private boolean neutral;
 
     //spaceship waiting to be launched
@@ -51,6 +51,11 @@ public class Planet {
             on_ground_spaceships.add(model);
             //System.out.println("Added new spaceship");
         }
+    }
+    
+    public boolean collide(Planet p) {
+    	double centerDistance = Math.sqrt(Math.pow(this.posX - p.posX, 2) + Math.pow(this.posY - p.posY, 2));    		
+		return centerDistance < this.radius + p.radius;
     }
 
     public String toString(){
