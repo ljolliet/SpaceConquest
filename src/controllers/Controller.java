@@ -19,7 +19,6 @@ public abstract class Controller {
     }
 
     public ArrayList<Planet> getPlanets() {
-
         return planets;
     }
 

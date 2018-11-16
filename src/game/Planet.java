@@ -29,14 +29,25 @@ public class Planet {
         this.model = model;
     }
 
+    //----------------NOT TESTED-------------------------------//
     public Squadron createSquadron(int size){
-        //put the spaceships of on_ground_spaceships in a squadron
-        return null;
+        ArrayList<Spaceship> spaceships = new ArrayList<>();
+    	for(Spaceship sp : on_ground_spaceships) {
+    		spaceships.add(sp);
+    	}
+        return new Squadron(spaceships);
     }
 
+    //---------------NOT TESTED---------------------------//
     public void sendShip(int amount){
         //add the squadron to the player controller
         //if player maybe visual/sound alert
+    	Squadron squad = createSquadron(amount);
+    	owner.getSquadrons().add(squad);
+    	//withdraw spaceship in the squadron from the on ground spaceships
+    	for(Spaceship sp : squad.getSpaceships()) {
+    		on_ground_spaceships.remove(sp);
+    	}
     }
 
     public void setPosition(int x, int y){
@@ -49,7 +60,7 @@ public class Planet {
         if(total_production >= model.necessary_production){
             total_production -= model.necessary_production;
             on_ground_spaceships.add(model);
-            //System.out.println("Added new spaceship");
+            //System.out.println("ADDED NEW SPACESHIP");
         }
     }
     

@@ -13,9 +13,6 @@ import controllers.HumanController;
 public class Gameloop extends AnimationTimer{
     //this class will update all graphics change
     //ex : ships' deplacement
-
-	public static int NB_NEUTRAL_PLANET = 5;
-	public static int NEUTRAL_PLANET_RADIUS = 25;
 	
     private Canvas canvas;
 
@@ -72,7 +69,7 @@ public class Gameloop extends AnimationTimer{
 
     //give totally random position but not on another planet
     public void initNeutralPlanets(){
-    	for(int i = 0; i < NB_NEUTRAL_PLANET; i++) {
+    	for(int i = 0; i < Utils.NB_NEUTRAL_PLANET; i++) {
     		addRandomNeutralPlanet();    		
     	}
     }
@@ -80,15 +77,15 @@ public class Gameloop extends AnimationTimer{
     public void addRandomNeutralPlanet() {
     	double randX = (Math.random() * Main.WINDOW_WIDTH);
 		double randY = (Math.random() * Main.WINDOW_HEIGHT);
-		if(randX - NEUTRAL_PLANET_RADIUS < 0) {
-			randX += NEUTRAL_PLANET_RADIUS;
+		if(randX - Utils.NEUTRAL_PLANET_RADIUS < 0) {
+			randX += Utils.NEUTRAL_PLANET_RADIUS;
 		}
-		if(randY - NEUTRAL_PLANET_RADIUS < 0) {
-			randY += NEUTRAL_PLANET_RADIUS;
+		if(randY - Utils.NEUTRAL_PLANET_RADIUS < 0) {
+			randY += Utils.NEUTRAL_PLANET_RADIUS;
 		}
 		
 		boolean isPosFree = true;
-		Planet tmp = new Planet(randX, randY, NEUTRAL_PLANET_RADIUS, true, 0, new LittleSpaceship());
+		Planet tmp = new Planet(randX, randY, Utils.NEUTRAL_PLANET_RADIUS, true, 0, new LittleSpaceship());
 		for(Planet p : planets) {
 			if(tmp.collide(p)) {
 				isPosFree = false;
