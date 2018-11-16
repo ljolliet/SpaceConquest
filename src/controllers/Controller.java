@@ -8,13 +8,15 @@ import java.util.ArrayList;
 
 public abstract class Controller {
 
-    private ArrayList<Planet> planets = new ArrayList<>();
-    private ArrayList<Squadron> squadrons = new ArrayList<>();
-    private Color color;
+
+    protected ArrayList<Planet> planets = new ArrayList<>();
+    protected ArrayList<Squadron> squadrons = new ArrayList<>();
+    protected Color color;
 
     public Controller(Color color){
         this.color = color;
     }
+
 
     public ArrayList<Squadron> getSquadrons() {
         return squadrons;

@@ -3,19 +3,12 @@ import game.Squadron;
 import game.spaceships.LittleSpaceship;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Group;
-import javafx.scene.Node;
-import javafx.scene.canvas.Canvas;
-import javafx.stage.Stage;
 import utils.Utils;
-
 import java.util.ArrayList;
 import java.util.Random;
-
 import controllers.ComputerController;
 import controllers.Controller;
 import controllers.HumanController;
-
-import javax.rmi.CORBA.Util;
 
 public class Gameloop extends AnimationTimer{
     //this class will update all graphics change

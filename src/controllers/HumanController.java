@@ -8,4 +8,13 @@ public class HumanController extends Controller {
     }
     //events and function used by the human to control his spaceships
 
+	public static boolean isOnHumanPlanet(double x, double y) {
+		boolean res = false;
+		
+		
+		
+		return res;
+	
+	}
+	
 }
