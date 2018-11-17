@@ -39,6 +39,7 @@ public class Planet {
     //----------------NOT TESTED-------------------------------//
     public Squadron createSquadron(int size){
         ArrayList<Spaceship> spaceships = new ArrayList<>();
+        //use "i" instead of spaceship sp : on_ground_spaceship in case that a spaceship is added during execution ??
     	for(Spaceship sp : on_ground_spaceships) {
     		spaceships.add(sp);
     	}
@@ -63,7 +64,7 @@ public class Planet {
         if(total_production >= model.necessary_production){
             total_production -= model.necessary_production;
             on_ground_spaceships.add(model);
-            System.out.println("ADDED NEW SPACESHIP");
+            //System.out.println("ADDED NEW SPACESHIP");
         }
     }
     
@@ -77,7 +78,7 @@ public class Planet {
     }
 
     public String toString(){
-        return "[Planet] position : " + posX + ";" + posY + ", production :" + total_production;
+        return "[Planet] position : " + posX + ";" + posY + ", production :" + total_production + ", nb ships : " + on_ground_spaceships.size();
     }
     //---------------------DRAW-------------------//
 
@@ -120,4 +121,13 @@ public class Planet {
     public void setRadius(int radius) {
         this.radius = radius;
     }
+
+    public ArrayList<Spaceship> getOn_ground_spaceships() {
+        return on_ground_spaceships;
+    }
+
+    public void setOn_ground_spaceships(ArrayList<Spaceship> on_ground_spaceships) {
+        this.on_ground_spaceships = on_ground_spaceships;
+    }
+
 }

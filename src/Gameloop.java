@@ -122,6 +122,8 @@ public class Gameloop extends AnimationTimer{
 		}
     }
 
+    //--------------------------EVENTS-------------------//
+
     public void initEvents(){
         HumanController hc = (HumanController)controllers.get(0);
 
@@ -129,8 +131,14 @@ public class Gameloop extends AnimationTimer{
             @Override
             public void handle(MouseEvent event) {
                 if(hc.isOnHumanPlanet(event.getX(), event.getY())){
-                    Planet selected = hc.getPlanetClic(event.getX(), event.getY());
-                    //System.out.println("x : " + event.getX() + ", y : " + event.getY() + " : PLAYER'S PLANET");
+                    Planet selected = hc.getHumanPlanetClic(event.getX(), event.getY());
+                    hc.launchShip(selected);
+                    //System.out.println(selected);
+                    //System.out.println(hc.getSquadrons().size());
+                }
+                else if(hc.isOnPlanet(event.getX(), event.getY(), planets)){
+                    Planet selected = hc.getPlanetClic(event.getX(), event.getY(), planets);
+                    //System.out.println(selected);
                 }
             }
         });
