@@ -63,13 +63,20 @@ public class Planet {
     	Squadron squad = createSquadron(amount);
     	owner.getSquadrons().add(squad);
     	//withdraw spaceship in the squadron from the on ground spaceships && assign pos
-        ArrayList<double[]> pos = MathUtils.dotAroundACircle(center.getX(), center.getY(), radius, squad.getSpaceships().size());
+        ArrayList<double[]> pos = MathUtils.dotAroundACircle(center, radius, squad.getSpaceships().size());
     	/*for(Spaceship sp : squad.getSpaceships()) {
     		on_ground_spaceships.remove(sp);
     	}*/
     	for(int i = 0; i < squad.getSpaceships().size(); i++){
     	    on_ground_spaceships.remove(squad.getSpaceships().get(i));
     	    squad.getSpaceships().get(i).setPos(new Point2D(pos.get(i)[0], pos.get(i)[1]));
+    	    MathUtils.rotateSpaceShip(center, squad.getSpaceships().get(i));
+
+
+
+
+
+
         }
     }
 
@@ -79,7 +86,6 @@ public class Planet {
         if(total_production >= model.necessary_production){
             total_production -= model.necessary_production;
             on_ground_spaceships.add(model.getInstance());
-            System.out.println("ADDED NEW SPACESHIP");
         }
     }
     

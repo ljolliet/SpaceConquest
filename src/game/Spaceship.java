@@ -12,6 +12,12 @@ public abstract class  Spaceship {
     protected int necessary_production;
     protected double angle = 0;
 
+    public Point2D getDirection() {
+        return direction;
+    }
+
+    protected Point2D direction = Point2D.ZERO;
+
     public Point2D getPos() {
         return pos;
     }
@@ -26,4 +32,7 @@ public abstract class  Spaceship {
 
     public abstract void draw(Group root);
 
+    public  void rotate(double teta){ // teta in  radians
+        angle = (angle+(teta* 180/Math.PI)) % 360; // angle in degrees ( _*180/pi : radians --> degrees)
+    }
 }

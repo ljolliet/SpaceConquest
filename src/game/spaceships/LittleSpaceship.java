@@ -1,6 +1,7 @@
 package game.spaceships;
 
 import game.Spaceship;
+import javafx.geometry.Point2D;
 import javafx.geometry.Point3D;
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
@@ -12,7 +13,8 @@ public class LittleSpaceship extends Spaceship {
 
     public LittleSpaceship() {
         necessary_production = 15;
-        length = 50;
+        length = 25;
+        this.direction = new Point2D(0, 1); // find a better way
 
     }
 
@@ -31,9 +33,8 @@ public class LittleSpaceship extends Spaceship {
                 pos.getX(), pos.getY(),
                 pos.getX()+(1./3.*length), pos.getY()-(1./3.*length));
 
-        polygon.setRotationAxis(new Point3D(pos.getX(), pos.getY(), 0));
-
         polygon.setRotate(angle);
         root.getChildren().add(polygon);
     }
+
 }
