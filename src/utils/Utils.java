@@ -20,6 +20,5 @@ public class Utils {
     public static Color NEUTRAL_PLANET_COLOR = Color.GREY;
     public static List<Color> PLANET_COLOR =  Arrays.asList(Color.RED,Color.BLUEVIOLET, Color.GOLDENROD, Color.LIGHTSKYBLUE, Color.YELLOWGREEN);
 
-    //Refresh the amount of production of planets every TIME_INTERVAL, 1s ? 100ms?
-    public static int TIME_INTERVAL = 1;
+
 }

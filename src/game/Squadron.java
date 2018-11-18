@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class Squadron {
 
-    private ArrayList<Spaceship> spaceships = new ArrayList<>();
+    private ArrayList<Spaceship> spaceships;
     private Planet target;
     
     public Squadron(ArrayList<Spaceship> spaceships) {
@@ -37,6 +37,8 @@ public class Squadron {
 	}
 
     public void draw(Group root) {
-
+        for(Spaceship sp : spaceships){
+            sp.draw(root);
+        }
     }
 }

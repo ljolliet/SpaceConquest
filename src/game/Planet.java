@@ -1,9 +1,11 @@
 package game;
 
 import controllers.Controller;
+import game.spaceships.LittleSpaceship;
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import utils.MathUtils;
 
 import java.util.ArrayList;
 
@@ -52,10 +54,15 @@ public class Planet {
         //if player maybe visual/sound alert
     	Squadron squad = createSquadron(amount);
     	owner.getSquadrons().add(squad);
-    	//withdraw spaceship in the squadron from the on ground spaceships
-    	for(Spaceship sp : squad.getSpaceships()) {
+    	//withdraw spaceship in the squadron from the on ground spaceships && assign pos
+        ArrayList<double[]> pos = MathUtils.dotAroundACircle(posX, posY, radius, squad.getSpaceships().size());
+    	/*for(Spaceship sp : squad.getSpaceships()) {
     		on_ground_spaceships.remove(sp);
-    	}
+    	}*/
+    	for(int i = 0; i < squad.getSpaceships().size(); i++){
+    	    on_ground_spaceships.remove(squad.getSpaceships().get(i));
+    	    squad.getSpaceships().get(i).setPos(pos.get(i));
+        }
     }
 
 
@@ -63,8 +70,8 @@ public class Planet {
         total_production += production_rate;
         if(total_production >= model.necessary_production){
             total_production -= model.necessary_production;
-            on_ground_spaceships.add(model);
-            //System.out.println("ADDED NEW SPACESHIP");
+            on_ground_spaceships.add(model.getInstance());
+            System.out.println("ADDED NEW SPACESHIP");
         }
     }
     

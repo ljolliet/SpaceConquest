@@ -1,4 +1,5 @@
 import game.Planet;
+import game.Spaceship;
 import game.Squadron;
 import game.spaceships.LittleSpaceship;
 import javafx.animation.AnimationTimer;
@@ -161,8 +162,9 @@ public class Gameloop extends AnimationTimer{
             p.draw(root);
 
         for(Controller c : controllers)
-            for(Squadron s : c.getSquadrons()) // draw all squadrons
+            for(Squadron s : c.getSquadrons()){
                 s.draw(root);
+            }
     }
 
 
