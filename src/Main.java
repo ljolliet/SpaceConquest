@@ -11,7 +11,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage){
-        stage.setTitle("Hello World");
+        stage.setTitle("Space Conquest");
         Group root = new Group();
         Scene scene = new Scene( root );
         stage.setScene(scene);
@@ -22,8 +22,9 @@ public class Main extends Application {
         GAMELOOP = new Gameloop(root, scene);
         GAMELOOP.start();
 
-        stage.show();
 
+
+        stage.show();
     }
 
 

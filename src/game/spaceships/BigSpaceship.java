@@ -18,7 +18,7 @@ public class BigSpaceship extends Spaceship {
 
 	@Override
 	public void draw(Group root) {
-		Circle c = new Circle(pos[0],pos[1],10);
+		Circle c = new Circle(pos.getX(),pos.getY(),10);
 		c.setFill(Color.BLACK);
 		root.getChildren().add(c);
 	}

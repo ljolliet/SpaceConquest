@@ -14,7 +14,7 @@ public class HumanController extends Controller {
 	public boolean isOnHumanPlanet(double x, double y) {
 		boolean res = false;
 		for(Planet p : planets){
-			if(Math.sqrt(Math.pow(p.getPosX() - x, 2) + Math.pow(p.getPosY() - y ,2)) < p.getRadius()){
+			if(Math.sqrt(Math.pow(p.getCenter().getX() - x, 2) + Math.pow(p.getCenter().getY() - y ,2)) < p.getRadius()){
 				res = true;
 			}
 		}
@@ -26,7 +26,7 @@ public class HumanController extends Controller {
 		Planet res = null;
 
 		for(Planet p : planets){
-			if(Math.sqrt(Math.pow(p.getPosX() - x, 2) + Math.pow(p.getPosY() - y ,2)) < p.getRadius()){
+			if(Math.sqrt(Math.pow(p.getCenter().getX() - x, 2) + Math.pow(p.getCenter().getY() - y ,2)) < p.getRadius()){
 				res = p;
 			}
 		}
@@ -37,7 +37,7 @@ public class HumanController extends Controller {
 	public boolean isOnPlanet(double x, double y, ArrayList<Planet> planets){
 		boolean res = false;
 		for(Planet p : planets){
-			if(Math.sqrt(Math.pow(p.getPosX() - x, 2) + Math.pow(p.getPosY() - y ,2)) < p.getRadius() && (p.getOwner() == null || p.getOwner() != this)){
+			if(Math.sqrt(Math.pow(p.getCenter().getX() - x, 2) + Math.pow(p.getCenter().getY() - y ,2)) < p.getRadius() && (p.getOwner() == null || p.getOwner() != this)){
 				res = true;
 			}
 		}
@@ -48,7 +48,7 @@ public class HumanController extends Controller {
 		Planet res = null;
 
 		for(Planet p : planets){
-			if(Math.sqrt(Math.pow(p.getPosX() - x, 2) + Math.pow(p.getPosY() - y ,2)) < p.getRadius() && (p.getOwner() == null || p.getOwner() != this)){
+			if(Math.sqrt(Math.pow(p.getCenter().getX() - x, 2) + Math.pow(p.getCenter().getY() - y ,2)) < p.getRadius() && (p.getOwner() == null || p.getOwner() != this)){
 				res = p;
 			}
 		}

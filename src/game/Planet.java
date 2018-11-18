@@ -2,17 +2,26 @@ package game;
 
 import controllers.Controller;
 import game.spaceships.LittleSpaceship;
+import javafx.geometry.Insets;
+import javafx.geometry.Point2D;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import utils.MathUtils;
 
 import java.util.ArrayList;
 
 public class Planet {
 
-    private double posX;
-    private double posY;
+
+
+    private Point2D center;
     private int radius; //optional
     private boolean neutral;
 
@@ -28,8 +37,7 @@ public class Planet {
     private Color color;
 
     public Planet(double posX, double posY, int radius, boolean neutral, float production_rate, Spaceship model, Color color){
-        this.posX = posX;
-        this.posY = posY;
+        center = new Point2D(posX,posY);
         this.neutral = neutral;
         this.production_rate = production_rate;
         this.model = model;
@@ -55,13 +63,13 @@ public class Planet {
     	Squadron squad = createSquadron(amount);
     	owner.getSquadrons().add(squad);
     	//withdraw spaceship in the squadron from the on ground spaceships && assign pos
-        ArrayList<double[]> pos = MathUtils.dotAroundACircle(posX, posY, radius, squad.getSpaceships().size());
+        ArrayList<double[]> pos = MathUtils.dotAroundACircle(center.getX(), center.getY(), radius, squad.getSpaceships().size());
     	/*for(Spaceship sp : squad.getSpaceships()) {
     		on_ground_spaceships.remove(sp);
     	}*/
     	for(int i = 0; i < squad.getSpaceships().size(); i++){
     	    on_ground_spaceships.remove(squad.getSpaceships().get(i));
-    	    squad.getSpaceships().get(i).setPos(pos.get(i));
+    	    squad.getSpaceships().get(i).setPos(new Point2D(pos.get(i)[0], pos.get(i)[1]));
         }
     }
 
@@ -76,23 +84,35 @@ public class Planet {
     }
     
     public boolean collide(Planet p) {
-    	double centerDistance = Math.sqrt(Math.pow(this.posX - p.posX, 2) + Math.pow(this.posY - p.posY, 2));    		
+    	double centerDistance = Math.sqrt(Math.pow(center.getX() - p.center.getX(), 2) + Math.pow(center.getY() - center.getY(), 2));
 		return centerDistance < this.radius + p.radius;
     }
     
     public double distantOf(double[] pos) {
-    	return Math.sqrt(Math.pow(this.posX - pos[0], 2) + Math.pow(this.posY - pos[1], 2));    		
+    	return Math.sqrt(Math.pow(center.getX() - pos[0], 2) + Math.pow(center.getY() - pos[1], 2));
     }
 
     public String toString(){
-        return "[Planet] position : " + posX + ";" + posY + ", production :" + total_production + ", nb ships : " + on_ground_spaceships.size();
+        return "[Planet] position : " + center.getX() + ";" + center.getY() + ", production :" + total_production + ", nb ships : " + on_ground_spaceships.size();
     }
     //---------------------DRAW-------------------//
 
     public void draw(Group root) {
-        Circle c = new Circle(posX,posY,radius);
+        Circle c = new Circle(0,0,radius);
         c.setFill(color);
-        root.getChildren().add(c);
+
+        //create a text inside a circle
+        final Text text = new Text (String.valueOf(this.on_ground_spaceships.size()));
+        text.setStroke(Color.BLACK);
+
+        //create a layout for circle with text inside
+         StackPane stack = new StackPane();
+
+        stack.getChildren().addAll(c, text);
+        stack.setLayoutX(center.getX()-radius);
+        stack.setLayoutY(center.getY()-radius);
+        root.getChildren().add(stack);
+
 
     }
     //---------------------GETTER/SETTER-------------------//
@@ -105,25 +125,13 @@ public class Planet {
         this.owner = owner;
     }
 
-    public double getPosX() {
-        return posX;
-    }
-
-    public void setPosX(double posX) {
-        this.posX = posX;
-    }
-
-    public double getPosY() {
-        return posY;
-    }
-
-    public void setPosY(double posY) {
-        this.posY = posY;
-    }
-
     public int getRadius() {
         return radius;
     }
+
+    public Point2D getCenter() { return center; }
+
+    public void setCenter(Point2D center) { this.center = center; }
 
     public void setRadius(int radius) {
         this.radius = radius;
