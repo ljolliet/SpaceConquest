@@ -4,6 +4,9 @@ import javafx.geometry.Point2D;
 import javafx.scene.Group;
 import utils.MathUtils;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 public abstract class  Spaceship {
 
     private int speed;
@@ -13,21 +16,10 @@ public abstract class  Spaceship {
     protected int necessary_production;
     protected int angle = 0;
 
-    public Point2D getDirection() {
-        return direction;
-    }
+    protected ArrayList<Point2D> steps; //list of coordinates to get to the target
 
     protected Point2D direction = Point2D.ZERO;
 
-    public Point2D getPos() {
-        return pos;
-    }
-
-    public void setPos(Point2D pos) { this.pos = pos;  }
-
-    public String toString(){
-        return "X : " + pos.getX() + ", Y : " + pos.getY();
-    }
 
     public abstract Spaceship getInstance();
 
@@ -43,6 +35,27 @@ public abstract class  Spaceship {
         System.out.println(this.direction + " "+ this.angle);
         System.out.println(MathUtils.getRotatedVector(this.direction, this.angle));
         this.setPos(this.getPos().add(MathUtils.getRotatedVector(this.direction, this.angle).normalize())); // NOT GOOD AT ALL
+    }
 
+    public String toString(){
+        return "X : " + pos.getX() + ", Y : " + pos.getY();
+    }
+
+    public Point2D getDirection() {
+        return direction;
+    }
+
+    public Point2D getPos() {
+        return pos;
+    }
+
+    public void setPos(Point2D pos) { this.pos = pos;  }
+
+    public ArrayList<Point2D> getSteps() {
+        return steps;
+    }
+
+    public void setSteps(ArrayList<Point2D> steps) {
+        this.steps = steps;
     }
 }

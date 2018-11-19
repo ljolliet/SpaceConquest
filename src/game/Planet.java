@@ -81,8 +81,13 @@ public class Planet {
     }
     
     public boolean collide(Planet p) {
-    	double centerDistance = Math.sqrt(Math.pow(center.getX() - p.center.getX(), 2) + Math.pow(center.getY() - center.getY(), 2));
+    	double centerDistance = Math.sqrt(Math.pow(center.getX() - p.center.getX(), 2) + Math.pow(center.getY() - p.center.getY(), 2));
 		return centerDistance < this.radius + p.radius;
+    }
+
+    public boolean contains(Point2D p){
+        double dist = Math.sqrt(Math.pow(center.getX() - p.getX(), 2) + Math.pow(center.getY() - p.getY(), 2));
+        return dist < this.radius;
     }
     
     public double distantOf(double[] pos) {

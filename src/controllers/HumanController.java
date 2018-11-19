@@ -3,9 +3,11 @@ package controllers;
 import game.Planet;
 import game.Spaceship;
 import game.Squadron;
+import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class HumanController extends Controller {
     public HumanController(Color color) {
@@ -61,8 +63,8 @@ public class HumanController extends Controller {
 	public void launchShip(Planet p){
     	p.sendShip(p.getAvailable_ships());
 	}
-	public void setTarget(Planet p){
-    	this.getSquadrons().get(0).setTarget(p); // BAD
+	public void setTarget(Planet p, HashMap<Point2D, Boolean> accessibilityMap){
+    	this.getSquadrons().get(0).setTarget(p, accessibilityMap); // BAD
 
 		 }
 	

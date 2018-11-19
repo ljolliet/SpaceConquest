@@ -1,11 +1,9 @@
 package utils;
 
-import game.Spaceship;
 import javafx.geometry.Point2D;
 import javafx.scene.transform.Rotate;
-import javafx.scene.transform.Transform;
-
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class MathUtils {
 
@@ -22,6 +20,16 @@ public class MathUtils {
         }
 
         return pos;
+    }
+
+    //inspired by the A* (A star) algorithm
+    public static ArrayList<Point2D> pathfinder(Point2D start, Point2D destination, HashMap<Point2D, Boolean> map){
+        ArrayList<Point2D> steps = new ArrayList<>();
+
+        //initialization
+
+
+        return steps;
     }
 
     public static double pointOnOffPlanet(Point2D center, Point2D spaceshipPos, Point2D spaceshipDirection, boolean on) {

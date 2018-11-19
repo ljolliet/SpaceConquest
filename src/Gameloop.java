@@ -1,14 +1,17 @@
 import game.Planet;
-import game.Spaceship;
 import game.Squadron;
 import game.spaceships.LittleSpaceship;
 import javafx.animation.AnimationTimer;
 import javafx.event.EventHandler;
+import javafx.geometry.Point2D;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import utils.Utils;
+
+import java.awt.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 import controllers.ComputerController;
 import controllers.Controller;
@@ -24,6 +27,8 @@ public class Gameloop extends AnimationTimer{
     private ArrayList<Controller> controllers = new ArrayList<>();
     private ArrayList<Planet> planets = new ArrayList<>();
 
+    private HashMap<Point2D, Boolean> accessibilityMap = new HashMap<>();
+
     public Gameloop(Group root, Scene scene){
         this.root = root;
         this.scene = scene;
@@ -35,10 +40,9 @@ public class Gameloop extends AnimationTimer{
         //code here is repeated
         draw();
         actualizeProduction();
+        actualizeShipPos();
 
-        for(Controller c : controllers) // Refactor in a method
-            for( Squadron s : c.getSquadrons())
-                s.sendToTarget();
+
 
     }
 
@@ -48,6 +52,7 @@ public class Gameloop extends AnimationTimer{
         initPlayers();
         initPlanets();
         initEvents();
+        initAccessibilityMap();
     }
 
     public void initPlayers(){
@@ -128,6 +133,22 @@ public class Gameloop extends AnimationTimer{
 		}
     }
 
+    public void initAccessibilityMap(){
+        long t0 = System.currentTimeMillis();
+        for(int i = 0; i < Utils.WINDOW_WIDTH; i += Utils.COLUMN_SIZE){
+            for(int j = 0; j < Utils.WINDOW_HEIGHT; j += Utils.COLUMN_SIZE){
+                Point2D realPos = new Point2D(i,j);
+                boolean accessible = true;
+                for(Planet p : planets){
+                    if(p.contains(realPos))
+                        accessible = false;
+                }
+                accessibilityMap.put(realPos,accessible);
+            }
+        }
+        System.out.println("Accessibility Map generated in : " + (System.currentTimeMillis() - t0) + "ms");
+    }
+
     //--------------------------EVENTS-------------------//
 
     public void initEvents(){
@@ -143,7 +164,7 @@ public class Gameloop extends AnimationTimer{
                 }
                 else if(hc.isOnPlanet(event.getX(), event.getY(), planets)){
                     Planet selected = hc.getPlanetClic(event.getX(), event.getY(), planets);
-                    hc.setTarget(selected);
+                    hc.setTarget(selected, accessibilityMap);
                 }
             }
         });
@@ -158,6 +179,14 @@ public class Gameloop extends AnimationTimer{
             }
         }
     }
+
+    public void actualizeShipPos(){
+        for(Controller c : controllers) // Refactor in a method
+            for( Squadron s : c.getSquadrons())
+                s.sendToTarget();
+    }
+
+
 
     public void draw(){
         root.getChildren().removeAll(root.getChildren()); // clear root
