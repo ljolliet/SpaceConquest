@@ -1,17 +1,11 @@
 package game;
 
 import controllers.Controller;
-import game.spaceships.LittleSpaceship;
-import javafx.geometry.Insets;
 import javafx.geometry.Point2D;
-import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontPosture;
-import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import utils.MathUtils;
 
@@ -70,12 +64,9 @@ public class Planet {
     	for(int i = 0; i < squad.getSpaceships().size(); i++){
     	    on_ground_spaceships.remove(squad.getSpaceships().get(i));
     	    squad.getSpaceships().get(i).setPos(new Point2D(pos.get(i)[0], pos.get(i)[1]));
-    	    MathUtils.rotateSpaceShip(center, squad.getSpaceships().get(i));
-
-
-
-
-
+    	    Spaceship s = squad.getSpaceships().get(i);
+    	    double angle = MathUtils.pointOnOffPlanet(center, s.getPos(), s.getDirection(), false);
+            s.rotate(angle);
 
         }
     }

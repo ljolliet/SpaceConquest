@@ -7,6 +7,7 @@ import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Polygon;
+import utils.MathUtils;
 
 public class LittleSpaceship extends Spaceship {
 
@@ -32,8 +33,8 @@ public class LittleSpaceship extends Spaceship {
                 pos.getX()-(1./3.*length), pos.getY()-(1./3.*length),
                 pos.getX(), pos.getY(),
                 pos.getX()+(1./3.*length), pos.getY()-(1./3.*length));
-
         polygon.setRotate(angle);
+
         root.getChildren().add(polygon);
     }
 

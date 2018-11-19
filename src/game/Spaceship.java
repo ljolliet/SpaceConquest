@@ -2,6 +2,7 @@ package game;
 
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
+import utils.MathUtils;
 
 public abstract class  Spaceship {
 
@@ -33,6 +34,9 @@ public abstract class  Spaceship {
     public abstract void draw(Group root);
 
     public  void rotate(double teta){ // teta in  radians
-        angle = (angle+(teta* 180/Math.PI)) % 360; // angle in degrees ( _*180/pi : radians --> degrees)
+        this.angle = (angle+(teta* 180/Math.PI)) % 360; // angle in degrees ( _*180/pi : radians --> degrees)
+        this.direction = MathUtils.getRotatedVector(this.direction, this.angle);
+
+        System.out.println("direction : " +direction);
     }
 }

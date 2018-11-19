@@ -22,17 +22,34 @@ public class MathUtils {
         return pos;
     }
 
-    public static void rotateSpaceShip(Point2D center, Spaceship spaceship) {
-        Point2D vectorPlanet = spaceship.getPos().subtract(center).normalize();
-        Point2D vectorSpaceShip = spaceship.getDirection();
+    public static double pointOnOffPlanet(Point2D center, Point2D spaceshipPos, Point2D spaceshipDirection, boolean on) {
+        Point2D vectorPlanet;
+        if(on)
+            vectorPlanet = center.subtract(spaceshipPos).normalize();
+        else
+            vectorPlanet = spaceshipPos.subtract(center).normalize();
+        Point2D vectorSpaceShip = spaceshipDirection;
         double uv = vectorPlanet.dotProduct(vectorSpaceShip);
         double u = Math.sqrt(Math.pow(vectorPlanet.getX(),2)+ Math.pow(vectorPlanet.getY(),2));
         double v = Math.sqrt(Math.pow(vectorSpaceShip.getX(),2)+ Math.pow(vectorSpaceShip.getY(),2));
         double teta = Math.acos(uv/(u*v));
         if(vectorPlanet.getX() > 0)
-         spaceship.rotate(-teta);
-        else
-            spaceship.rotate(teta);
+            return -teta;
+
+        return teta;
+
+    }
+
+
+    public static Point2D getRotatedVector(Point2D direction, double theta) {
+
+        double cos = Math.cos(theta);
+        double sin = Math.sin(theta);
+
+        double px = direction.getX() * cos - direction.getY() * sin;
+        double py = direction.getX() * sin + direction.getY() * cos;
+
+        return new Point2D(px,py);
 
     }
 }

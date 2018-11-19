@@ -1,6 +1,8 @@
 package controllers;
 
 import game.Planet;
+import game.Spaceship;
+import game.Squadron;
 import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
@@ -59,5 +61,9 @@ public class HumanController extends Controller {
 	public void launchShip(Planet p){
     	p.sendShip(p.getOn_ground_spaceships().size());
 	}
+	public void setTarget(Planet p){
+    	this.getSquadrons().get(0).setTarget(p); // BAD
+
+		 }
 	
 }

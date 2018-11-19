@@ -134,12 +134,11 @@ public class Gameloop extends AnimationTimer{
                 if(hc.isOnHumanPlanet(event.getX(), event.getY())){
                     Planet selected = hc.getHumanPlanetClic(event.getX(), event.getY());
                     hc.launchShip(selected);
-                    //System.out.println(selected);
-                    //System.out.println(hc.getSquadrons().size());
+
                 }
                 else if(hc.isOnPlanet(event.getX(), event.getY(), planets)){
                     Planet selected = hc.getPlanetClic(event.getX(), event.getY(), planets);
-                    //System.out.println(selected);
+                    hc.setTarget(selected);
                 }
             }
         });
