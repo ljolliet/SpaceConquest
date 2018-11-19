@@ -35,6 +35,11 @@ public class Gameloop extends AnimationTimer{
         //code here is repeated
         draw();
         actualizeProduction();
+
+        for(Controller c : controllers) // Refactor in a method
+            for( Squadron s : c.getSquadrons())
+                s.sendToTarget();
+
     }
 
     //--------------------INIT-------------//

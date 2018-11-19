@@ -11,7 +11,7 @@ public abstract class  Spaceship {
     protected Point2D pos;
     protected double length;
     protected int necessary_production;
-    protected double angle = 0;
+    protected int angle = 0;
 
     public Point2D getDirection() {
         return direction;
@@ -34,9 +34,13 @@ public abstract class  Spaceship {
     public abstract void draw(Group root);
 
     public  void rotate(double teta){ // teta in  radians
-        this.angle = (angle+(teta* 180/Math.PI)) % 360; // angle in degrees ( _*180/pi : radians --> degrees)
-        this.direction = MathUtils.getRotatedVector(this.direction, this.angle);
+        this.angle = Math.floorMod((int) ((teta* 180/Math.PI)), 360); // angle in degrees ( _*180/pi : radians --> degrees)
+    }
 
-        System.out.println("direction : " +direction);
+    public void moveForward(){
+//        System.out.println(this.getPos()+" + " + MathUtils.getRotatedVector(this.direction, this.angle) +" : "
+  //              + this.getPos().add(MathUtils.getRotatedVector(this.direction, this.angle).normalize() ));
+        this.setPos(this.getPos().add(MathUtils.getRotatedVector(this.direction, this.angle).normalize())); // NOT GOOD AT ALL
+
     }
 }

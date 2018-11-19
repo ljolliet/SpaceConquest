@@ -43,11 +43,9 @@ public class MathUtils {
 
     public static Point2D getRotatedVector(Point2D direction, double theta) {
 
-        double cos = Math.cos(theta);
-        double sin = Math.sin(theta);
 
-        double px = direction.getX() * cos - direction.getY() * sin;
-        double py = direction.getX() * sin + direction.getY() * cos;
+        double px = direction.getX() * Math.cos(theta) - direction.getY() * Math.sin(theta);
+        double py = direction.getX() * Math.sin(theta) + direction.getY() * Math.cos(theta);
 
         return new Point2D(px,py);
 

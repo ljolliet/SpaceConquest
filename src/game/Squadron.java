@@ -30,6 +30,13 @@ public class Squadron {
         processSpaceShipPos();
     }
 
+    public void sendToTarget() {
+        if(this.target != null)
+        for (Spaceship s : spaceships) {
+            s.moveForward();
+        }
+    }
+
     //-------GETTER SETTER---------//
 
     public ArrayList<Spaceship> getSpaceships() {
