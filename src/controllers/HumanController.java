@@ -59,7 +59,7 @@ public class HumanController extends Controller {
 	}
 
 	public void launchShip(Planet p){
-    	p.sendShip(p.getOn_ground_spaceships().size());
+    	p.sendShip(p.getAvailable_ships());
 	}
 	public void setTarget(Planet p){
     	this.getSquadrons().get(0).setTarget(p); // BAD
