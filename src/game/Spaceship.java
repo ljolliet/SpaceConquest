@@ -33,13 +33,15 @@ public abstract class  Spaceship {
 
     public abstract void draw(Group root);
 
-    public  void rotate(double teta){ // teta in  radians
-        this.angle = Math.floorMod((int) ((teta* 180/Math.PI)), 360); // angle in degrees ( _*180/pi : radians --> degrees)
+    public  void rotate(double theta){ // theta in  radians
+        this.angle = Math.floorMod((int) Math.toDegrees(theta), 360); // angle in degrees this mod is better than %
     }
 
     public void moveForward(){
 //        System.out.println(this.getPos()+" + " + MathUtils.getRotatedVector(this.direction, this.angle) +" : "
   //              + this.getPos().add(MathUtils.getRotatedVector(this.direction, this.angle).normalize() ));
+        System.out.println(this.direction + " "+ this.angle);
+        System.out.println(MathUtils.getRotatedVector(this.direction, this.angle));
         this.setPos(this.getPos().add(MathUtils.getRotatedVector(this.direction, this.angle).normalize())); // NOT GOOD AT ALL
 
     }

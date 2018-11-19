@@ -2,6 +2,8 @@ package utils;
 
 import game.Spaceship;
 import javafx.geometry.Point2D;
+import javafx.scene.transform.Rotate;
+import javafx.scene.transform.Transform;
 
 import java.util.ArrayList;
 
@@ -41,13 +43,9 @@ public class MathUtils {
     }
 
 
-    public static Point2D getRotatedVector(Point2D direction, double theta) {
-
-
-        double px = direction.getX() * Math.cos(theta) - direction.getY() * Math.sin(theta);
-        double py = direction.getX() * Math.sin(theta) + direction.getY() * Math.cos(theta);
-
-        return new Point2D(px,py);
-
+    public static Point2D getRotatedVector(Point2D direction, double angle) {
+        Rotate r = new Rotate();
+        r.setAngle(angle); // degrees
+        return r.deltaTransform(direction.getX(),direction.getY());
     }
 }
