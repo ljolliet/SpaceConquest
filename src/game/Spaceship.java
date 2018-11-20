@@ -35,6 +35,11 @@ public abstract class  Spaceship {
     }
 
     public void moveForward(){
+        //System.out.println(this.getPos()+" + " + MathUtils.getRotatedVector(this.direction, this.angle) +" : "
+        //  + this.getPos().add(MathUtils.getRotatedVector(this.direction, this.angle).normalize() ));
+        //System.out.println(this.direction + " "+ this.angle);
+        //System.out.println(MathUtils.getRotatedVector(this.direction, this.angle));
+
         this.setPos(this.getPos().add(MathUtils.getRotatedVector(this.direction, this.angle).normalize())); // NOT GOOD AT ALL
     }
 

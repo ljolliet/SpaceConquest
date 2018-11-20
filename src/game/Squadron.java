@@ -32,6 +32,9 @@ public class Squadron {
         HashMap<Point2D, Boolean> squadAccessibilityMap = getSquadAccessibilityMap(target, accessibilityMap );
         for(Spaceship sp : spaceships){
             sp.setSteps(MathUtils.pathfinder(sp.pos, target.getCenter(), squadAccessibilityMap));
+            for(Point2D p : sp.getSteps()){
+                System.out.println("X : " + p.getX() + ", Y : " + p.getY());
+            }
         }
     }
 
