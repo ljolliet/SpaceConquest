@@ -72,7 +72,7 @@ public class Gameloop extends AnimationTimer{
     public void initPlayerPlanets(){
         for(int i = 0; i < controllers.size(); i ++){
         	double[] pos = getPlayerPos();
-            Planet p = new Planet(pos[0],pos[1], Utils.PLAYER_PLANET_RADIUS, false, 1, new LittleSpaceship(), controllers.get(i).getColor()); // add color
+            Planet p = new Planet(pos[0],pos[1], Utils.PLAYER_PLANET_RADIUS, false, 1, new LittleSpaceship(controllers.get(i).getColor()));// add color
             controllers.get(i).getPlanets().add(p);
             p.setOwner(controllers.get(i));
             planets.add(p);
@@ -119,7 +119,7 @@ public class Gameloop extends AnimationTimer{
     	double randY = new Random().nextInt(maxY + 1 - min) + min; 			
 		
 		boolean isPosFree = true;
-		Planet tmp = new Planet(randX, randY, Utils.NEUTRAL_PLANET_RADIUS, true, 0, new LittleSpaceship(), Utils.NEUTRAL_PLANET_COLOR);
+		Planet tmp = new Planet(randX, randY, Utils.NEUTRAL_PLANET_RADIUS, true, 0, new LittleSpaceship(Utils.NEUTRAL_PLANET_COLOR));
 		for(Planet p : planets) {
 			if(tmp.collide(p)) {
 				isPosFree = false;

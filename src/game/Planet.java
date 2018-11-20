@@ -1,6 +1,7 @@
 package game;
 
 import controllers.Controller;
+import game.spaceships.LittleSpaceship;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
 import javafx.scene.layout.StackPane;
@@ -30,15 +31,16 @@ public class Planet {
     private Controller owner;
     private Color color;
 
-    public Planet(double posX, double posY, int radius, boolean neutral, float production_rate, Spaceship model, Color color){
+    public Planet(double posX, double posY, int radius, boolean neutral, float production_rate, Spaceship model){
         center = new Point2D(posX,posY);
         this.neutral = neutral;
         this.production_rate = production_rate;
         this.model = model;
         this.radius = radius;
-        this.color = color;
+        this.color = model.getColor();
 
     }
+
 
     //----------------NOT TESTED-------------------------------//
     public Squadron createSquadron(int size){

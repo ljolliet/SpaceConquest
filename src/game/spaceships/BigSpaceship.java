@@ -7,13 +7,15 @@ import javafx.scene.shape.Circle;
 
 public class BigSpaceship extends Spaceship {
 	
-	public BigSpaceship() {
+	public BigSpaceship(Color color) {
+		super(color);
+
 		necessary_production = 500;
 	}
 
 	@Override
 	public Spaceship getInstance() {
-		return new BigSpaceship();
+		return new BigSpaceship(color);
 	}
 
 	@Override

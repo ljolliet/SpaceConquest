@@ -37,9 +37,10 @@ public class Squadron {
 
     public void sendToTarget() {
         if(this.target != null)
-        for (Spaceship s : spaceships) {
-            s.moveForward();
-        }
+            for (Spaceship s : spaceships) {
+                if(!this.target.contains(s.getPos())) // not good
+                s.moveForward();
+            }
     }
 
     public HashMap<Point2D, Boolean> getSquadAccessibilityMap(Planet target, HashMap<Point2D, Boolean> globalAccessibleMap) {
