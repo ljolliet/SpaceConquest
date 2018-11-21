@@ -4,10 +4,7 @@ import javafx.geometry.Point2D;
 import javafx.scene.transform.Rotate;
 import sun.reflect.generics.tree.Tree;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.TreeSet;
+import java.util.*;
 
 public class MathUtils {
 
@@ -26,9 +23,9 @@ public class MathUtils {
         return pos;
     }
 
-    //inspired by the A* (A star) algorithm
-    public static ArrayList<Point2D> pathfinder(Point2D start, Point2D destination, HashMap<Point2D, Boolean> map){
-        ArrayList<Point2D> steps = new ArrayList<>();
+    //inspired by the A* (A star) algorithm -> linkedlist works like a FIFO queue
+    public static LinkedList<Point2D> pathfinder(Point2D start, Point2D destination, HashMap<Point2D, Boolean> map){
+        LinkedList<Point2D> steps = new LinkedList<>();
 
         steps.add(firstPoint(start, destination,map));
 
@@ -42,7 +39,7 @@ public class MathUtils {
         return steps;
     }
 
-    public static void  addNext(ArrayList<Point2D> steps,Point2D current, Point2D destination, HashMap<Point2D,Boolean> map){
+    public static void  addNext(LinkedList<Point2D> steps,Point2D current, Point2D destination, HashMap<Point2D,Boolean> map){
         TreeSet<Point2D> neighbours = new TreeSet<>((o1, o2) -> {
             double disto1Dest = Math.sqrt(Math.pow(o1.getX() - destination.getX(), 2) + Math.pow(o1.getY() - destination.getY(), 2));
             double disto2Dest = Math.sqrt(Math.pow(o2.getX() - destination.getX(), 2) + Math.pow(o2.getY() - destination.getY(), 2));

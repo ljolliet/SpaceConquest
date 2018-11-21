@@ -20,5 +20,6 @@ public class Utils {
     public static Color NEUTRAL_PLANET_COLOR = Color.GREY;
     public static List<Color> PLANET_COLOR =  Arrays.asList(Color.RED,Color.BLUEVIOLET, Color.GOLDENROD, Color.LIGHTSKYBLUE, Color.YELLOWGREEN);
 
-    public static int COLUMN_SIZE = 5;
+    public static int COLUMN_SIZE = 15;
+
 }

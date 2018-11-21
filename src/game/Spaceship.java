@@ -6,6 +6,7 @@ import javafx.scene.paint.Color;
 import utils.MathUtils;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 public abstract class  Spaceship {
 
@@ -17,7 +18,7 @@ public abstract class  Spaceship {
     protected int angle = 0;
     protected final Color color;
 
-    protected ArrayList<Point2D> steps; //list of coordinates to get to the target
+    protected LinkedList<Point2D> steps; //list of coordinates to get to the target
 
     protected Point2D direction = Point2D.ZERO;
 
@@ -40,6 +41,7 @@ public abstract class  Spaceship {
         //System.out.println(this.direction + " "+ this.angle);
         //System.out.println(MathUtils.getRotatedVector(this.direction, this.angle));
 
+
         this.setPos(this.getPos().add(MathUtils.getRotatedVector(this.direction, this.angle).normalize())); // NOT GOOD AT ALL
     }
 
@@ -57,11 +59,11 @@ public abstract class  Spaceship {
 
     public void setPos(Point2D pos) { this.pos = pos;  }
 
-    public ArrayList<Point2D> getSteps() {
+    public LinkedList<Point2D> getSteps() {
         return steps;
     }
 
-    public void setSteps(ArrayList<Point2D> steps) {
+    public void setSteps(LinkedList<Point2D> steps) {
         this.steps = steps;
     }
 
