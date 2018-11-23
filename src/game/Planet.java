@@ -31,7 +31,7 @@ public class Planet {
 
     private Controller owner;
     private Color color;
-    
+
     public Planet(Point2D center, int radius, boolean neutral, float production_rate, Spaceship model){
         this.center = center;
         this.neutral = neutral;
@@ -46,27 +46,27 @@ public class Planet {
     public Squadron createSquadron(int size){
         ArrayList<Spaceship> spaceships = new ArrayList<>();
         //use "i" instead of spaceship sp : on_ground_spaceship in case that a spaceship is added during execution ??
-    	for(int i = 0; i < available_ships; i++) {
-    		spaceships.add(model.getInstance());
-    	}
+        for(int i = 0; i < available_ships; i++) {
+            spaceships.add(model.getInstance());
+        }
         return new Squadron(spaceships, this.owner);
     }
 
     public void sendShip(int amount){
         //add the squadron to the player controller
         //if player maybe visual/sound alert
-    	Squadron squad = createSquadron(amount);
-    	owner.getSquadrons().add(squad);
-    	//withdraw spaceship in the squadron from the on ground spaceships && assign pos
+        Squadron squad = createSquadron(amount);
+        owner.getSquadrons().add(squad);
+        //withdraw spaceship in the squadron from the on ground spaceships && assign pos
         ArrayList<double[]> pos = MathUtils.dotAroundACircle(center, radius, squad.getSpaceships().size());
     	/*for(Spaceship sp : squad.getSpaceships()) {
     		on_ground_spaceships.remove(sp);
     	}*/
-    	for(int i = 0; i < squad.getSpaceships().size(); i++){
-    	    available_ships --;
-    	    squad.getSpaceships().get(i).setPos(new Point2D(pos.get(i)[0], pos.get(i)[1]));
-    	    Spaceship s = squad.getSpaceships().get(i);
-    	    double angle = MathUtils.pointOnOffPlanet(center, s.getPos(), s.getDirection(), false);
+        for(int i = 0; i < squad.getSpaceships().size(); i++){
+            available_ships --;
+            squad.getSpaceships().get(i).setPos(new Point2D(pos.get(i)[0], pos.get(i)[1]));
+            Spaceship s = squad.getSpaceships().get(i);
+            double angle = MathUtils.pointOnOffPlanet(center, s.getPos(), s.getDirection(), false);
             s.rotate(angle);
 
         }
@@ -80,24 +80,31 @@ public class Planet {
             available_ships ++;
         }
     }
-    
+
     public boolean collide(Planet p) {
-    	double centerDistance = Math.sqrt(Math.pow(center.getX() - p.center.getX(), 2) + Math.pow(center.getY() - p.center.getY(), 2));
-		return centerDistance < this.radius + p.radius;
+        double centerDistance = Math.sqrt(Math.pow(center.getX() - p.center.getX(), 2) + Math.pow(center.getY() - p.center.getY(), 2));
+        return centerDistance < this.radius + p.radius;
     }
 
     public boolean contains(Point2D p){
         double dist = Math.sqrt(Math.pow(center.getX() - p.getX(), 2) + Math.pow(center.getY() - p.getY(), 2));
         return dist <= this.radius;
     }
-    
+
     public boolean containsHitbox(Point2D p) {
-    	double dist = Math.sqrt(Math.pow(center.getX() - p.getX(), 2) + Math.pow(center.getY() - p.getY(), 2));
+        double dist = Math.sqrt(Math.pow(center.getX() - p.getX(), 2) + Math.pow(center.getY() - p.getY(), 2));
         return dist <= (this.radius + Utils.ADDITIONAL_HITBOX_RANGE);
     }
-    
+
     public double distantOf(Point2D pos) {
-    	return Math.sqrt(Math.pow(center.getX() - pos.getX(), 2) + Math.pow(center.getY() - pos.getY(), 2));
+        return Math.sqrt(Math.pow(center.getX() - pos.getX(), 2) + Math.pow(center.getY() - pos.getY(), 2));
+    }
+    public void changeOwner(Controller owner) {
+        setOwner(owner);
+        this.color = owner.getColor();
+        owner.addPlanet(this);
+        model.setColor(color);
+        this.production_rate = Utils.PLAYER_PRODUCTION_RATE;
     }
 
     public String toString(){
@@ -115,11 +122,11 @@ public class Planet {
 
         //create a layout for circle with text inside
         StackPane stack = new StackPane();
-        
+
         stack.getChildren().addAll(c, text);
         stack.setLayoutX(center.getX()-radius);
-        stack.setLayoutY(center.getY()-radius);    	
-        
+        stack.setLayoutY(center.getY()-radius);
+
         root.getChildren().add(stack);
 
 
@@ -132,13 +139,6 @@ public class Planet {
 
     public Controller getOwner() {
         return owner;
-    }
-
-    public void changeOwner(Controller owner) {
-        this.owner = owner;
-        this.color = owner.getColor();
-        owner.addPlanet(this);
-        this.production_rate = Utils.PLAYER_PRODUCTION_RATE;
     }
 
     public int getRadius() {
@@ -159,11 +159,17 @@ public class Planet {
         this.available_ships-=damage;
     }
 
-    public boolean conquest(Controller owner) {
-        if (this.available_ships <= 0) {
-            changeOwner(owner);
-            return true;
+    public Spaceship checkCollision(Spaceship spaceship, Controller spaceShipOwner) {
+        if(contains(spaceship.getPos()) ) {
+            if (this.getOwner() != spaceShipOwner) {
+                this.setHit(spaceship.getDamage());
+                if (this.available_ships <= 0)
+                    this.changeOwner(spaceShipOwner);
+            }
+            else
+                this.addProduction();
+            return spaceship;
         }
-        return false;
+        return null;
     }
 }

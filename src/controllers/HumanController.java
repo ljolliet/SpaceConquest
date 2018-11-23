@@ -1,6 +1,7 @@
 package controllers;
 
 import game.Planet;
+import game.Squadron;
 import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
 
@@ -8,7 +9,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class HumanController extends Controller {
-    public HumanController(Color color) {
+	private Squadron selectedSquadron = null;
+
+	public HumanController(Color color) {
         super(color);
     }
     //events and function used by the human to control his spaceships
@@ -61,9 +64,14 @@ public class HumanController extends Controller {
 	public void launchShip(Planet p){
     	p.sendShip(p.getAvailable_ships());
 	}
+
 	public void setTarget(Planet p, HashMap<Point2D, Boolean> accessibilityMap){
-    	this.getSquadrons().get(0).setTarget(p, accessibilityMap); // BAD
+		if(this.selectedSquadron != null)
+    	selectedSquadron.setTarget(p, accessibilityMap); // BAD
 
 		 }
-	
+
+	public void setSelectedSquadron(Squadron selectedSquadron) {
+		this.selectedSquadron = selectedSquadron;
+	}
 }

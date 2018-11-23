@@ -3,9 +3,9 @@ package game;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Polygon;
 import utils.MathUtils;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 
 public abstract class  Spaceship {
@@ -19,7 +19,7 @@ public abstract class  Spaceship {
     protected double length;
     protected int necessary_production;
     protected int angle = 0;
-    protected final Color color;
+    protected Color color;
 
     protected LinkedList<Point2D> steps; //list of coordinates to get to the target
 
@@ -32,7 +32,7 @@ public abstract class  Spaceship {
 
     public abstract Spaceship getInstance();
 
-    public abstract void draw(Group root);
+    public abstract void draw(Group root, boolean selected);
 
     public  void rotate(double theta){ // theta in  radians
         this.angle = Math.floorMod((int) Math.toDegrees(theta), 360); // angle in degrees this mod is better than %
@@ -40,15 +40,14 @@ public abstract class  Spaceship {
 
 
     public void moveForward(){
-        //System.out.println(this.getPos()+" + " + MathUtils.getRotatedVector(this.direction, this.angle) +" : "
-        //  + this.getPos().add(MathUtils.getRotatedVector(this.direction, this.angle).normalize() ));
-        //System.out.println(this.direction + " "+ this.angle);
-        //System.out.println(MathUtils.getRotatedVector(this.direction, this.angle));
-
-
-        this.setPos(this.getPos().add(MathUtils.getRotatedVector(this.direction, this.angle).normalize())); // NOT GOOD AT ALL
+        this.setPos(this.getPos().add(MathUtils.getRotatedVector(this.direction, this.angle).normalize()));
+    }
+    public boolean contains(Point2D point){
+        Polygon polygon = initPolygon();
+        return  polygon.contains(point);
     }
 
+    @Override
     public String toString(){
         return "X : " + pos.getX() + ", Y : " + pos.getY();
     }
@@ -78,5 +77,11 @@ public abstract class  Spaceship {
     }
     public int getDamage() {
         return damage;
+    }
+
+    public abstract Polygon initPolygon();
+
+    public void setColor(Color color) {
+        this.color = color;
     }
 }

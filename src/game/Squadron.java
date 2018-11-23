@@ -12,6 +12,7 @@ public class Squadron {
     private ArrayList<Spaceship> spaceships;
     private Planet target;
     private Controller owner;
+    private boolean selected = false;
 
 
     public Squadron(ArrayList<Spaceship> spaceships, Controller owner) {
@@ -47,26 +48,16 @@ public class Squadron {
     }
 
     public void sendToTarget() {
-        ArrayList<Spaceship> tmp = new ArrayList();
+        ArrayList<Spaceship> spaceShipToRemove = new ArrayList();
+        Spaceship tmpShip;
         if(this.target != null){
             processSpaceShipPos();
             for (Spaceship s : spaceships) {
-                if(!this.target.contains(s.getPos())) // not good .containsHitbox(s.getPos()) // pas d'accord
-                    s.moveForward();
-
-                else if(this.target.getOwner()!=this.owner) {  // PUT THAT SOMEWHERE ELSE
-                    this.target.setHit(s.getDamage());
-                    tmp.add(s);
-                    if (this.target.conquest(owner)) {
-                        //smthg
-                    }
-                }
-                else{
-                    this.target.addProduction();
-                    tmp.add(s);
-                }
+                s.moveForward();
+                if((tmpShip = this.target.checkCollision(s,this.owner))!=null)
+                    spaceShipToRemove.add(tmpShip);
             }
-            for(Spaceship s : tmp)
+            for(Spaceship s : spaceShipToRemove)
                 spaceships.remove(s);
         }
 
@@ -93,7 +84,7 @@ public class Squadron {
 
     public void draw(Group root) {
         for(Spaceship sp : spaceships){
-            sp.draw(root);
+            sp.draw(root,selected);
 
             if(sp.getSteps() != null){
                 /*for(Point2D p : sp.getSteps()){
@@ -108,4 +99,17 @@ public class Squadron {
         }
 
     }
+
+    public boolean contains(Point2D pos) {
+        for(Spaceship s : spaceships)
+            if(s.contains(pos))
+                return true;
+        return false;
+    }
+
+    public void setSelected(boolean selected) {
+        this.selected = selected;
+
+    }
 }
+

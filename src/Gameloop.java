@@ -203,17 +203,22 @@ public class Gameloop extends AnimationTimer{
     public void initEvents(){
         HumanController hc = (HumanController)controllers.get(0);
 
-        scene.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                if(hc.isOnHumanPlanet(event.getX(), event.getY())){
-                    Planet selected = hc.getHumanPlanetClic(event.getX(), event.getY());
-                    hc.launchShip(selected);
-                }
-                else if(hc.isOnPlanet(event.getX(), event.getY(), planets)){
-                    Planet selected = hc.getPlanetClic(event.getX(), event.getY(), planets);
-                    hc.setTarget(selected, accessibilityMap);
-                }
+        scene.setOnMouseClicked(event -> {
+            if (hc.isOnHumanPlanet(event.getX(), event.getY())) {
+                Planet selected = hc.getHumanPlanetClic(event.getX(), event.getY());
+                hc.launchShip(selected);
+                } else if (hc.isOnPlanet(event.getX(), event.getY(), planets)) {
+                Planet selected = hc.getPlanetClic(event.getX(), event.getY(), planets);
+                hc.setTarget(selected, accessibilityMap);
+            }
+            else{
+                for(Squadron s : hc.getSquadrons())
+                    if(s.contains(new Point2D(event.getX(),event.getY()))){
+                        hc.setSelectedSquadron(s);
+                        s.setSelected(true);
+                    }
+                    else
+                        s.setSelected(false);
             }
         });
     }
