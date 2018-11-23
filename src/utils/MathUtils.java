@@ -12,7 +12,7 @@ public class MathUtils {
 
     public static ArrayList<double[]> dotAroundACircle(Point2D center, int radius, int nb_dots){
         ArrayList<double[]> pos = new ArrayList<>();
-        double multiplier = 360/nb_dots;
+        double multiplier = nb_dots%360;
         int newRadius = radius + DISTANCE_ADDED;
 
         for(int i = 0; i < nb_dots; i ++){
@@ -62,31 +62,23 @@ public class MathUtils {
     }
 
     public static ArrayList<Point2D> getNeighbours(Point2D p, HashMap<Point2D, Boolean> map){
+        ArrayList<Point2D> tmp = new ArrayList<Point2D>(Arrays.asList(
+        		new Point2D(p.getX() - Utils.COLUMN_SIZE, p.getY() - Utils.COLUMN_SIZE),	//topleft
+        		new Point2D(p.getX() - Utils.COLUMN_SIZE, p.getY()),						//left
+        		new Point2D(p.getX(), p.getY() - Utils.COLUMN_SIZE),						//top
+        		new Point2D(p.getX() - Utils.COLUMN_SIZE, p.getY() + Utils.COLUMN_SIZE),	//bottomleft
+        		new Point2D(p.getX() + Utils.COLUMN_SIZE, p.getY() - Utils.COLUMN_SIZE),	//topright
+        		new Point2D(p.getX() + Utils.COLUMN_SIZE, p.getY() + Utils.COLUMN_SIZE),	//bottomright
+        		new Point2D(p.getX(), p.getY() + Utils.COLUMN_SIZE),						//bottom
+        		new Point2D(p.getX() + Utils.COLUMN_SIZE, p.getY())							//right
+        		));
+        
         ArrayList<Point2D> neighbours = new ArrayList<>();
-        if(map.containsKey(new Point2D(p.getX() - Utils.COLUMN_SIZE, p.getY() - Utils.COLUMN_SIZE)))
-            neighbours.add(new Point2D(p.getX() - Utils.COLUMN_SIZE, p.getY() - Utils.COLUMN_SIZE)); //topleft
-
-        if(map.containsKey(new Point2D(p.getX() - Utils.COLUMN_SIZE, p.getY())))
-            neighbours.add(new Point2D(p.getX() - Utils.COLUMN_SIZE, p.getY())); //left
-
-        if(map.containsKey(new Point2D(p.getX(), p.getY() - Utils.COLUMN_SIZE)))
-            neighbours.add(new Point2D(p.getX(), p.getY() - Utils.COLUMN_SIZE)); //top
-
-        if(map.containsKey(new Point2D(p.getX() - Utils.COLUMN_SIZE, p.getY() + Utils.COLUMN_SIZE)))
-            neighbours.add(new Point2D(p.getX() - Utils.COLUMN_SIZE, p.getY() + Utils.COLUMN_SIZE)); //bottomleft
-
-        if(map.containsKey(new Point2D(p.getX() + Utils.COLUMN_SIZE, p.getY() - Utils.COLUMN_SIZE)))
-            neighbours.add(new Point2D(p.getX() + Utils.COLUMN_SIZE, p.getY() - Utils.COLUMN_SIZE)); //topright
-
-        if(map.containsKey(new Point2D(p.getX() + Utils.COLUMN_SIZE, p.getY() + Utils.COLUMN_SIZE)))
-            neighbours.add(new Point2D(p.getX() + Utils.COLUMN_SIZE, p.getY() + Utils.COLUMN_SIZE)); //bottomright
-
-        if(map.containsKey(new Point2D(p.getX(), p.getY() + Utils.COLUMN_SIZE)))
-            neighbours.add(new Point2D(p.getX(), p.getY() + Utils.COLUMN_SIZE));//bottom
-
-        if(map.containsKey(new Point2D(p.getX() + Utils.COLUMN_SIZE, p.getY())))
-            neighbours.add(new Point2D(p.getX() + Utils.COLUMN_SIZE, p.getY()));//right
-
+        for(Point2D point : tmp) {
+        	if(map.containsKey(point))
+        		neighbours.add(point);
+        }
+        
         return neighbours;
     }
 

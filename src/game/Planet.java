@@ -31,8 +31,8 @@ public class Planet {
     private Controller owner;
     private Color color;
 
-    public Planet(double posX, double posY, int radius, boolean neutral, float production_rate, Spaceship model){
-        center = new Point2D(posX,posY);
+    public Planet(Point2D center, int radius, boolean neutral, float production_rate, Spaceship model){
+        this.center = center;
         this.neutral = neutral;
         this.production_rate = production_rate;
         this.model = model;
@@ -89,11 +89,11 @@ public class Planet {
 
     public boolean contains(Point2D p){
         double dist = Math.sqrt(Math.pow(center.getX() - p.getX(), 2) + Math.pow(center.getY() - p.getY(), 2));
-        return dist < this.radius;
+        return dist <= this.radius;
     }
     
-    public double distantOf(double[] pos) {
-    	return Math.sqrt(Math.pow(center.getX() - pos[0], 2) + Math.pow(center.getY() - pos[1], 2));
+    public double distantOf(Point2D pos) {
+    	return Math.sqrt(Math.pow(center.getX() - pos.getX(), 2) + Math.pow(center.getY() - pos.getY(), 2));
     }
 
     public String toString(){

@@ -13,7 +13,7 @@ public class Utils {
 
     public static int NB_PLAYER = 5;
     public static int NB_NEUTRAL_PLANET = 25;
-    public static int NEUTRAL_PLANET_RADIUS = 5;
+    public static int NEUTRAL_PLANET_RADIUS = 25;
     public static int PLAYER_PLANET_RADIUS = 50;
     public static int DISTANCE_BETWEEN_PLAYERS = 150;
 

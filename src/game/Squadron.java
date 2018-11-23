@@ -83,13 +83,13 @@ public class Squadron {
             sp.draw(root);
 
             if(sp.getSteps() != null){
-                for(Point2D p : sp.getSteps()){
+                /*for(Point2D p : sp.getSteps()){
                     //System.out.println(" X : " + p.getX() + ", Y : " + p.getY());
                     Circle c = new Circle(p.getX(),p.getY(),4);
                     c.setFill(Color.BLACK);
 
                     root.getChildren().add(c);
-                }
+                }*/
             }
 
         }
