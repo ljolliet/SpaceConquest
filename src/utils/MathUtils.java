@@ -53,7 +53,8 @@ public class MathUtils {
 
         for(Point2D p : getNeighbours(current,map)){
             if(map.get(p))
-                neighbours.add(p);
+            	if(!steps.contains(p))	//otherwise two points can be added indefinitely
+            		neighbours.add(p);
         }
 
         steps.add(neighbours.first());
