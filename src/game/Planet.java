@@ -30,7 +30,7 @@ public class Planet {
 
     private Controller owner;
     private Color color;
-
+    
     public Planet(Point2D center, int radius, boolean neutral, float production_rate, Spaceship model){
         this.center = center;
         this.neutral = neutral;
@@ -42,7 +42,6 @@ public class Planet {
     }
 
 
-    //----------------NOT TESTED-------------------------------//
     public Squadron createSquadron(int size){
         ArrayList<Spaceship> spaceships = new ArrayList<>();
         //use "i" instead of spaceship sp : on_ground_spaceship in case that a spaceship is added during execution ??
@@ -52,7 +51,6 @@ public class Planet {
         return new Squadron(spaceships);
     }
 
-    //---------------NOT TESTED---------------------------//
     public void sendShip(int amount){
         //add the squadron to the player controller
         //if player maybe visual/sound alert
@@ -110,11 +108,12 @@ public class Planet {
         text.setStroke(Color.BLACK);
 
         //create a layout for circle with text inside
-         StackPane stack = new StackPane();
-
+        StackPane stack = new StackPane();
+        
         stack.getChildren().addAll(c, text);
         stack.setLayoutX(center.getX()-radius);
-        stack.setLayoutY(center.getY()-radius);
+        stack.setLayoutY(center.getY()-radius);    	
+        
         root.getChildren().add(stack);
 
 

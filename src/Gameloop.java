@@ -152,9 +152,15 @@ public class Gameloop extends AnimationTimer{
     	
     	int randX = new Random().nextInt(maxX + 1 - min) + min; 
     	int randY = new Random().nextInt(maxY + 1 - min) + min; 			
-		
 		boolean isPosFree = true;
 		Planet tmp = new Planet(new Point2D(randX, randY), Utils.NEUTRAL_PLANET_RADIUS, true, 0, new LittleSpaceship(Utils.NEUTRAL_PLANET_COLOR));
+		
+		int maxHp = Utils.NEUTRAL_HP_RANGE + Utils.HP_VARIATION * Utils.NEUTRAL_HP_RANGE / 100;
+		int minHp = Utils.NEUTRAL_HP_RANGE - Utils.HP_VARIATION * Utils.NEUTRAL_HP_RANGE / 100;
+		int hp = new Random().nextInt(maxHp + 1 - minHp) + minHp;
+		
+		tmp.setAvailable_ships(hp);
+		
 		for(Planet p : planets) {
 			if(tmp.collide(p)) {
 				isPosFree = false;
@@ -167,6 +173,7 @@ public class Gameloop extends AnimationTimer{
 			addRandomNeutralPlanet();
 		}
     }
+    
 
     
     /**
