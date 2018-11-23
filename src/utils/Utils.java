@@ -19,8 +19,8 @@ public class Utils {
     
     public static int PLAYER_PLANET_RADIUS = 50;
     public static int DISTANCE_BETWEEN_PLAYERS = 150;
-    
-    
+    public static int DISTANCE_PLANET_SHIPS = 15; //distance between the planet and the ship at ship's spawn
+    public static int ADDITIONAL_HITBOX_RANGE = 6;     //must be < DISTANCE_PLANET_SHIP -> bug < 6 ??
 
     public static Color NEUTRAL_PLANET_COLOR = Color.GREY;
     public static List<Color> PLANET_COLOR =  Arrays.asList(Color.RED,Color.BLUEVIOLET, Color.GOLDENROD, Color.LIGHTSKYBLUE, Color.YELLOWGREEN);

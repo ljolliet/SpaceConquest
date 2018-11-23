@@ -183,13 +183,13 @@ public class Gameloop extends AnimationTimer{
         long t0 = System.currentTimeMillis();
         for(int i = 0; i < Utils.WINDOW_WIDTH; i += Utils.COLUMN_SIZE){
             for(int j = 0; j < Utils.WINDOW_HEIGHT; j += Utils.COLUMN_SIZE){
-                Point2D realPos = new Point2D(i,j);
+                Point2D pos = new Point2D(i,j);
                 boolean accessible = true;
                 for(Planet p : planets){
-                    if(p.contains(realPos))
+                    if(p.contains(pos))  //.containsHitbox(pos)
                         accessible = false;
                 }
-                accessibilityMap.put(realPos,accessible);
+                accessibilityMap.put(pos,accessible);
             }
         }
         System.out.println("Accessibility Map generated in : " + (System.currentTimeMillis() - t0) + "ms");
@@ -209,7 +209,6 @@ public class Gameloop extends AnimationTimer{
                 if(hc.isOnHumanPlanet(event.getX(), event.getY())){
                     Planet selected = hc.getHumanPlanetClic(event.getX(), event.getY());
                     hc.launchShip(selected);
-
                 }
                 else if(hc.isOnPlanet(event.getX(), event.getY(), planets)){
                     Planet selected = hc.getPlanetClic(event.getX(), event.getY(), planets);

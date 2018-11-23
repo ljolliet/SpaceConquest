@@ -8,12 +8,12 @@ import java.util.*;
 
 public class MathUtils {
 
-    private static int DISTANCE_ADDED = 15;
+    
 
     public static ArrayList<double[]> dotAroundACircle(Point2D center, int radius, int nb_dots){
         ArrayList<double[]> pos = new ArrayList<>();
         double multiplier = nb_dots%360;
-        int newRadius = radius + DISTANCE_ADDED;
+        int newRadius = radius + Utils.DISTANCE_PLANET_SHIPS;
 
         for(int i = 0; i < nb_dots; i ++){
             double[] newPos = new double[]{center.getX() + newRadius * Math.cos(i * multiplier),center.getY() + newRadius * Math.sin(i * multiplier)};

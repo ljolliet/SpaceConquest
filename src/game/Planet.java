@@ -9,6 +9,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 import utils.MathUtils;
+import utils.Utils;
 
 import java.util.ArrayList;
 
@@ -88,6 +89,11 @@ public class Planet {
     public boolean contains(Point2D p){
         double dist = Math.sqrt(Math.pow(center.getX() - p.getX(), 2) + Math.pow(center.getY() - p.getY(), 2));
         return dist <= this.radius;
+    }
+    
+    public boolean containsHitbox(Point2D p) {
+    	double dist = Math.sqrt(Math.pow(center.getX() - p.getX(), 2) + Math.pow(center.getY() - p.getY(), 2));
+        return dist <= (this.radius + Utils.ADDITIONAL_HITBOX_RANGE);
     }
     
     public double distantOf(Point2D pos) {

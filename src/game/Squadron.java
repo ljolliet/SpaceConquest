@@ -52,7 +52,7 @@ public class Squadron {
         if(this.target != null){
             processSpaceShipPos();
             for (Spaceship s : spaceships) {
-                if(!this.target.contains(s.getPos())) // not good
+                if(!this.target.contains(s.getPos())) // not good .containsHitbox(s.getPos())
                     s.moveForward();
             }
         }
