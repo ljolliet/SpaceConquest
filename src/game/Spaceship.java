@@ -11,7 +11,10 @@ import java.util.LinkedList;
 public abstract class  Spaceship {
 
     private int speed;
-    private int damage;
+
+
+
+    protected int damage;
     protected Point2D pos;
     protected double length;
     protected int necessary_production;
@@ -35,6 +38,7 @@ public abstract class  Spaceship {
         this.angle = Math.floorMod((int) Math.toDegrees(theta), 360); // angle in degrees this mod is better than %
     }
 
+
     public void moveForward(){
         //System.out.println(this.getPos()+" + " + MathUtils.getRotatedVector(this.direction, this.angle) +" : "
         //  + this.getPos().add(MathUtils.getRotatedVector(this.direction, this.angle).normalize() ));
@@ -48,6 +52,8 @@ public abstract class  Spaceship {
     public String toString(){
         return "X : " + pos.getX() + ", Y : " + pos.getY();
     }
+
+    //----------------GETTERS/SETTERS--------------//
 
     public Point2D getDirection() {
         return direction;
@@ -69,5 +75,8 @@ public abstract class  Spaceship {
 
     public Color getColor() {
         return color;
+    }
+    public int getDamage() {
+        return damage;
     }
 }

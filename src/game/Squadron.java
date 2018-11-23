@@ -1,13 +1,9 @@
 package game;
 
+import controllers.Controller;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
-import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
-import javafx.scene.text.Text;
 import utils.MathUtils;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -15,16 +11,18 @@ public class Squadron {
 
     private ArrayList<Spaceship> spaceships;
     private Planet target;
+    private Controller owner;
 
-    public Squadron(ArrayList<Spaceship> spaceships) {
+
+    public Squadron(ArrayList<Spaceship> spaceships, Controller owner) {
         this.spaceships = spaceships;
+        this.owner = owner;
     }
 
 
     public void processSpaceShipPos() {
         for (Spaceship s : spaceships) {
             if(!s.getSteps().isEmpty() && Math.sqrt(Math.pow(s.getSteps().getFirst().getX() - s.getPos().getX(),2) + Math.pow(s.getSteps().getFirst().getY() - s.getPos().getY(),2)) < 2){
-                //System.out.println("Arrived to the first step");
                 s.getSteps().removeFirst();
             }
 
@@ -49,12 +47,27 @@ public class Squadron {
     }
 
     public void sendToTarget() {
+        ArrayList<Spaceship> tmp = new ArrayList();
         if(this.target != null){
             processSpaceShipPos();
             for (Spaceship s : spaceships) {
-                if(!this.target.contains(s.getPos())) // not good .containsHitbox(s.getPos())
+                if(!this.target.contains(s.getPos())) // not good .containsHitbox(s.getPos()) // pas d'accord
                     s.moveForward();
+
+                else if(this.target.getOwner()!=this.owner) {  // PUT THAT SOMEWHERE ELSE
+                    this.target.setHit(s.getDamage());
+                    tmp.add(s);
+                    if (this.target.conquest(owner)) {
+                        //smthg
+                    }
+                }
+                else{
+                    this.target.addProduction();
+                    tmp.add(s);
+                }
             }
+            for(Spaceship s : tmp)
+                spaceships.remove(s);
         }
 
     }

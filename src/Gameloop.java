@@ -95,7 +95,7 @@ public class Gameloop extends AnimationTimer{
     public void initPlayerPlanets(){
         for(int i = 0; i < controllers.size(); i ++){
         	Point2D pos = getPlayerPlanetPos();
-            Planet p = new Planet(pos, Utils.PLAYER_PLANET_RADIUS, false, 1, new LittleSpaceship(controllers.get(i).getColor()));// add color
+            Planet p = new Planet(pos, Utils.PLAYER_PLANET_RADIUS, false, Utils.PLAYER_PRODUCTION_RATE, new LittleSpaceship(controllers.get(i).getColor()));// add color
             controllers.get(i).getPlanets().add(p);
             p.setOwner(controllers.get(i));
             planets.add(p);
@@ -134,10 +134,10 @@ public class Gameloop extends AnimationTimer{
   
     /**
      * Add the neutral planets. 
-     * @param number of neutral planets
+     * @param amount of neutral planets
      */
-    public void initNeutralPlanets(int nb){
-    	for(int i = 0; i < nb; i++) {
+    public void initNeutralPlanets(int amount){
+    	for(int i = 0; i < amount; i++) {
     		addRandomNeutralPlanet();    		
     	}
     }
@@ -218,7 +218,7 @@ public class Gameloop extends AnimationTimer{
         });
     }
 
-    //-------------PROCESS---------------------//
+    //-----------------PROCESS---------------------//
 
     
     /**

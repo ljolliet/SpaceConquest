@@ -37,4 +37,8 @@ public abstract class Controller {
     public Color getColor() {
         return color;
     }
+
+    public void addPlanet(Planet planet){
+        this.planets.add(planet);
+    }
 }

@@ -49,7 +49,7 @@ public class Planet {
     	for(int i = 0; i < available_ships; i++) {
     		spaceships.add(model.getInstance());
     	}
-        return new Squadron(spaceships);
+        return new Squadron(spaceships, this.owner);
     }
 
     public void sendShip(int amount){
@@ -126,12 +126,19 @@ public class Planet {
     }
     //---------------------GETTER/SETTER-------------------//
 
+    public void setOwner(Controller owner) {
+        this.owner = owner;
+    }
+
     public Controller getOwner() {
         return owner;
     }
 
-    public void setOwner(Controller owner) {
+    public void changeOwner(Controller owner) {
         this.owner = owner;
+        this.color = owner.getColor();
+        owner.addPlanet(this);
+        this.production_rate = Utils.PLAYER_PRODUCTION_RATE;
     }
 
     public int getRadius() {
@@ -140,17 +147,23 @@ public class Planet {
 
     public Point2D getCenter() { return center; }
 
-    public void setCenter(Point2D center) { this.center = center; }
-
-    public void setRadius(int radius) {
-        this.radius = radius;
-    }
-
     public int getAvailable_ships() {
         return available_ships;
     }
 
     public void setAvailable_ships(int available_ships) {
         this.available_ships = available_ships;
+    }
+
+    public void setHit(int damage) {
+        this.available_ships-=damage;
+    }
+
+    public boolean conquest(Controller owner) {
+        if (this.available_ships <= 0) {
+            changeOwner(owner);
+            return true;
+        }
+        return false;
     }
 }

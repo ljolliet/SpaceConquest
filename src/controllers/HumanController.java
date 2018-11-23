@@ -1,8 +1,6 @@
 package controllers;
 
 import game.Planet;
-import game.Spaceship;
-import game.Squadron;
 import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
 
