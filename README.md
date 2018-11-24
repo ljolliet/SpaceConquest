@@ -10,12 +10,13 @@
 6. highlight selected squadron **DONE**
 7. make a constant for necessar production -> calculation of hp range
 8. bigger contains (hitbox)
-9. space between neutral planets & every planets
-10. put in private the methods that can
+9. space between neutral planets & every planets **DONE**
+10. put in private the methods that can -> Alt + Maj + i on IntelliJ
 11. Check function annotation in java
 12. Fix send squadron from a new conquested planet
 13. Clean Squadron.sendToTarget **DONE**
 14. Put Animation on click planet ?
-15. Bug collision with a friendly planet
+15. Bug collision with a friendly planet (kind of fixed because of distance between neutral planet)
 16. Better draw management to avoid lag
+17. Fix planet too close to screen's border bug
 

@@ -28,7 +28,7 @@ public class LittleSpaceship extends Spaceship {
     }
 
     /**
-     * Draw a spaceship and add is to root.
+     * Draw a spaceship and adds it to root.
      * @param root
      * @param selected
      */
@@ -37,6 +37,7 @@ public class LittleSpaceship extends Spaceship {
 
         Polygon polygon = initPolygon();
         polygon.setFill(color);
+
         if(selected)
         {
             DropShadow borderGlow = new DropShadow();

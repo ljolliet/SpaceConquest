@@ -22,10 +22,6 @@ public abstract class Controller {
         return squadrons;
     }
 
-  //  public void setSquadrons(ArrayList<Squadron> squadrons) {
-//        this.squadrons = squadrons;
-//    }
-
     public ArrayList<Planet> getPlanets() {
         return planets;
     }
