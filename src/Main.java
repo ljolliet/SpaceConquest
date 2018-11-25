@@ -7,13 +7,17 @@ import utils.Utils;
 
 public class Main extends Application {
 
+    /**
+     * Instance of the game
+     */
     public static Gameloop GAMELOOP;
 
+
     @Override
-    public void start(Stage stage){
+    public void start(Stage stage) {
         stage.setTitle("Space Conquest");
         Group root = new Group();
-        Scene scene = new Scene( root );
+        Scene scene = new Scene(root);
         stage.setScene(scene);
 
         Canvas canvas = new Canvas(Utils.WINDOW_WIDTH, Utils.WINDOW_HEIGHT);
@@ -21,8 +25,6 @@ public class Main extends Application {
 
         GAMELOOP = new Gameloop(root, scene);
         GAMELOOP.start();
-
-
 
         stage.show();
     }

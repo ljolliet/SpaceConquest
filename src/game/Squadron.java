@@ -14,7 +14,7 @@ public class Squadron {
 
     private ArrayList<Spaceship> spaceships;
     private Planet target;
-    private Controller owner;
+    private final Controller owner;
     private boolean selected = false;
 
 
@@ -24,7 +24,7 @@ public class Squadron {
     }
 
 
-    public void processSpaceShipPos() {
+    private void processSpaceShipPos() {
         for (Spaceship s : spaceships) {
             if (!s.getSteps().isEmpty() && Math.sqrt(Math.pow(s.getSteps().getFirst().getX() - s.getPos().getX(), 2) + Math.pow(s.getSteps().getFirst().getY() - s.getPos().getY(), 2)) < 2) {
                 s.getSteps().removeFirst();
@@ -34,8 +34,6 @@ public class Squadron {
                 double angle = MathUtils.pointOnOffPlanet(s.getSteps().getFirst(), s.getPos(), s.getDirection(), true);
                 s.rotate(angle);
             }
-
-
         }
     }
 
@@ -66,7 +64,7 @@ public class Squadron {
 
     }
 
-    public HashMap<Point2D, Boolean> getSquadAccessibilityMap(Planet target, HashMap<Point2D, Boolean> globalAccessibleMap) {
+    private HashMap<Point2D, Boolean> getSquadAccessibilityMap(Planet target, HashMap<Point2D, Boolean> globalAccessibleMap) {
         HashMap<Point2D, Boolean> tmp = (HashMap<Point2D, Boolean>) globalAccessibleMap.clone();
         for (Point2D p : tmp.keySet()) {
             if (target.contains(p))
@@ -79,10 +77,6 @@ public class Squadron {
 
     public ArrayList<Spaceship> getSpaceships() {
         return spaceships;
-    }
-
-    public void setSpaceships(ArrayList<Spaceship> spaceships) {
-        this.spaceships = spaceships;
     }
 
     public void draw(Group root) {
@@ -101,12 +95,12 @@ public class Squadron {
                 }
             }
             //System.out.println("Non optimized draw squad time : " + (System.currentTimeMillis() - t1));
-        }else{
+        } else {
             //long t1 = System.currentTimeMillis();
             LinkedList<Point2D> pointsDrawn = new LinkedList<>();
-            for(Spaceship sp : spaceships){
-                if(!pointsDrawn.contains(sp.getPos())){
-                    sp.draw(root,selected);
+            for (Spaceship sp : spaceships) {
+                if (!pointsDrawn.contains(sp.getPos())) {
+                    sp.draw(root, selected);
                     pointsDrawn.add(sp.getPos());
                 }
             }

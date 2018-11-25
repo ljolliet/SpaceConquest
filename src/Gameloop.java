@@ -2,14 +2,11 @@ import game.Planet;
 import game.Squadron;
 import game.spaceships.LittleSpaceship;
 import javafx.animation.AnimationTimer;
-import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.input.MouseEvent;
 import utils.Utils;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
@@ -23,9 +20,6 @@ import controllers.HumanController;
  * @author tguesdon, ljolliet
  */
 public class Gameloop extends AnimationTimer {
-    //this class will update all graphics change
-    //ex : ships' deplacement
-
 
     private Group root;
     private Scene scene;
@@ -33,11 +27,11 @@ public class Gameloop extends AnimationTimer {
     private ArrayList<Controller> controllers = new ArrayList<>();
     private ArrayList<Planet> planets = new ArrayList<>();
 
-    private HashMap<Point2D, Boolean> accessibilityMap = new HashMap<>();
+    private final HashMap<Point2D, Boolean> accessibilityMap = new HashMap<>();
 
     /**
-     * @param root
-     * @param scene
+     * @param root  containing the object that will be drawn
+     * @param scene on which root is drawn
      */
     public Gameloop(Group root, Scene scene) {
         this.root = root;
@@ -61,7 +55,7 @@ public class Gameloop extends AnimationTimer {
     /**
      * Call all initialization function.
      */
-    public void init() {
+    private void init() {
         initPlayers();
         initPlanets();
         initEvents();
@@ -72,7 +66,7 @@ public class Gameloop extends AnimationTimer {
     /**
      * Create a human controller for the player 0 and a computer controller for every other player
      */
-    public void initPlayers() {
+    private void initPlayers() {
         controllers.add(new HumanController(Utils.PLANET_COLOR.get(0)));
         //start at 1 because 0 is the human
         for (int i = 1; i < Utils.NB_PLAYER; i++) {
@@ -84,7 +78,7 @@ public class Gameloop extends AnimationTimer {
     /**
      * Init all planets (player & neutral)
      */
-    public void initPlanets() {
+    private void initPlanets() {
         initPlayerPlanets();
         initNeutralPlanets(Utils.NB_NEUTRAL_PLANET);
     }
@@ -92,12 +86,12 @@ public class Gameloop extends AnimationTimer {
     /**
      * Create planets for players using getPlayerPlanetPos() to get a free position
      */
-    public void initPlayerPlanets() {
-        for (int i = 0; i < controllers.size(); i++) {
+    private void initPlayerPlanets() {
+        for (Controller c : controllers) {
             Point2D pos = getPlayerPlanetPos();
-            Planet p = new Planet(pos, Utils.PLAYER_PLANET_RADIUS, false, Utils.PLAYER_PRODUCTION_RATE, new LittleSpaceship(controllers.get(i).getColor()));// add color
-            controllers.get(i).getPlanets().add(p);
-            p.setOwner(controllers.get(i));
+            Planet p = new Planet(pos, Utils.PLAYER_PLANET_RADIUS, false, Utils.PLAYER_PRODUCTION_RATE, new LittleSpaceship(c.getColor()));// add color
+            c.getPlanets().add(p);
+            p.setOwner(c);
             planets.add(p);
         }
     }
@@ -106,7 +100,7 @@ public class Gameloop extends AnimationTimer {
     /**
      * @return a free position for player's planet
      */
-    public Point2D getPlayerPlanetPos() {
+    private Point2D getPlayerPlanetPos() {
         int maxX = Utils.WINDOW_WIDTH - Utils.PLAYER_PLANET_RADIUS;
         int maxY = Utils.WINDOW_HEIGHT - Utils.PLAYER_PLANET_RADIUS;
         int min = Utils.PLAYER_PLANET_RADIUS;
@@ -137,7 +131,7 @@ public class Gameloop extends AnimationTimer {
      *
      * @param amount of neutral planets
      */
-    public void initNeutralPlanets(int amount) {
+    private void initNeutralPlanets(int amount) {
         for (int i = 0; i < amount; i++) {
             addRandomNeutralPlanet();
         }
@@ -146,7 +140,7 @@ public class Gameloop extends AnimationTimer {
     /**
      * Generate a random position that isn't part of an already existing planet and create a neutral planet with this position.
      */
-    public void addRandomNeutralPlanet() {
+    private void addRandomNeutralPlanet() {
         int maxX = Utils.WINDOW_WIDTH - Utils.NEUTRAL_PLANET_RADIUS;
         int maxY = Utils.WINDOW_HEIGHT - Utils.NEUTRAL_PLANET_RADIUS;
         int min = Utils.NEUTRAL_PLANET_RADIUS;
@@ -179,7 +173,7 @@ public class Gameloop extends AnimationTimer {
     /**
      * Fill the accessibility map by creating a grid of points and checking if they are part of a planet
      */
-    public void initAccessibilityMap() {
+    private void initAccessibilityMap() {
         long t0 = System.currentTimeMillis();
         for (int i = 0; i < Utils.WINDOW_WIDTH; i += Utils.COLUMN_SIZE) {
             for (int j = 0; j < Utils.WINDOW_HEIGHT; j += Utils.COLUMN_SIZE) {
@@ -200,7 +194,7 @@ public class Gameloop extends AnimationTimer {
     /**
      * Declaration of all events triggered by the human
      */
-    public void initEvents() {
+    private void initEvents() {
         HumanController hc = (HumanController) controllers.get(0);
 
         scene.setOnMouseClicked(event -> {
@@ -227,7 +221,7 @@ public class Gameloop extends AnimationTimer {
     /**
      * Actualize the production of all planets
      */
-    public void actualizeProduction() {
+    private void actualizeProduction() {
         for (Controller c : controllers) {
             for (Planet p : c.getPlanets()) {
                 p.addProduction();
@@ -239,21 +233,21 @@ public class Gameloop extends AnimationTimer {
     /**
      * Actualize the position of all controller's ships
      */
-    public void actualizeShipPos() {
-        if(Utils.OPTIMIZED){
+    private void actualizeShipPos() {
+        if (Utils.OPTIMIZED) {
             for (Controller c : controllers) { // refactor in a method
                 ArrayList<Squadron> toRemove = new ArrayList<>();
                 for (Squadron s : c.getSquadrons()) {
                     s.sendToTarget();
-                    if(s.getSpaceships().isEmpty()){
+                    if (s.getSpaceships().isEmpty()) {
                         toRemove.add(s);
                     }
                 }
-                for(Squadron s : toRemove){
+                for (Squadron s : toRemove) {
                     c.getSquadrons().remove(s);
                 }
             }
-        }else{
+        } else {
             for (Controller c : controllers) // refactor in a method
                 for (Squadron s : c.getSquadrons())
                     s.sendToTarget();
@@ -266,7 +260,7 @@ public class Gameloop extends AnimationTimer {
     /**
      * Call every draw function of the game's elements
      */
-    public void draw() {
+    private void draw() {
         root.getChildren().removeAll(root.getChildren()); // clear root
 
         for (Planet p : planets) // draw all planets
