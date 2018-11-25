@@ -209,9 +209,9 @@ public class MathUtils {
 
     /**
      *
-     * @param direction
-     * @param angle
-     * @return
+     * @param direction A direction vector
+     * @param angle Angle of the rotation in degrees
+     * @return The vector rotated with the angle
      */
     public static Point2D getRotatedVector(Point2D direction, double angle) {
         Rotate r = new Rotate();

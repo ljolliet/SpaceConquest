@@ -27,7 +27,7 @@ public class HumanController extends Controller {
         return res;
     }
 
-    public Planet getHumanPlanetClic(double x, double y) {
+    public Planet getHumanPlanetClick(double x, double y) {
         Planet res = null;
 
         for (Planet p : planets) {
@@ -67,7 +67,7 @@ public class HumanController extends Controller {
 
     public void setTarget(Planet p, HashMap<Point2D, Boolean> accessibilityMap) {
         if (this.selectedSquadron != null)
-            selectedSquadron.setTarget(p, accessibilityMap); // BAD
+            selectedSquadron.setTarget(p, accessibilityMap);
 
     }
 

@@ -39,8 +39,9 @@ public class Gameloop extends AnimationTimer {
         init();
     }
 
-    /* (non-Javadoc)
+    /**
      * @see javafx.animation.AnimationTimer#handle(long)
+     * @param now
      */
     @Override
     public void handle(long now) {
@@ -199,7 +200,7 @@ public class Gameloop extends AnimationTimer {
 
         scene.setOnMouseClicked(event -> {
             if (hc.isOnHumanPlanet(event.getX(), event.getY())) {
-                Planet selected = hc.getHumanPlanetClic(event.getX(), event.getY());
+                Planet selected = hc.getHumanPlanetClick(event.getX(), event.getY());
                 hc.launchShip(selected);
             } else if (hc.isOnPlanet(event.getX(), event.getY(), planets)) {
                 Planet selected = hc.getPlanetClic(event.getX(), event.getY(), planets);

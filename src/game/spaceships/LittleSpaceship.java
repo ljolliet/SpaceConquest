@@ -13,10 +13,10 @@ public class LittleSpaceship extends Spaceship {
 
     public LittleSpaceship(Color color) {
         super(color);
-        necessary_production = 5;
-        length = 25;
-        this.direction = new Point2D(0, 1); // find a better way
+        necessary_production = Utils.LITTLE_SPACESHIP_NEC_PROD;
         damage = Utils.LITTLE_SPACESHIP_DAMAGE;
+        length = Utils.LITTLE_SPACESHIP_LENGTH;
+        this.direction = new Point2D(0, 1); // find a better way
     }
 
     /**
@@ -25,28 +25,6 @@ public class LittleSpaceship extends Spaceship {
     @Override
     public Spaceship getInstance() {
         return new LittleSpaceship(color);
-    }
-
-    /**
-     * Draw a spaceship and adds it to root.
-     * @param root
-     * @param selected
-     */
-    @Override
-    public void draw(Group root, boolean selected) {
-
-        Polygon polygon = initPolygon();
-        polygon.setFill(color);
-
-        if(selected)
-        {
-            DropShadow borderGlow = new DropShadow();
-            borderGlow.setColor(color);
-            borderGlow.setOffsetX(0f);
-            borderGlow.setOffsetY(0f);
-            polygon.setEffect(borderGlow);
-        }
-        root.getChildren().add(polygon);
     }
 
     @Override

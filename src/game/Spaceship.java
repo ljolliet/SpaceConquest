@@ -2,6 +2,7 @@ package game;
 
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import utils.MathUtils;
@@ -32,7 +33,27 @@ public abstract class  Spaceship {
 
     public abstract Spaceship getInstance();
 
-    public abstract void draw(Group root, boolean selected);
+
+    /**
+     * Draw a spaceship and adds it to root.
+     * @param root
+     * @param selected
+     */
+    public void draw(Group root, boolean selected) {
+
+        Polygon polygon = initPolygon();
+        polygon.setFill(color);
+
+        if(selected)
+        {
+            DropShadow borderGlow = new DropShadow();
+            borderGlow.setColor(color);
+            borderGlow.setOffsetX(0f);
+            borderGlow.setOffsetY(0f);
+            // polygon.setEffect(borderGlow); // SLOW THE ENTIRE GAME
+        }
+        root.getChildren().add(polygon);
+    }
 
     public  void rotate(double theta){ // theta in  radians
         this.angle = Math.floorMod((int) Math.toDegrees(theta), 360); // angle in degrees this mod is better than %

@@ -1,7 +1,6 @@
 package utils;
 
 import javafx.scene.paint.Color;
-
 import java.util.Arrays;
 import java.util.List;
 
@@ -13,14 +12,24 @@ public class Utils {
     public static final boolean OPTIMIZED = true;
 
     /**
-     * Damage made by the little spaceship when they land on an ennemy planet.
+     * Damage made by the little spaceship when they land on an enemy planet.
      */
     public static final int LITTLE_SPACESHIP_DAMAGE = 1;
 
     /**
      * Production added by frame (=/= number of ship).
      */
-    public static final float PLAYER_PRODUCTION_RATE = 1;
+    public static final float PLAYER_PRODUCTION_RATE = 1; // Double ?
+
+    /**
+     * Necessary production to create a Spaceship.
+     */
+    public static final int LITTLE_SPACESHIP_NEC_PROD = 50;
+
+    /**
+     *  Length of a little spaceship in px.
+     */
+    public static final double LITTLE_SPACESHIP_LENGTH = 25;
 
     /**
      * Height of the window.
@@ -53,7 +62,7 @@ public class Utils {
     public static int NEUTRAL_HP_RANGE = 100; //600 ?
 
     /**
-     * Maximum percentage of HP that can be withdrawed or added to neutral planets when they are generated.
+     * Maximum percentage of HP that can be withdrawn or added to neutral planets when they are generated.
      */
     public static int HP_VARIATION = 20; //percentage
 
@@ -93,7 +102,7 @@ public class Utils {
     public static List<Color> PLANET_COLOR =  Arrays.asList(Color.RED,Color.BLUEVIOLET, Color.GOLDENROD, Color.LIGHTSKYBLUE, Color.YELLOWGREEN);
 
     /**
-     * Distance between points used for the pathfinding algorithm. Smaller number increase time needed for calculation but increase precision.
+     * Distance between points used for the path finding algorithm. Smaller number increase time needed for calculation but increase precision.
      */
     public static int COLUMN_SIZE = 5;
 
