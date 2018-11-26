@@ -140,7 +140,8 @@ public class Planet {
 
         if(selected){
             Circle c = new Circle(center.getX(),center.getY(), radius + Utils.SELECTED_HALO_SIZE);
-            Point2D p2 = new Point2D(MouseInfo.getPointerInfo().getLocation().getX(), MouseInfo.getPointerInfo().getLocation().getY());
+            Point2D pScreen = new Point2D(MouseInfo.getPointerInfo().getLocation().getX(), MouseInfo.getPointerInfo().getLocation().getY());
+            Point2D p2 = root.screenToLocal(pScreen);
             Line l = new Line(center.getX(), center.getY(),p2.getX(),p2.getY());
 
             l.setStrokeWidth(5);
