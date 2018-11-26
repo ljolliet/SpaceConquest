@@ -16,8 +16,10 @@ public class Utils {
 	/**
 	 * Max size for a wave.
 	 */
-	public static int WAVE_SIZE = 50;
-    
+	public static int WAVE_SIZE_MAX = 50;
+
+	public static int WAVE_SIZE = 25;
+
 	/**
      * If true the game will run optimized code on some functions.
      */

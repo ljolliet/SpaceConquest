@@ -4,6 +4,7 @@ import game.Planet;
 import game.Squadron;
 import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
+import utils.Utils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -63,7 +64,7 @@ public class HumanController extends Controller {
     }
 
     public void launchShip(Planet p) {
-        Squadron squad = p.sendShip(p.getAvailable_ships());
+        Squadron squad = p.sendShip(Utils.WAVE_SIZE);
         this.setSelectedSquadron(squad);
     }
 

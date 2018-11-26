@@ -1,7 +1,6 @@
 package game;
 
 import controllers.Controller;
-import game.spaceships.LittleSpaceship;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
 import javafx.scene.layout.StackPane;
@@ -25,6 +24,7 @@ public class Planet {
 
     //spaceship waiting to be launched
     private int available_ships = 0;
+
     private Spaceship model;
 
     //the amount of production generated per [time_interval]
@@ -50,7 +50,13 @@ public class Planet {
     public Squadron createSquadron(int size){
         ArrayList<Spaceship> spaceships = new ArrayList<>();
         //use "i" instead of spaceship sp : on_ground_spaceship in case that a spaceship is added during execution ??
-        for(int i = 0; i < available_ships; i++) {
+        if(size > Utils.WAVE_SIZE_MAX)
+            size = Utils.WAVE_SIZE_MAX;
+
+        if(size > available_ships)
+            size = available_ships;
+
+        for(int i = 0; i < size; i++) {
             spaceships.add(model.getInstance());
         }
         return new Squadron(spaceships, this.owner);
