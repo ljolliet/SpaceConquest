@@ -214,7 +214,9 @@ public class Gameloop extends AnimationTimer {
         scene.setOnDragDetected(event->{
         	if(hc.isOnHumanPlanet(event.getX(), event.getY())) {
         		dragging = true;
-        		hc.setSelectedPlanet(hc.getHumanPlanetClick(event.getX(), event.getY()));
+        		Planet p = hc.getHumanPlanetClick(event.getX(), event.getY());
+        		p.setSelected(true);
+        		hc.setSelectedPlanet(p);
         	}
         	}); 
         
@@ -227,6 +229,10 @@ public class Gameloop extends AnimationTimer {
         	if(hc.getSelectedSquadron()!=null)
         		hc.setTarget(hc.getPlanetClic(event.getX(), event.getY(), planets), accessibilityMap);
         	}
+
+        	if(hc.getSelectedPlanet() != null)
+                hc.getSelectedPlanet().setSelected(false);
+
         	});
          
     }

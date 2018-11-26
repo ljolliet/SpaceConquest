@@ -7,10 +7,12 @@ import javafx.scene.Group;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
 import utils.MathUtils;
 import utils.Utils;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 public class Planet {
@@ -31,6 +33,8 @@ public class Planet {
 
     private Controller owner;
     private Color color;
+
+    private boolean selected = false;
 
     public Planet(Point2D center, int radius, boolean neutral, float production_rate, Spaceship model){
         this.center = center;
@@ -133,6 +137,19 @@ public class Planet {
     //---------------------DRAW-------------------//
 
     public void draw(Group root) {
+
+        if(selected){
+            Circle c = new Circle(center.getX(),center.getY(), radius + Utils.SELECTED_HALO_SIZE);
+            Point2D p2 = new Point2D(MouseInfo.getPointerInfo().getLocation().getX(), MouseInfo.getPointerInfo().getLocation().getY());
+            Line l = new Line(center.getX(), center.getY(),p2.getX(),p2.getY());
+
+            l.setStrokeWidth(5);
+            l.setStroke(Utils.HALO_COLOR);
+
+            c.setFill(Utils.HALO_COLOR);
+            root.getChildren().addAll(c,l);
+        }
+
         Circle c = new Circle(0,0,radius);
         c.setFill(color);
 
@@ -178,5 +195,16 @@ public class Planet {
     public void setHit(int damage) {
         this.available_ships-=damage;
     }
+
+
+    public boolean isSelected() {
+        return selected;
+    }
+
+    public void setSelected(boolean selected) {
+        this.selected = selected;
+    }
+
+
 
 }

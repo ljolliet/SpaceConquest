@@ -1,10 +1,17 @@
 package utils;
 
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
+
 import java.util.Arrays;
 import java.util.List;
 
 public class Utils {
+
+    /**
+     * Size added to the radius of a planet when selected.
+     */
+    public static int SELECTED_HALO_SIZE = 5;
 
 	/**
 	 * Max size for a wave.
@@ -105,6 +112,11 @@ public class Utils {
      * List of colors for players.
      */
     public static List<Color> PLANET_COLOR =  Arrays.asList(Color.RED,Color.BLUEVIOLET, Color.GOLDENROD, Color.LIGHTSKYBLUE, Color.YELLOWGREEN);
+
+    /**
+     * Color of the halo when a planet is selected.
+     */
+    public static Paint HALO_COLOR = PLANET_COLOR.get(0).darker();
 
     /**
      * Distance between points used for the path finding algorithm. Smaller number increase time needed for calculation but increase precision.
