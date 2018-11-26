@@ -52,7 +52,7 @@ public class Planet {
         return new Squadron(spaceships, this.owner);
     }
 
-    public void sendShip(int amount){
+    public Squadron sendShip(int amount){
         //add the squadron to the player controller
         //if player maybe visual/sound alert
         Squadron squad = createSquadron(amount);
@@ -70,6 +70,7 @@ public class Planet {
             s.rotate(angle);
 
         }
+		return squad;
     }
 
 
@@ -103,12 +104,12 @@ public class Planet {
     public double distantOf(Point2D pos) {
         return Math.sqrt(Math.pow(center.getX() - pos.getX(), 2) + Math.pow(center.getY() - pos.getY(), 2));
     }
-    public void changeOwner(Controller owner) { // add the spaceship as a model
+    public void changeOwner(Controller owner, Spaceship spaceship) { // add the spaceship as a model
         setOwner(owner);
         this.color = owner.getColor();
-        owner.addPlanet(this);
-        model.setColor(color);
+        this.model = spaceship;
         this.production_rate = Utils.PLAYER_PRODUCTION_RATE;
+        owner.addPlanet(this);
     }
 
     public Spaceship checkCollision(Spaceship spaceship, Controller spaceShipOwner) {
@@ -116,7 +117,7 @@ public class Planet {
             if (this.getOwner() != spaceShipOwner) {
                 this.setHit(spaceship.getDamage());
                 if (this.available_ships <= 0)
-                    this.changeOwner(spaceShipOwner);
+                    this.changeOwner(spaceShipOwner,spaceship);
             }
             else
                 this.addSpaceship();

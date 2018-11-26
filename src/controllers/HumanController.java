@@ -10,6 +10,7 @@ import java.util.HashMap;
 
 public class HumanController extends Controller {
     private Squadron selectedSquadron = null;
+    private Planet selectedPlanet = null;
 
     public HumanController(Color color) {
         super(color);
@@ -62,7 +63,8 @@ public class HumanController extends Controller {
     }
 
     public void launchShip(Planet p) {
-        p.sendShip(p.getAvailable_ships());
+        Squadron squad = p.sendShip(p.getAvailable_ships());
+        this.setSelectedSquadron(squad);
     }
 
     public void setTarget(Planet p, HashMap<Point2D, Boolean> accessibilityMap) {
@@ -72,6 +74,22 @@ public class HumanController extends Controller {
     }
 
     public void setSelectedSquadron(Squadron selectedSquadron) {
+        if(this.selectedSquadron != null)
+        	this.selectedSquadron.setSelected(false);
+        
         this.selectedSquadron = selectedSquadron;
+        selectedSquadron.setSelected(true);
     }
+
+	public Planet getSelectedPlanet() {
+		return selectedPlanet;
+	}
+
+	public void setSelectedPlanet(Planet selectedPlanet) {
+		this.selectedPlanet = selectedPlanet;
+	}
+
+	public Squadron getSelectedSquadron() {
+		return selectedSquadron;
+	}
 }

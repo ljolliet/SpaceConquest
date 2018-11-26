@@ -6,7 +6,12 @@ import java.util.List;
 
 public class Utils {
 
-    /**
+	/**
+	 * Max size for a wave.
+	 */
+	public static int WAVE_SIZE = 50;
+    
+	/**
      * If true the game will run optimized code on some functions.
      */
     public static final boolean OPTIMIZED = true;
@@ -24,22 +29,22 @@ public class Utils {
     /**
      * Necessary production to create a Spaceship.
      */
-    public static final int LITTLE_SPACESHIP_NEC_PROD = 5;
+    public static final int LITTLE_SPACESHIP_NEC_PROD = 60;
 
     /**
      *  Length of a little spaceship in px.
      */
-    public static final double LITTLE_SPACESHIP_LENGTH = 25;
+    public static final int LITTLE_SPACESHIP_LENGTH = 25;
 
     /**
      * Height of the window.
      */
-    public static int WINDOW_HEIGHT = 620;
+    public static int WINDOW_HEIGHT = 1080;
 
     /**
      * Width of the window.
      */
-    public static int WINDOW_WIDTH = 1080;
+    public static int WINDOW_WIDTH = 1920;
 
     /**
      * Number of player.
@@ -49,12 +54,12 @@ public class Utils {
     /**
      * Number of neutral planets.
      */
-    public static int NB_NEUTRAL_PLANET = 10;
+    public static int NB_NEUTRAL_PLANET = 20;
 
     /**
      * Radius' size for neutral planets.
      */
-    public static int NEUTRAL_PLANET_RADIUS = 25;
+    public static int NEUTRAL_PLANET_RADIUS = 2*LITTLE_SPACESHIP_LENGTH;
 
     /**
      * Base HP before variation calculation for neutral planets.
@@ -69,17 +74,17 @@ public class Utils {
     /**
      * Radius' size for player planets.
      */
-    public static int PLAYER_PLANET_RADIUS = 50;
+    public static int PLAYER_PLANET_RADIUS = 3*LITTLE_SPACESHIP_LENGTH;
 
     /**
      * Minimal distance between two player's planet at initialization.
      */
-    public static int DISTANCE_BETWEEN_PLAYERS = 150;
+    public static int DISTANCE_BETWEEN_PLAYERS = 3*PLAYER_PLANET_RADIUS;
 
     /**
      * Minimal distance between a neutral planet and every other planet at initialization.
      */
-    public static int DISTANCE_BETWEEN_NEUTRAL = 100;
+    public static int DISTANCE_BETWEEN_NEUTRAL = 2*PLAYER_PLANET_RADIUS;
 
     /**
      * Distance between the ship and the planet at ship's spawn.

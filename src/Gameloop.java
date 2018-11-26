@@ -2,6 +2,7 @@ import game.Planet;
 import game.Squadron;
 import game.spaceships.LittleSpaceship;
 import javafx.animation.AnimationTimer;
+import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -23,6 +24,8 @@ public class Gameloop extends AnimationTimer {
 
     private Group root;
     private Scene scene;
+    
+    public  boolean dragging = false;
 
     private ArrayList<Controller> controllers = new ArrayList<>();
     private ArrayList<Planet> planets = new ArrayList<>();
@@ -197,23 +200,35 @@ public class Gameloop extends AnimationTimer {
      */
     private void initEvents() {
         HumanController hc = (HumanController) controllers.get(0);
+        
+       
 
         scene.setOnMouseClicked(event -> {
-            if (hc.isOnHumanPlanet(event.getX(), event.getY())) {
-                Planet selected = hc.getHumanPlanetClick(event.getX(), event.getY());
-                hc.launchShip(selected);
-            } else if (hc.isOnPlanet(event.getX(), event.getY(), planets)) {
-                Planet selected = hc.getPlanetClic(event.getX(), event.getY(), planets);
-                hc.setTarget(selected, accessibilityMap);
-            } else {
                 for (Squadron s : hc.getSquadrons())
                     if (s.contains(new Point2D(event.getX(), event.getY()))) {
                         hc.setSelectedSquadron(s);
-                        s.setSelected(true);
-                    } else
-                        s.setSelected(false);
-            }
+                    }
+            
         });
+        
+        scene.setOnDragDetected(event->{
+        	if(hc.isOnHumanPlanet(event.getX(), event.getY())) {
+        		dragging = true;
+        		hc.setSelectedPlanet(hc.getHumanPlanetClick(event.getX(), event.getY()));
+        	}
+        	}); 
+        
+        scene.setOnMouseReleased(event->{
+        	if(hc.isOnPlanet(event.getX(), event.getY(), planets)){
+        		if(dragging) {
+                    hc.launchShip(hc.getSelectedPlanet());
+                    dragging = false;
+        		}
+        	if(hc.getSelectedSquadron()!=null)
+        		hc.setTarget(hc.getPlanetClic(event.getX(), event.getY(), planets), accessibilityMap);
+        	}
+        	});
+         
     }
 
     //-----------------PROCESS---------------------//
