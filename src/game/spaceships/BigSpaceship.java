@@ -11,7 +11,7 @@ public class BigSpaceship extends Spaceship {
 	public BigSpaceship(Color color) {
 		super(color);
 
-		necessary_production = 500;
+		necessary_production = 500; // CST in UTILS
 	}
 
 	@Override

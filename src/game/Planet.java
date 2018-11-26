@@ -81,6 +81,10 @@ public class Planet {
         }
     }
 
+    public void addSpaceship(){
+            available_ships ++;
+    }
+
     public boolean collide(Planet p) {
         double centerDistance = Math.sqrt(Math.pow(center.getX() - p.center.getX(), 2) + Math.pow(center.getY() - p.center.getY(), 2));
         return centerDistance < this.radius + p.radius;
@@ -99,7 +103,7 @@ public class Planet {
     public double distantOf(Point2D pos) {
         return Math.sqrt(Math.pow(center.getX() - pos.getX(), 2) + Math.pow(center.getY() - pos.getY(), 2));
     }
-    public void changeOwner(Controller owner) {
+    public void changeOwner(Controller owner) { // add the spaceship as a model
         setOwner(owner);
         this.color = owner.getColor();
         owner.addPlanet(this);
@@ -107,6 +111,21 @@ public class Planet {
         this.production_rate = Utils.PLAYER_PRODUCTION_RATE;
     }
 
+    public Spaceship checkCollision(Spaceship spaceship, Controller spaceShipOwner) {
+        if(contains(spaceship.getPos()) ) {
+            if (this.getOwner() != spaceShipOwner) {
+                this.setHit(spaceship.getDamage());
+                if (this.available_ships <= 0)
+                    this.changeOwner(spaceShipOwner);
+            }
+            else
+                this.addSpaceship();
+            return spaceship;
+        }
+        return null;
+    }
+
+    @Override
     public String toString(){
         return "[Planet] position : " + center.getX() + ";" + center.getY() + ", production :" + total_production + ", nb ships : " + available_ships;
     }
@@ -159,17 +178,4 @@ public class Planet {
         this.available_ships-=damage;
     }
 
-    public Spaceship checkCollision(Spaceship spaceship, Controller spaceShipOwner) {
-        if(contains(spaceship.getPos()) ) {
-            if (this.getOwner() != spaceShipOwner) {
-                this.setHit(spaceship.getDamage());
-                if (this.available_ships <= 0)
-                    this.changeOwner(spaceShipOwner);
-            }
-            else
-                this.addProduction();
-            return spaceship;
-        }
-        return null;
-    }
 }

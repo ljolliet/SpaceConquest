@@ -24,7 +24,7 @@ public class Utils {
     /**
      * Necessary production to create a Spaceship.
      */
-    public static final int LITTLE_SPACESHIP_NEC_PROD = 50;
+    public static final int LITTLE_SPACESHIP_NEC_PROD = 5;
 
     /**
      *  Length of a little spaceship in px.

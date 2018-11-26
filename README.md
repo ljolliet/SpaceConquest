@@ -8,7 +8,6 @@
 4. Check function annotation in java
 5. Find a way for the user to transfer spaceships from a Planet to an other
 6. Put Animation on click planet ?
-7. Bug collision with a friendly planet (kind of fixed because of distance between neutral planet)
 8. Better draw management to avoid lag
 9. Fix planet too close to screen's border bug
 
