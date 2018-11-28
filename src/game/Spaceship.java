@@ -11,19 +11,15 @@ import java.util.LinkedList;
 
 public abstract class  Spaceship {
 
-    private int speed;
-
-
-
     protected int damage;
-    protected Point2D pos;
-    protected double length;
     protected int necessary_production;
     protected int angle = 0;
+    protected double speed;
+    protected double length;
+    protected Point2D pos;
     protected Color color;
 
     protected LinkedList<Point2D> steps; //list of coordinates to get to the target
-
     protected Point2D direction = Point2D.ZERO;
 
     public Spaceship(Color color) {
@@ -50,23 +46,34 @@ public abstract class  Spaceship {
             borderGlow.setColor(color);
             borderGlow.setOffsetX(0f);
             borderGlow.setOffsetY(0f);
-            polygon.setEffect(borderGlow); // SLOW THE ENTIRE GAME
+             polygon.setEffect(borderGlow); // SLOW THE ENTIRE GAME
         }
         root.getChildren().add(polygon);
     }
 
-    public  void rotate(double theta){ // theta in  radians
+    /**
+     * Rotate the spaceship.
+     * @param theta Rotation's angle in radians.
+     */
+    public void rotate(double theta){ // theta in  radians
         this.angle = Math.floorMod((int) Math.toDegrees(theta), 360); // angle in degrees this mod is better than %
     }
 
 
     public void moveForward(){
-        this.setPos(this.getPos().add(MathUtils.getRotatedVector(this.direction, this.angle).normalize()));
+        this.setPos(this.getPos().add(MathUtils.getRotatedVector(this.direction.multiply(speed), this.angle)));
     }
+
+    /**
+     * Ensure that the Spaceship contains the point.
+     * @param point A Point in space.
+     * @return True if the spaceship contains the point.
+     */
     public boolean contains(Point2D point){
         Polygon polygon = initPolygon();
         return  polygon.contains(point);
     }
+
 
     @Override
     public String toString(){

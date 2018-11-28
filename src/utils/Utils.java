@@ -2,38 +2,31 @@ package utils;
 
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
-
 import java.util.Arrays;
 import java.util.List;
 
 public class Utils {
 
+
+    //------------GAME-------------//
+
     /**
-     * Size added to the radius of a planet when selected.
+     * Height of the window.
      */
-    public static int SELECTED_HALO_SIZE = 5;
+    public static int WINDOW_HEIGHT = 1080;
 
-	/**
-	 * Max size for a wave.
-	 */
-	public static int WAVE_SIZE_MAX = 50;
-
-	public static int WAVE_SIZE = 25;
+    /**
+     * Width of the window.
+     */
+    public static int WINDOW_WIDTH = 1920;
 
 	/**
      * If true the game will run optimized code on some functions.
      */
     public static final boolean OPTIMIZED = true;
 
-    /**
-     * Damage made by the little spaceship when they land on an enemy planet.
-     */
-    public static final int LITTLE_SPACESHIP_DAMAGE = 1;
 
-    /**
-     * Production added by frame (=/= number of ship).
-     */
-    public static final float PLAYER_PRODUCTION_RATE = 1; // Double ?
+    //------------SPACESHIPS-------------//
 
     /**
      * Necessary production to create a Spaceship.
@@ -46,14 +39,24 @@ public class Utils {
     public static final int LITTLE_SPACESHIP_LENGTH = 25;
 
     /**
-     * Height of the window.
+     * Damage made by the little spaceship when they land on an enemy planet.
      */
-    public static int WINDOW_HEIGHT = 1080;
+    public static final int LITTLE_SPACESHIP_DAMAGE = 1;
 
     /**
-     * Width of the window.
+     *  Speed of a little spaceship in px/frame.
      */
-    public static int WINDOW_WIDTH = 1920;
+    public static final double LITTLE_SPACESHIP_SPEED = 2.; // Not more than 3
+
+    /******************************/
+
+
+    /**
+     * Production added by frame (=/= number of ship).
+     */
+    public static final float PLAYER_PRODUCTION_RATE = 1; // Double ?
+
+
 
     /**
      * Number of player.
@@ -78,7 +81,7 @@ public class Utils {
     /**
      * Maximum percentage of HP that can be withdrawn or added to neutral planets when they are generated.
      */
-    public static int HP_VARIATION = 20; //percentage
+    public static int HP_VARIATION = 20;
 
     /**
      * Radius' size for player planets.
@@ -124,5 +127,18 @@ public class Utils {
      * Distance between points used for the path finding algorithm. Smaller number increase time needed for calculation but increase precision.
      */
     public static int COLUMN_SIZE = 5;
+
+    /**
+     * Size added to the radius of a planet when selected.
+     */
+    public static int SELECTED_HALO_SIZE = 5;
+
+    /**
+     * Max size for a wave.
+     */
+    public static int WAVE_SIZE_MAX = 50;
+
+
+    public static int WAVE_SIZE = 25;
 
 }

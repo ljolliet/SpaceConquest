@@ -16,6 +16,7 @@ public class LittleSpaceship extends Spaceship {
         necessary_production = Utils.LITTLE_SPACESHIP_NEC_PROD;
         damage = Utils.LITTLE_SPACESHIP_DAMAGE;
         length = Utils.LITTLE_SPACESHIP_LENGTH;
+        speed = Utils.LITTLE_SPACESHIP_SPEED;
         this.direction = new Point2D(0, 1); // find a better way
     }
 

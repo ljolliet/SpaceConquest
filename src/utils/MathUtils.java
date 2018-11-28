@@ -199,11 +199,11 @@ public class MathUtils {
         double uv = vectorPlanet.dotProduct(spaceshipDirection);
         double u = Math.sqrt(Math.pow(vectorPlanet.getX(), 2) + Math.pow(vectorPlanet.getY(), 2));
         double v = Math.sqrt(Math.pow(spaceshipDirection.getX(), 2) + Math.pow(spaceshipDirection.getY(), 2));
-        double teta = Math.acos(uv / (u * v));
+        double theta = Math.acos(uv / (u * v));
         if (vectorPlanet.getX() > 0)
-            return -teta;
+            return -theta;
 
-        return teta;
+        return theta;
 
     }
 
