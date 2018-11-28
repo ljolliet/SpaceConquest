@@ -141,4 +141,6 @@ public class Utils {
 
     public static int WAVE_SIZE = 25;
 
+    public static int ALLOWED_RANGE_TAKE_OFF = 25;
+
 }

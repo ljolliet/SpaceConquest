@@ -1,5 +1,6 @@
 package game;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import controllers.Controller;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
@@ -13,6 +14,7 @@ import utils.Utils;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Planet {
 
@@ -24,6 +26,10 @@ public class Planet {
 
     //spaceship waiting to be launched
     private int available_ships = 0;
+
+    private int waiting_for_launch = 0;
+    private Planet target = null;
+    private HashMap<Point2D, Boolean> map = null;
 
     private Spaceship model;
 
@@ -53,8 +59,10 @@ public class Planet {
         if(size > Utils.WAVE_SIZE_MAX)
             size = Utils.WAVE_SIZE_MAX;
 
-        if(size > available_ships)
-            size = available_ships;
+        if(size > waiting_for_launch)
+            size = waiting_for_launch;
+
+        waiting_for_launch -= size;
 
         for(int i = 0; i < size; i++) {
             spaceships.add(model.getInstance());
@@ -66,12 +74,10 @@ public class Planet {
         //add the squadron to the player controller
         //if player maybe visual/sound alert
         Squadron squad = createSquadron(amount);
-        owner.getSquadrons().add(squad);
+
         //withdraw spaceship in the squadron from the on ground spaceships && assign pos
         ArrayList<double[]> pos = MathUtils.dotAroundACircle(center, radius, squad.getSpaceships().size());
-    	/*for(Spaceship sp : squad.getSpaceships()) {
-    		on_ground_spaceships.remove(sp);
-    	}*/
+
         for(int i = 0; i < squad.getSpaceships().size(); i++){
             available_ships --;
             squad.getSpaceships().get(i).setPos(new Point2D(pos.get(i)[0], pos.get(i)[1]));
@@ -80,7 +86,18 @@ public class Planet {
             s.rotate(angle);
 
         }
+
+        squad.setTarget(target, map);
+        owner.getSquadrons().add(squad);
+
 		return squad;
+    }
+
+    public void addWaitingShips(int amount, Planet target, HashMap<Point2D,Boolean> map)
+    {
+        this.target = target;
+        this.map = map;
+        waiting_for_launch += amount;
     }
 
 
@@ -93,7 +110,7 @@ public class Planet {
     }
 
     public void addSpaceship(){
-            available_ships ++;
+        available_ships ++;
     }
 
     public boolean collide(Planet p) {
@@ -114,6 +131,7 @@ public class Planet {
     public double distantOf(Point2D pos) {
         return Math.sqrt(Math.pow(center.getX() - pos.getX(), 2) + Math.pow(center.getY() - pos.getY(), 2));
     }
+
     public void changeOwner(Controller owner, Spaceship spaceship) { // add the spaceship as a model
         setOwner(owner);
         this.color = owner.getColor();
@@ -134,6 +152,19 @@ public class Planet {
             return spaceship;
         }
         return null;
+    }
+
+    public boolean isLaunchReady(){
+        boolean res = true;
+
+        for(Squadron s : owner.getSquadrons()){
+            for(Spaceship sp : s.getSpaceships()){
+                if(this.distantOf(sp.pos) < radius + Utils.ALLOWED_RANGE_TAKE_OFF)
+                    res = false;
+            }
+        }
+
+        return res;
     }
 
     @Override
@@ -212,6 +243,30 @@ public class Planet {
         this.selected = selected;
     }
 
+    public int getWaiting_for_launch() {
+        return waiting_for_launch;
+    }
+
+    public void setWaiting_for_launch(int waiting_for_launch) {
+        this.waiting_for_launch = waiting_for_launch;
+    }
+
+
+    public Planet getTarget() {
+        return target;
+    }
+
+    public void setTarget(Planet target) {
+        this.target = target;
+    }
+
+    public HashMap<Point2D, Boolean> getMap() {
+        return map;
+    }
+
+    public void setMap(HashMap<Point2D, Boolean> map) {
+        this.map = map;
+    }
 
 
 }

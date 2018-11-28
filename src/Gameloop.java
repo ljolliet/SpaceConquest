@@ -24,7 +24,7 @@ public class Gameloop extends AnimationTimer {
 
     private Group root;
     private Scene scene;
-    
+
     public  boolean dragging = false;
 
     private ArrayList<Controller> controllers = new ArrayList<>();
@@ -51,6 +51,8 @@ public class Gameloop extends AnimationTimer {
         draw();
         actualizeProduction();
         actualizeShipPos();
+        actualizeShipSending();
+
     }
 
     //--------------------INIT-------------//
@@ -200,17 +202,17 @@ public class Gameloop extends AnimationTimer {
      */
     private void initEvents() {
         HumanController hc = (HumanController) controllers.get(0);
-        
-       
+
+
 
         scene.setOnMouseClicked(event -> {
                 for (Squadron s : hc.getSquadrons())
                     if (s.contains(new Point2D(event.getX(), event.getY()))) {
                         hc.setSelectedSquadron(s);
                     }
-            
+
         });
-        
+
         scene.setOnDragDetected(event->{
         	if(hc.isOnHumanPlanet(event.getX(), event.getY())) {
         		dragging = true;
@@ -218,23 +220,25 @@ public class Gameloop extends AnimationTimer {
         		p.setSelected(true);
         		hc.setSelectedPlanet(p);
         	}
-        	}); 
-        
+        	});
+
         scene.setOnMouseReleased(event->{
-        	if(hc.isOnPlanet(event.getX(), event.getY(), planets)){
-        		if(dragging) {
-                    hc.launchShip(hc.getSelectedPlanet());
+        	if(hc.isOnPlanet(event.getX(), event.getY(), planets)) {
+        	    if (dragging) { //if mouse released during a drag action
+                    hc.getSelectedPlanet().addWaitingShips(hc.getSelectedPlanet().getAvailable_ships(), hc.getPlanetClic(event.getX(), event.getY(), planets), accessibilityMap);
                     dragging = false;
-        		}
-        	if(hc.getSelectedSquadron()!=null)
-        		hc.setTarget(hc.getPlanetClic(event.getX(), event.getY(), planets), accessibilityMap);
-        	}
+                }else{ //if mouse was released not during a drag action
+                    if (hc.getSelectedSquadron() != null) {
+                        hc.setTarget(hc.getPlanetClic(event.getX(), event.getY(), planets), accessibilityMap);
+                    }
+                }
+            }
 
         	if(hc.getSelectedPlanet() != null)
                 hc.getSelectedPlanet().setSelected(false);
 
         	});
-         
+
     }
 
     //-----------------PROCESS---------------------//
@@ -276,6 +280,18 @@ public class Gameloop extends AnimationTimer {
         }
 
 
+    }
+
+    //COMPLEXITY TO BAD ?
+    private void actualizeShipSending(){
+        for(Controller c : controllers){
+            for(Planet p : c.getPlanets()){
+                if(p.isLaunchReady() && p.getWaiting_for_launch() > 0){
+                    if(c.getClass() == HumanController.class)
+                        ((HumanController)c).launchShip(p);
+                }
+            }
+        }
     }
 
 
