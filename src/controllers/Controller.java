@@ -6,11 +6,13 @@ import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
 
+
 public abstract class Controller {
 
 
     protected ArrayList<Planet> planets = new ArrayList<>();
     protected ArrayList<Squadron> squadrons = new ArrayList<>();
+    
     protected Color color;
 
     public Controller(Color color){
@@ -37,4 +39,5 @@ public abstract class Controller {
     public void addPlanet(Planet planet){
         this.planets.add(planet);
     }
+
 }

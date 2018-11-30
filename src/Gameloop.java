@@ -223,7 +223,7 @@ public class Gameloop extends AnimationTimer {
         	});
 
         scene.setOnMouseReleased(event->{
-        	if(hc.isOnPlanet(event.getX(), event.getY(), planets)) {
+        	if(hc.isOnPlanet(event.getX(), event.getY(), planets) || hc.isOnHumanPlanet(event.getX(), event.getY())) {
         	    if (dragging) { //if mouse released during a drag action
                     hc.getSelectedPlanet().addWaitingShips(hc.getSelectedPlanet().getAvailable_ships(), hc.getPlanetClic(event.getX(), event.getY(), planets), accessibilityMap);
                     dragging = false;

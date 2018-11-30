@@ -55,7 +55,7 @@ public class HumanController extends Controller {
         Planet res = null;
 
         for (Planet p : planets) {
-            if (Math.sqrt(Math.pow(p.getCenter().getX() - x, 2) + Math.pow(p.getCenter().getY() - y, 2)) < p.getRadius() && (p.getOwner() == null || p.getOwner() != this)) {
+            if (Math.sqrt(Math.pow(p.getCenter().getX() - x, 2) + Math.pow(p.getCenter().getY() - y, 2)) < p.getRadius()) { //&& (p.getOwner() == null || p.getOwner() != this)
                 res = p;
             }
         }
