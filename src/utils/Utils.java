@@ -65,7 +65,7 @@ public class Utils {
     /**
      * Number of player.
      */
-    public static final int NB_PLAYER = 2;
+    public static final int NB_PLAYER = 5;
 
     /**
      * Number of neutral planets.
@@ -142,11 +142,28 @@ public class Utils {
      */
     public static int WAVE_SIZE_MAX = 50;
 
-
+    /**
+     * Number of ships per wave (for the player).
+     */
     public static int WAVE_SIZE = 25;
 
+    /**
+     * Distance around a planet that needs to be empty for spaceships to take off.
+     */
     public static int ALLOWED_RANGE_TAKE_OFF = 25;
-    
+
+    //--------------------------------------AI-------------------
+
+    /**
+     * Number of frames between each AI action.
+     */
     public static int AI_ACTION_TIME = 60;
+
+    /**
+     * Percentage of ships sent at every action for each type of AI
+     */
+    public static int CLASSIC_AI_PERCENTAGE = 30;
+    public static int AGGRESSIVE_AI_PERCENTAGE = 50;
+    public static int SAFE_AI_PERCENTAGE = 10;
 
 }

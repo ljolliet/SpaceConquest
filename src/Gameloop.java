@@ -1,8 +1,8 @@
+import controllers.TypeAI;
 import game.Planet;
 import game.Squadron;
 import game.spaceships.LittleSpaceship;
 import javafx.animation.AnimationTimer;
-import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -77,7 +77,24 @@ public class Gameloop extends AnimationTimer {
         controllers.add(new HumanController(Utils.PLANET_COLOR.get(0)));
         //start at 1 because 0 is the human
         for (int i = 1; i < Utils.NB_PLAYER; i++) {
-            controllers.add(new ComputerController(Utils.PLANET_COLOR.get(i)));
+            int rand = (int)(Math.random() * 3);
+            TypeAI type;
+            switch (rand){
+                case 0:
+                    type = TypeAI.CLASSIC;
+                    break;
+                case 1:
+                    type = TypeAI.SAFE;
+                    break;
+                case 2:
+                    type =TypeAI.AGGRESSIVE;
+                    break;
+                default:
+                    type = TypeAI.CLASSIC;
+                    break;
+            }
+
+            controllers.add(new ComputerController(Utils.PLANET_COLOR.get(i), type));
         }
     }
 

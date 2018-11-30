@@ -79,12 +79,10 @@ public class Planet {
         ArrayList<double[]> pos = MathUtils.dotAroundACircle(center, radius, squad.getSpaceships().size());
 
         for(int i = 0; i < squad.getSpaceships().size(); i++){
-            available_ships --;
             squad.getSpaceships().get(i).setPos(new Point2D(pos.get(i)[0], pos.get(i)[1]));
             Spaceship s = squad.getSpaceships().get(i);
             double angle = MathUtils.pointOnOffPlanet(center, s.getPos(), s.getDirection(), false);
             s.rotate(angle);
-
         }
 
         squad.setTarget(target, map);
@@ -98,6 +96,7 @@ public class Planet {
         this.target = target;
         this.map = map;
         waiting_for_launch += amount;
+        available_ships -= amount;
     }
 
 
@@ -133,6 +132,8 @@ public class Planet {
     }
 
     public void changeOwner(Controller owner, Spaceship spaceship) { // add the spaceship as a model
+        if(this.owner != null)
+            this.owner.getPlanets().remove(this);
         setOwner(owner);
         this.color = owner.getColor();
         this.model = spaceship;
@@ -210,6 +211,7 @@ public class Planet {
         //create a text inside a circle
         final Text text = new Text (String.valueOf(available_ships));
         text.setStroke(Color.BLACK);
+
 
         //create a layout for circle with text inside
         StackPane stack = new StackPane();
