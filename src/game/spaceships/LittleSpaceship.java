@@ -1,9 +1,6 @@
 package game.spaceships;
 
 import game.Spaceship;
-import javafx.geometry.Point2D;
-import javafx.scene.Group;
-import javafx.scene.effect.DropShadow;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import javafx.scene.transform.Rotate;
@@ -17,17 +14,21 @@ public class LittleSpaceship extends Spaceship {
         damage = Utils.LITTLE_SPACESHIP_DAMAGE;
         length = Utils.LITTLE_SPACESHIP_LENGTH;
         speed = Utils.LITTLE_SPACESHIP_SPEED;
-        this.direction = new Point2D(0, 1); // find a better way
+        this.direction = Utils.SPACESHIP_DIRECTION;
     }
 
     /**
-     * @return a new instance of this Spaceship.
+     * @return A new instance of this Spaceship.
      */
     @Override
     public Spaceship getInstance() {
         return new LittleSpaceship(color);
     }
 
+    /**
+     * Initialize spaceship shape
+     * @return a Polygon initialized as a spaceship.
+     */
     @Override
     public Polygon initPolygon() {
         Polygon polygon = new Polygon();

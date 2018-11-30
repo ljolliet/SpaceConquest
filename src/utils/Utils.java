@@ -1,5 +1,6 @@
 package utils;
 
+import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import java.util.Arrays;
@@ -29,6 +30,11 @@ public class Utils {
     //------------SPACESHIPS-------------//
 
     /**
+     * Spaceship default direction vector
+     */
+    public static final Point2D SPACESHIP_DIRECTION = new Point2D(0, 1);
+
+    /**
      * Necessary production to create a Spaceship.
      */
     public static final int LITTLE_SPACESHIP_NEC_PROD = 10;
@@ -56,32 +62,30 @@ public class Utils {
      */
     public static final float PLAYER_PRODUCTION_RATE = 1; // Double ?
 
-
-
     /**
      * Number of player.
      */
-    public static int NB_PLAYER = 5;
+    public static final int NB_PLAYER = 2;
 
     /**
      * Number of neutral planets.
      */
-    public static int NB_NEUTRAL_PLANET = 20;
+    public static final int NB_NEUTRAL_PLANET = 20;
 
     /**
      * Radius' size for neutral planets.
      */
-    public static int NEUTRAL_PLANET_RADIUS = 2*LITTLE_SPACESHIP_LENGTH;
+    public static final int NEUTRAL_PLANET_RADIUS = 2*LITTLE_SPACESHIP_LENGTH;
 
     /**
      * Base HP before variation calculation for neutral planets.
      */
-    public static int NEUTRAL_HP_RANGE = 100; //600 ?
+    public static final int NEUTRAL_HP_RANGE = 100; //600 ?
 
     /**
      * Maximum percentage of HP that can be withdrawn or added to neutral planets when they are generated.
      */
-    public static int HP_VARIATION = 20;
+    public static final int HP_VARIATION = 20;
 
     /**
      * Radius' size for player planets.

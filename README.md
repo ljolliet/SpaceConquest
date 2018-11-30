@@ -14,8 +14,8 @@ TODO :
 Basics(12) :
 - Manage ships speed **DONE**
 - Click planet to planet **DONE**
+- Find a way for the user to transfer spaceships from a Planet to another **DONE**
 - Production rate different for each planet
-- Find a way for the user to transfer spaceships from a Planet to another
 - Make wave of ships instead of superposition
 - Input for the quantity of ships (keyboard)
 - Save / Restore
@@ -24,3 +24,5 @@ Basics(12) :
 Improve :
 - color variation (image + filter ?)
 - Better way to select squadrons
+- Sounds
+
