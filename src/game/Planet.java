@@ -171,6 +171,22 @@ public class Planet {
     public String toString(){
         return "[Planet] position : " + center.getX() + ";" + center.getY() + ", production :" + total_production + ", nb ships : " + available_ships;
     }
+    
+    public Planet nearestEnnemyPlanet(ArrayList<Planet> all_planets) {
+		Planet res = null;
+		
+		double minDist = Utils.WINDOW_WIDTH;
+		
+		for(Planet p : all_planets) {
+			if(p.getOwner() != this.getOwner() && this.distantOf(p.center) < minDist) {
+				minDist = this.distantOf(p.center);
+				res = p;
+			}
+		}
+    	
+    	return res;
+    }
+    
     //---------------------DRAW-------------------//
 
     public void draw(Group root) {
@@ -203,8 +219,6 @@ public class Planet {
         stack.setLayoutY(center.getY()-radius);
 
         root.getChildren().add(stack);
-
-
     }
     //---------------------GETTER/SETTER-------------------//
 

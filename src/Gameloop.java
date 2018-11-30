@@ -52,6 +52,7 @@ public class Gameloop extends AnimationTimer {
         actualizeProduction();
         actualizeShipPos();
         actualizeShipSending();
+        actualizeActionsAI();
 
     }
 
@@ -289,9 +290,21 @@ public class Gameloop extends AnimationTimer {
                 if(p.isLaunchReady() && p.getWaiting_for_launch() > 0){
                     if(c.getClass() == HumanController.class)
                         ((HumanController)c).launchShip(p);
+                    else {
+                    	p.sendShip(Utils.WAVE_SIZE);
+                    }
+                    	
                 }
             }
         }
+    }
+    
+    private void actualizeActionsAI(){
+    	for(Controller c : controllers) {
+    		if(c.getClass() == ComputerController.class) {
+    			((ComputerController)c).process(planets, accessibilityMap);
+    		}
+    	}
     }
 
 

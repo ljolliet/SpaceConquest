@@ -19,6 +19,7 @@ public abstract class Controller {
         this.color = color;
     }
 
+    
 
     public ArrayList<Squadron> getSquadrons() {
         return squadrons;
