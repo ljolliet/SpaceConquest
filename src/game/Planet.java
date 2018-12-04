@@ -113,20 +113,11 @@ public class Planet {
         available_ships ++;
     }
 
-    public boolean collide(Planet p) {
-        double centerDistance = Math.sqrt(Math.pow(center.getX() - p.center.getX(), 2) + Math.pow(center.getY() - p.center.getY(), 2));
-        return centerDistance < this.radius + p.radius;
-    }
-
     public boolean contains(Point2D p){
         double dist = Math.sqrt(Math.pow(center.getX() - p.getX(), 2) + Math.pow(center.getY() - p.getY(), 2));
         return dist <= this.radius;
     }
 
-    public boolean containsHitbox(Point2D p) {
-        double dist = Math.sqrt(Math.pow(center.getX() - p.getX(), 2) + Math.pow(center.getY() - p.getY(), 2));
-        return dist <= (this.radius + Utils.ADDITIONAL_HITBOX_RANGE);
-    }
 
     public double distantOf(Point2D pos) {
         return Math.sqrt(Math.pow(center.getX() - pos.getX(), 2) + Math.pow(center.getY() - pos.getY(), 2));

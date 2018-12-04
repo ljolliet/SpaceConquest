@@ -118,7 +118,10 @@ public class Squadron {
 
     public void setSelected(boolean selected) {
         this.selected = selected;
+    }
 
+    public Controller getOwner() { //ONly for test -> should we keep it ?
+        return owner;
     }
 }
 

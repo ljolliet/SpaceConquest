@@ -1,28 +1,39 @@
 package tests;
 
+import controllers.ComputerController;
+import controllers.TypeAI;
 import game.Planet;
+import game.Squadron;
 import game.spaceships.LittleSpaceship;
 import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
 import utils.Utils;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.HashMap;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.*;
 
 
 class PlanetTest {
 
     @org.junit.jupiter.api.Test
     void createSquadron() {
-        fail("Not implemented");
-    }
+        Planet p = new Planet(new Point2D(0,0),0,true, 5* Utils.LITTLE_SPACESHIP_NEC_PROD, new LittleSpaceship(Color.BLUE));
+        Planet target = new Planet(new Point2D(100,100),0,false, 0, new LittleSpaceship(Color.BLUE));
+        p.addProduction();
+        assertEquals(5,p.getAvailable_ships());
+        p.addWaitingShips(5,target,new HashMap<>());
+        assertEquals(5, p.getWaiting_for_launch());
 
-    @org.junit.jupiter.api.Test
-    void sendShip() {
-        fail("Not implemented");
+        p.setOwner(new ComputerController(Color.RED, TypeAI.CLASSIC));
+
+        Squadron s = p.createSquadron(p.getWaiting_for_launch());
+
+        assertEquals(5,s.getSpaceships().size());
+        assertNotEquals(null, s.getOwner());
+
     }
 
     @org.junit.jupiter.api.Test
@@ -68,18 +79,10 @@ class PlanetTest {
     }
 
     @org.junit.jupiter.api.Test
-    void collide() {
-        fail("Not implemented");
-    }
-
-    @org.junit.jupiter.api.Test
     void contains() {
-        fail("Not implemented");
-    }
-
-    @org.junit.jupiter.api.Test
-    void containsHitbox() {
-        fail("Not implemented");
+        Planet p1 = new Planet(new Point2D(0,0),50,false, 9, new LittleSpaceship(Color.BLUE));
+        assertEquals(true, p1.contains(new Point2D(0,50)));
+        assertEquals(false,p1.contains(new Point2D(0,51)));
     }
 
     @org.junit.jupiter.api.Test
@@ -93,7 +96,19 @@ class PlanetTest {
 
     @org.junit.jupiter.api.Test
     void changeOwner() {
-        fail("Not implemented");
+        Planet p1 = new Planet(new Point2D(0,0),0,false, 9, new LittleSpaceship(Color.BLUE));
+
+        ComputerController owner1 = new ComputerController(Color.BLUE, TypeAI.CLASSIC);
+        ComputerController owner2 = new ComputerController(Color.RED, TypeAI.CLASSIC);
+
+        p1.setOwner(owner1);
+
+        assertEquals(owner1, p1.getOwner());
+
+        p1.changeOwner(owner2, new LittleSpaceship(Color.RED));
+
+        assertEquals(owner2, p1.getOwner());
+        assertFalse(owner1.getPlanets().contains(p1));
     }
 
     @org.junit.jupiter.api.Test
@@ -108,6 +123,22 @@ class PlanetTest {
 
     @org.junit.jupiter.api.Test
     void nearestEnnemyPlanet() {
-        fail("Not implemented");
+        Planet p1 = new Planet(new Point2D(0,0),0,false, 9, new LittleSpaceship(Color.BLUE));
+        Planet p2 = new Planet(new Point2D(0,100),0,false, 9, new LittleSpaceship(Color.BLUE));
+        Planet p3 = new Planet(new Point2D(0,200),0,false, 9, new LittleSpaceship(Color.BLUE));
+
+        ComputerController owner1 = new ComputerController(Color.BLUE, TypeAI.CLASSIC);
+        ComputerController owner2 = new ComputerController(Color.RED, TypeAI.CLASSIC);
+
+        p1.setOwner(owner1);
+        p2.setOwner(owner2);
+        p3.setOwner(owner2);
+
+        ArrayList<Planet> planets = new ArrayList<>();
+        planets.add(p1);
+        planets.add(p2);
+        planets.add(p3);
+
+        assertEquals(p2, p1.nearestEnnemyPlanet(planets));
     }
 }
