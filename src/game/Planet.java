@@ -132,6 +132,7 @@ public class Planet {
     }
 
     public void changeOwner(Controller owner, Spaceship spaceship) { // add the spaceship as a model
+        this.waiting_for_launch = 0;
         if(this.owner != null)
             this.owner.getPlanets().remove(this);
         setOwner(owner);
