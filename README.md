@@ -8,7 +8,8 @@ TODO :
 - Check function annotation in java
 - Put Animation on click planet ?
 - Better draw management to avoid lag
-- Fix planet too close to screen's border bug
+- Fix planet too close to screen's border bug **DONE**
+- Empty waiting ship list when changing owner of a planet
 
 
 Basics(12) :
@@ -19,7 +20,7 @@ Basics(12) :
 - Make wave of ships instead of superposition
 - Input for the quantity of ships (keyboard)
 - Save / Restore
-- AI
+- AI **DONE**
 
 Improve :
 - color variation (image + filter ?)

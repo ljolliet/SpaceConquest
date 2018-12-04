@@ -136,7 +136,8 @@ public class Gameloop extends AnimationTimer {
 
         boolean isFree = true;
 
-        if(pos.distance(new Point2D(pos.getX(), 0)) < Utils.DISTANCE_BORDER || pos.distance(new Point2D(0, pos.getY())) < Utils.DISTANCE_BORDER )
+        if(pos.distance(new Point2D(pos.getX(), 0)) < Utils.DISTANCE_BORDER || pos.distance(new Point2D(0, pos.getY())) < Utils.DISTANCE_BORDER
+                || pos.distance(new Point2D(pos.getX(), Utils.WINDOW_HEIGHT)) < Utils.DISTANCE_BORDER || pos.distance(new Point2D(Utils.WINDOW_WIDTH, pos.getY())) < Utils.DISTANCE_BORDER )
             isFree = false;
 
         if(isFree){
