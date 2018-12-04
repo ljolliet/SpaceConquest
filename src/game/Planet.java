@@ -103,8 +103,9 @@ public class Planet {
     public void addProduction(){
         total_production += production_rate;
         if(total_production >= model.necessary_production){
-            total_production -= model.necessary_production;
-            available_ships ++;
+            float producted_ships = total_production/ model.necessary_production;
+            available_ships += producted_ships;
+            total_production -= producted_ships * model.necessary_production;
         }
     }
 
