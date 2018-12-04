@@ -136,9 +136,14 @@ public class Gameloop extends AnimationTimer {
 
         boolean isFree = true;
 
-        for (Planet p : planets) {
-            if (p.distantOf(pos) < Utils.DISTANCE_BETWEEN_PLAYERS) {
-                isFree = false;
+        if(pos.distance(new Point2D(pos.getX(), 0)) < Utils.DISTANCE_BORDER || pos.distance(new Point2D(0, pos.getY())) < Utils.DISTANCE_BORDER )
+            isFree = false;
+
+        if(isFree){
+            for (Planet p : planets) {
+                if (p.distantOf(pos) < Utils.DISTANCE_BETWEEN_PLAYERS) {
+                    isFree = false;
+                }
             }
         }
 
@@ -179,6 +184,10 @@ public class Gameloop extends AnimationTimer {
         int hp = new Random().nextInt(maxHp + 1 - minHp) + minHp;
 
         tmp.setAvailable_ships(hp);
+
+        if(tmp.getCenter().distance(new Point2D(tmp.getCenter().getX(), 0)) < Utils.DISTANCE_BORDER || tmp.getCenter().distance(new Point2D(0, tmp.getCenter().getY())) < Utils.DISTANCE_BORDER
+                || tmp.getCenter().distance(new Point2D(tmp.getCenter().getX(), Utils.WINDOW_HEIGHT)) < Utils.DISTANCE_BORDER || tmp.getCenter().distance(new Point2D(Utils.WINDOW_WIDTH, tmp.getCenter().getY())) < Utils.DISTANCE_BORDER )
+            isPosFree = false;
 
         for (Planet p : planets) {
             if (tmp.distantOf(p.getCenter()) < Utils.DISTANCE_BETWEEN_NEUTRAL) {

@@ -93,6 +93,11 @@ public class Utils {
     public static int PLAYER_PLANET_RADIUS = 3*LITTLE_SPACESHIP_LENGTH;
 
     /**
+     * Minimal distance between a planet and the border of the screen at initialization
+     */
+    public static int DISTANCE_BORDER = 2*PLAYER_PLANET_RADIUS;
+
+    /**
      * Minimal distance between two player's planet at initialization.
      */
     public static int DISTANCE_BETWEEN_PLAYERS = 3*PLAYER_PLANET_RADIUS;
