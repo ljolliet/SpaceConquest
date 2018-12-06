@@ -6,6 +6,9 @@ import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
 import utils.Utils;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -16,6 +19,8 @@ public class HumanController extends Controller {
     public HumanController(Color color) {
         super(color);
     }
+
+
     //events and function used by the human to control his spaceships
 
     public boolean isOnHumanPlanet(double x, double y) {

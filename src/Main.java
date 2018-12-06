@@ -2,8 +2,11 @@ import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 import utils.Utils;
+
+import java.io.*;
 
 public class Main extends Application {
 
@@ -25,6 +28,49 @@ public class Main extends Application {
 
         GAMELOOP = new Gameloop(root, scene);
         GAMELOOP.start();
+
+        scene.setOnKeyPressed(event -> {
+            if(event.getCode() == KeyCode.S){
+                System.out.println("  Saving ...");
+                long t1 = System.currentTimeMillis();
+                try {
+                    FileOutputStream fileOut =
+                            new FileOutputStream("save.ser");
+                    ObjectOutputStream out = new ObjectOutputStream(fileOut);
+                    out.writeObject(GAMELOOP);
+                    out.close();
+                    fileOut.close();
+                    System.out.printf("  Saved in save.ser (" + (System.currentTimeMillis() - t1) + ")ms");
+                } catch (IOException i) {
+                    i.printStackTrace();
+                }
+            }else if(event.getCode() == KeyCode.L){
+                System.out.println("  Loading ...");
+                long t1 = System.currentTimeMillis();
+                GAMELOOP = null;
+                try
+                {
+                    FileInputStream fileIn = new FileInputStream("save.ser");
+                    ObjectInputStream in = new ObjectInputStream(fileIn);
+                    GAMELOOP = (Gameloop) in.readObject();
+                    in.close();
+                    fileIn.close();
+                    GAMELOOP.setScene(scene);
+                    GAMELOOP.setRoot(root);
+                    GAMELOOP.start();
+                    System.out.printf("  Loaded in " + (System.currentTimeMillis() - t1) + " ms");
+
+                } catch(IOException ioe)
+                {
+                    ioe.printStackTrace();
+                    return;
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+
 
         stage.show();
     }

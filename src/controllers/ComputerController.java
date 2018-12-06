@@ -1,5 +1,7 @@
 package controllers;
 
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -54,4 +56,13 @@ public class ComputerController extends Controller {
     }
 
 
+    @Override
+    public void writeObject(ObjectOutputStream oos) {
+
+    }
+
+    @Override
+    public void readObject(ObjectInputStream ois) {
+
+    }
 }

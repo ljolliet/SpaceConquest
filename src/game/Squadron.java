@@ -6,15 +6,19 @@ import javafx.scene.Group;
 import utils.MathUtils;
 import utils.Utils;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 
-public class Squadron {
+public class Squadron implements Serializable{
 
     private ArrayList<Spaceship> spaceships;
     private Planet target;
-    private final Controller owner;
+    private Controller owner;
     private boolean selected = false;
 
 
@@ -121,6 +125,32 @@ public class Squadron {
 
     public Controller getOwner() { //ONly for test -> should we keep it ?
         return owner;
+    }
+
+    private void writeObject(ObjectOutputStream oos){
+        try {
+            oos.writeObject(spaceships);
+            oos.writeObject(target);
+            oos.writeObject(owner);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void readObject(ObjectInputStream ois){
+        try {
+            spaceships = (ArrayList<Spaceship>)ois.readObject();
+            target = (Planet) ois.readObject();
+            owner = (Controller) ois.readObject();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public Planet getTarget() {
+        return target;
     }
 }
 

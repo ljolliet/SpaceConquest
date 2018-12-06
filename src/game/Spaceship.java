@@ -7,9 +7,13 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import utils.MathUtils;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.LinkedList;
 
-public abstract class  Spaceship {
+public abstract class  Spaceship implements Serializable{
 
     protected int damage;
     protected int necessary_production;
@@ -111,5 +115,51 @@ public abstract class  Spaceship {
 
     public void setColor(Color color) {
         this.color = color;
+    }
+
+    private void writeObject(ObjectOutputStream oos){
+        try {
+            oos.writeObject(damage);
+            oos.writeObject(necessary_production);
+            oos.writeObject(angle);
+            oos.writeObject(speed);
+            oos.writeObject(length);
+            oos.writeObject(pos.getX());
+            oos.writeObject(pos.getY());
+            oos.writeObject(color.getRed());
+            oos.writeObject(color.getGreen());
+            oos.writeObject(color.getBlue());
+            oos.writeObject(color.getOpacity());
+            oos.writeObject(direction.getX());
+            oos.writeObject(direction.getY());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void readObject(ObjectInputStream ois){
+        try {
+            damage = (int)ois.readObject();
+            necessary_production = (int)ois.readObject();
+            angle = (int)ois.readObject();
+            speed = (double)ois.readObject();
+            length = (double)ois.readObject();
+            double x = (double)ois.readObject();
+            double y = (double)ois.readObject();
+            double r = (double)ois.readObject();
+            double g = (double)ois.readObject();
+            double b = (double)ois.readObject();
+            double opacity = (double)ois.readObject();
+            double xDirection = (double)ois.readObject();
+            double yDirection = (double)ois.readObject();
+            pos = new Point2D(x,y);
+            direction = new Point2D(xDirection, yDirection);
+            color = new Color(r,g,b,opacity);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
     }
 }

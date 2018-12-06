@@ -1,6 +1,5 @@
 package game;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import controllers.Controller;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
@@ -13,12 +12,14 @@ import utils.MathUtils;
 import utils.Utils;
 
 import java.awt.*;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Planet {
-
-
+public class Planet implements Serializable{
 
     private Point2D center;
     private int radius; //optional
@@ -29,7 +30,7 @@ public class Planet {
 
     private int waiting_for_launch = 0;
     private Planet target = null;
-    private HashMap<Point2D, Boolean> map = null;
+    private HashMap<Point2D, Boolean> map = new HashMap<>();
 
     private Spaceship model;
 
@@ -47,6 +48,7 @@ public class Planet {
         this.neutral = neutral;
         this.production_rate = production_rate;
         this.model = model;
+        model.setPos(new Point2D(-1,-1)); //so that serialization won't load a null object
         this.radius = radius;
         this.color = model.getColor();
 
@@ -277,5 +279,64 @@ public class Planet {
         this.map = map;
     }
 
+    private void writeObject(ObjectOutputStream oos){
+        try {
+            oos.writeObject(center.getX());
+            oos.writeObject(center.getY());
+            oos.writeObject(color.getRed());
+            oos.writeObject(color.getGreen());
+            oos.writeObject(color.getBlue());
+            oos.writeObject(color.getOpacity());
+            oos.writeObject(available_ships);
+            oos.writeObject(waiting_for_launch);
+            oos.writeObject(total_production);
+            oos.writeObject(production_rate);
+            oos.writeObject(radius);
+            oos.writeObject(model);
+            oos.writeObject(owner);
+            oos.writeObject(target);
+            oos.writeObject(map.size());
+            for(Point2D p : map.keySet())
+            {
+                oos.writeObject(p.getX());
+                oos.writeObject(p.getY());
+                oos.writeObject(map.get(p));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void readObject(ObjectInputStream ois){
+
+        try {
+            double x = (double)ois.readObject();
+            double y = (double)ois.readObject();
+            double r = (double) ois.readObject();
+            double g = (double) ois.readObject();
+            double b = (double) ois.readObject();
+            double opacity = (double) ois.readObject();
+            available_ships = (int) ois.readObject();
+            waiting_for_launch = (int) ois.readObject();
+            total_production = (float) ois.readObject();
+            production_rate = (float) ois.readObject();
+            radius = (int) ois.readObject();
+            model = (Spaceship) ois.readObject();
+            owner = (Controller)ois.readObject();
+            target = (Planet)ois.readObject();
+            int mapSize = (int)ois.readObject();
+            map = new HashMap<>();
+            for(int i = 0; i < mapSize; i++){
+                map.put(new Point2D((double)ois.readObject(),(double)ois.readObject()), (Boolean)ois.readObject());
+            }
+            center = new Point2D(x,y);
+            color = new Color(r,g,b,opacity);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+    }
 
 }

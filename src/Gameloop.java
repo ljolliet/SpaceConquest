@@ -1,5 +1,6 @@
 import controllers.TypeAI;
 import game.Planet;
+import game.Spaceship;
 import game.Squadron;
 import game.spaceships.LittleSpaceship;
 import javafx.animation.AnimationTimer;
@@ -8,6 +9,10 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import utils.Utils;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
@@ -20,7 +25,7 @@ import controllers.HumanController;
 /**
  * @author tguesdon, ljolliet
  */
-public class Gameloop extends AnimationTimer {
+public class Gameloop extends AnimationTimer implements Serializable {
 
     private Group root;
     private Scene scene;
@@ -30,7 +35,7 @@ public class Gameloop extends AnimationTimer {
     private ArrayList<Controller> controllers = new ArrayList<>();
     private ArrayList<Planet> planets = new ArrayList<>();
 
-    private final HashMap<Point2D, Boolean> accessibilityMap = new HashMap<>();
+    private HashMap<Point2D, Boolean> accessibilityMap = new HashMap<>();
 
     /**
      * @param root  containing the object that will be drawn
@@ -350,5 +355,38 @@ public class Gameloop extends AnimationTimer {
             }
     }
 
+    private void writeObject(ObjectOutputStream oos){
+        try {
+            oos.writeObject(planets);
+            oos.writeObject(controllers);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
+    private void readObject(ObjectInputStream ois){
+        try {
+            planets = (ArrayList<Planet>) ois.readObject();
+            controllers = (ArrayList<Controller>)ois.readObject();
+            accessibilityMap = new HashMap<>();
+            initAccessibilityMap();
+            for(Controller c : controllers){
+                for(Squadron s : c.getSquadrons()){
+                    s.setTarget(s.getTarget(), accessibilityMap);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void setRoot(Group root) {
+        this.root = root;
+    }
+
+    public void setScene(Scene scene) {
+        this.scene = scene;
+    }
 }

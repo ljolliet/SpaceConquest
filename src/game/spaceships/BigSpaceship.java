@@ -6,6 +6,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Polygon;
 
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+
 public class BigSpaceship extends Spaceship {
 	
 	public BigSpaceship(Color color) {
