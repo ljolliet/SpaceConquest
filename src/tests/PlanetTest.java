@@ -3,6 +3,7 @@ package tests;
 import controllers.ComputerController;
 import controllers.TypeAI;
 import game.Planet;
+import game.Spaceship;
 import game.Squadron;
 import game.spaceships.LittleSpaceship;
 import javafx.geometry.Point2D;
@@ -112,13 +113,23 @@ class PlanetTest {
     }
 
     @org.junit.jupiter.api.Test
-    void checkCollision() {
-        fail("Not implemented");
-    }
-
-    @org.junit.jupiter.api.Test
     void isLaunchReady() {
-        fail("Not implemented");
+        Planet p1 = new Planet(new Point2D(0,0),0,false, 9, new LittleSpaceship(Color.BLUE));
+        ComputerController owner1 = new ComputerController(Color.BLUE, TypeAI.CLASSIC);
+        p1.setOwner(owner1);
+
+        assertEquals(true, p1.isLaunchReady());
+
+        ArrayList<Spaceship> spaceships = new ArrayList<>();
+        Spaceship obstacle = new LittleSpaceship(Color.BLUE);
+        obstacle.setPos(new Point2D( 0,0));
+
+        spaceships.add(obstacle);
+
+        Squadron squad = new Squadron(spaceships, owner1);
+        owner1.getSquadrons().add(squad);
+
+        assertEquals(false, p1.isLaunchReady());
     }
 
     @org.junit.jupiter.api.Test
