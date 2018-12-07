@@ -35,10 +35,10 @@ public class Main extends Application {
             addSceneEvents(scene,root);
         }
         else{
-            System.out.println("Creating UI ...");
             UIController.loadAssets();
             UIController.generateDecoratives();
             UIController.generateControlsAndTitle();
+            UIController.generateOptionControls();
             UIController.drawBackground(root, true);
 
             UIController.start.setOnMouseClicked(event -> {
@@ -48,7 +48,12 @@ public class Main extends Application {
             });
 
             UIController.option.setOnMouseClicked(event -> {
-                UIController.drawOption(root, false);
+                if(UIController.OPTION_DISPLAYED){
+                    UIController.drawOption(root, true);
+                }else{
+                    UIController.drawOption(root, false);
+                }
+
             });
 
             UIController.quit.setOnMouseClicked(event -> {

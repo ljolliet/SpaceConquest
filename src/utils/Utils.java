@@ -24,7 +24,7 @@ public class Utils {
 	/**
      * If true the game will run optimized code on some functions.
      */
-    public static final boolean OPTIMIZED = true;
+    public static boolean OPTIMIZED = true;
 
 
     //------------SPACESHIPS-------------//
@@ -70,12 +70,12 @@ public class Utils {
     /**
      * Number of player.
      */
-    public static final int NB_PLAYER = 5;
+    public static int NB_PLAYER = 5;
 
     /**
      * Number of neutral planets.
      */
-    public static final int NB_NEUTRAL_PLANET = 20;
+    public static int NB_NEUTRAL_PLANET = 20;
 
     /**
      * Radius' size for neutral planets.
@@ -183,22 +183,54 @@ public class Utils {
 
     //-----------------------USER INTERFACE-------------------------
 
+    /**
+     * Number of decorative sprites in the background
+     */
     public static int DECORATIVE_NUMBER = 40;
 
+    /**
+     * Average size of sprites in the background
+     */
     public static int DECORATIVE_SIZE = 30;
 
+    /**
+     * Percentage of variation around DECORATIVE_SIZE for the size of decorative sprites in the background
+     */
     public static int DECORATIVE_SIZE_VARIATION = 33;
 
+    /**
+     * Color of the background
+     */
     public static Color BACKGROUND_COLOR = Color.rgb(0,0,51); //Nightblue
 
+    /**
+     * Width of buttons in the user interface
+     */
     public static int BUTTON_WIDTH = 100;
 
+    /**
+     * Height of buttons in the user interface
+     */
     public static int BUTTON_HEIGHT = 50;
 
+    /**
+     * Size of padding around buttons
+     */
     public static int BUTTON_RECT_PADDING = BUTTON_WIDTH/4;
 
+    /**
+     * Color of the rectangle surrounding buttons
+     */
     public static Color BUTTON_RECT_COLOR = Color.rgb(77,0,77, 0.75);
 
+    /**
+     * Width of the rectangle around options
+     */
     public static int OPTION_AREA_WIDTH = Utils.WINDOW_WIDTH/5;
+
+    /**
+     * Option text color
+     */
+    public static Color TEXT_COLOR = Color.WHITE;
 
 }

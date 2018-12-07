@@ -351,7 +351,8 @@ public class Gameloop extends AnimationTimer implements Serializable {
      */
     private void draw() {
         root.getChildren().removeAll(root.getChildren()); // clear root
-        UIController.drawBackground(root, false);
+        //if(!Utils.OPTIMIZED)
+            UIController.drawBackground(root, false);
 
         for (Planet p : planets) // draw all planets
             p.draw(root);

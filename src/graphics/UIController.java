@@ -1,13 +1,16 @@
 package graphics;
 
-import javafx.geometry.Point2D;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
+import javafx.util.StringConverter;
 import utils.Utils;
 
 import java.util.ArrayList;
@@ -29,9 +32,17 @@ public class UIController {
     public static Rectangle buttonArea = new Rectangle();
 
     //Options
+    public static boolean OPTION_DISPLAYED = false;
+
     public static Rectangle optionArea = new Rectangle();
     public static Line delimitation = new Line();
     public static Button apply = new Button("Apply");
+    public static Text optimization = new Text("Optimization : ");
+    public static Text playerNumber = new Text("Number of players : ");
+    public static Text neutralNumber = new Text("Number of neutral planets : ");
+    public static CheckBox optimizationController = new CheckBox();
+    public static Slider playerNumberController = new Slider();
+    public static Slider neutralNumberController = new Slider();
 
     public static void loadAssets(){
         assets.add(new Image("file:res/images/planet1.png"));
@@ -118,41 +129,96 @@ public class UIController {
     }
 
     public static void drawOption(Group group, boolean closeOption){
-        if(closeOption){
+        if(closeOption && OPTION_DISPLAYED){
             group.getChildren().remove(optionArea);
             group.getChildren().remove(delimitation);
+            group.getChildren().remove(optimization);
+            group.getChildren().remove(playerNumber);
+            group.getChildren().remove(neutralNumber);
+            group.getChildren().remove(optimizationController);
+            group.getChildren().remove(playerNumberController);
+            group.getChildren().remove(neutralNumberController);
             group.getChildren().remove(apply);
-        }else{
-            optionArea.setHeight(buttonArea.getHeight());
-            optionArea.setWidth(Utils.OPTION_AREA_WIDTH);
-
-            optionArea.setX(buttonArea.getX() + buttonArea.getWidth());
-            optionArea.setY(buttonArea.getY());
-
-            optionArea.setFill(Utils.BUTTON_RECT_COLOR);
-
-            delimitation.setStartX(optionArea.getX());
-            delimitation.setStartY(optionArea.getY());
-
-            delimitation.setEndX(optionArea.getX());
-            delimitation.setEndY(optionArea.getY() + optionArea.getHeight());
-
-            delimitation.setFill(Color.BLACK);
-
-            Rectangle buttonRect = new Rectangle(Utils.BUTTON_WIDTH,Utils.BUTTON_HEIGHT);
-            apply.setPrefSize(Utils.BUTTON_WIDTH,Utils.BUTTON_HEIGHT);
-            apply.setShape(buttonRect);
-            apply.setLayoutX(optionArea.getX() + optionArea.getWidth()/2 - Utils.BUTTON_WIDTH/2);
-            apply.setLayoutY(quit.getLayoutY());
-
+            OPTION_DISPLAYED = false;
+        }else if(!OPTION_DISPLAYED){
             apply.setOnMouseClicked(event -> {
+                Utils.OPTIMIZED = optimizationController.isSelected();
+                Utils.NB_NEUTRAL_PLANET = (int)neutralNumberController.getValue();
+                Utils.NB_PLAYER = (int)playerNumberController.getValue();
                 drawOption(group, true);
             });
-
             group.getChildren().add(optionArea);
             group.getChildren().add(delimitation);
+            group.getChildren().add(optimization);
+            group.getChildren().add(playerNumber);
+            group.getChildren().add(neutralNumber);
+            group.getChildren().add(optimizationController);
+            group.getChildren().add(playerNumberController);
+            group.getChildren().add(neutralNumberController);
             group.getChildren().add(apply);
-
+            OPTION_DISPLAYED = true;
         }
+    }
+
+    public static void generateOptionControls(){
+        optionArea.setHeight(buttonArea.getHeight());
+        optionArea.setWidth(Utils.OPTION_AREA_WIDTH);
+
+        optionArea.setX(buttonArea.getX() + buttonArea.getWidth());
+        optionArea.setY(buttonArea.getY());
+
+        optionArea.setFill(Utils.BUTTON_RECT_COLOR);
+
+        delimitation.setStartX(optionArea.getX());
+        delimitation.setStartY(optionArea.getY());
+
+        delimitation.setEndX(optionArea.getX());
+        delimitation.setEndY(optionArea.getY() + optionArea.getHeight());
+
+        delimitation.setFill(Color.BLACK);
+
+        Rectangle buttonRect = new Rectangle(Utils.BUTTON_WIDTH,Utils.BUTTON_HEIGHT);
+        apply.setPrefSize(Utils.BUTTON_WIDTH,Utils.BUTTON_HEIGHT);
+        apply.setShape(buttonRect);
+        apply.setLayoutX(optionArea.getX() + optionArea.getWidth()/2 - Utils.BUTTON_WIDTH/2);
+        apply.setLayoutY(quit.getLayoutY());
+
+        optimization.setX(optionArea.getX() + 10);
+        playerNumber.setX(optionArea.getX() + 10);
+        neutralNumber.setX(optionArea.getX() + 10);
+
+        optimization.setY(optionArea.getY() + optionArea.getHeight()/8);
+        playerNumber.setY(optionArea.getY() + 3*optionArea.getHeight()/8);
+        neutralNumber.setY(optionArea.getY() + 5*optionArea.getHeight()/8);
+
+        optimization.setFill(Utils.TEXT_COLOR);
+        playerNumber.setFill(Utils.TEXT_COLOR);
+        neutralNumber.setFill(Utils.TEXT_COLOR);
+
+        optimizationController.setSelected(Utils.OPTIMIZED);
+        optimizationController.setLayoutX(optionArea.getX() + optionArea.getWidth()/2);
+        optimizationController.setLayoutY(optimization.getY() - 10);
+
+        playerNumberController.setMin(2);
+        playerNumberController.setMax(5);
+        playerNumberController.setValue(Utils.NB_PLAYER);
+        playerNumberController.setShowTickLabels(true);
+        playerNumberController.setShowTickMarks(true);
+        playerNumberController.setMajorTickUnit(1);
+        playerNumberController.setMinorTickCount(0);
+        playerNumberController.setSnapToTicks(true);
+        playerNumberController.setLayoutX(optionArea.getX() + optionArea.getWidth()/2);
+        playerNumberController.setLayoutY(playerNumber.getY() - 10);
+
+        neutralNumberController.setMin(5);
+        neutralNumberController.setMax(20);
+        neutralNumberController.setValue(Utils.NB_NEUTRAL_PLANET);
+        neutralNumberController.setShowTickLabels(true);
+        neutralNumberController.setShowTickMarks(true);
+        neutralNumberController.setMajorTickUnit(4);
+        neutralNumberController.setSnapToTicks(true);
+        neutralNumberController.setLayoutX(optionArea.getX() + optionArea.getWidth()/2);
+        neutralNumberController.setLayoutY(neutralNumber.getY() - 10);
+
     }
 }
