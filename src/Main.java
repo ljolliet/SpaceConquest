@@ -1,4 +1,6 @@
+import graphics.UIController;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -26,9 +28,43 @@ public class Main extends Application {
         Canvas canvas = new Canvas(Utils.WINDOW_WIDTH, Utils.WINDOW_HEIGHT);
         root.getChildren().add(canvas);
 
-        GAMELOOP = new Gameloop(root, scene);
-        GAMELOOP.start();
 
+        if(Utils.TESTING){
+            GAMELOOP = new Gameloop(root, scene);
+            GAMELOOP.start();
+            addSceneEvents(scene,root);
+        }
+        else{
+            System.out.println("Creating UI ...");
+            UIController.loadAssets();
+            UIController.generateDecoratives();
+            UIController.generateControlsAndTitle();
+            UIController.drawBackground(root, true);
+
+            UIController.start.setOnMouseClicked(event -> {
+                GAMELOOP = new Gameloop(root, scene);
+                GAMELOOP.start();
+                addSceneEvents(scene,root);
+            });
+
+            UIController.option.setOnMouseClicked(event -> {
+                UIController.drawOption(root, false);
+            });
+
+            UIController.quit.setOnMouseClicked(event -> {
+                Platform.exit();
+                try {
+                    stop();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            });
+        }
+
+        stage.show();
+    }
+
+    public void addSceneEvents(Scene scene, Group root){
         scene.setOnKeyPressed(event -> {
             if(event.getCode() == KeyCode.S){
                 System.out.println("  Saving ...");
@@ -69,10 +105,6 @@ public class Main extends Application {
                 }
             }
         });
-
-
-
-        stage.show();
     }
 
 

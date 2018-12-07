@@ -63,6 +63,11 @@ public class Utils {
     public static final float PLAYER_PRODUCTION_RATE = 1; // Double ?
 
     /**
+     * Maximal percentage of production that can be withdrawn or added to the production
+     */
+    public static final int PRODUCTION_VARIATION = 20;
+
+    /**
      * Number of player.
      */
     public static final int NB_PLAYER = 5;
@@ -170,5 +175,30 @@ public class Utils {
     public static int CLASSIC_AI_PERCENTAGE = 30;
     public static int AGGRESSIVE_AI_PERCENTAGE = 50;
     public static int SAFE_AI_PERCENTAGE = 10;
+
+    /**
+     * Start the game without start screen
+     */
+    public static boolean TESTING = false;
+
+    //-----------------------USER INTERFACE-------------------------
+
+    public static int DECORATIVE_NUMBER = 40;
+
+    public static int DECORATIVE_SIZE = 30;
+
+    public static int DECORATIVE_SIZE_VARIATION = 33;
+
+    public static Color BACKGROUND_COLOR = Color.rgb(0,0,51); //Nightblue
+
+    public static int BUTTON_WIDTH = 100;
+
+    public static int BUTTON_HEIGHT = 50;
+
+    public static int BUTTON_RECT_PADDING = BUTTON_WIDTH/4;
+
+    public static Color BUTTON_RECT_COLOR = Color.rgb(77,0,77, 0.75);
+
+    public static int OPTION_AREA_WIDTH = Utils.WINDOW_WIDTH/5;
 
 }

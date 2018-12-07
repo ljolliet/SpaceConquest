@@ -3,6 +3,7 @@ import game.Planet;
 import game.Spaceship;
 import game.Squadron;
 import game.spaceships.LittleSpaceship;
+import graphics.UIController;
 import javafx.animation.AnimationTimer;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
@@ -118,7 +119,12 @@ public class Gameloop extends AnimationTimer implements Serializable {
     private void initPlayerPlanets() {
         for (Controller c : controllers) {
             Point2D pos = getPlayerPlanetPos();
-            Planet p = new Planet(pos, Utils.PLAYER_PLANET_RADIUS, false, Utils.PLAYER_PRODUCTION_RATE, new LittleSpaceship(c.getColor()));// add color
+
+            double maxProdRate = Utils.PLAYER_PRODUCTION_RATE + Utils.PRODUCTION_VARIATION * Utils.PLAYER_PRODUCTION_RATE / 100;
+            double minProdRate = Utils.PLAYER_PRODUCTION_RATE - Utils.PRODUCTION_VARIATION * Utils.PLAYER_PRODUCTION_RATE / 100;
+            double randProd = minProdRate + (maxProdRate - minProdRate) * (new Random()).nextDouble();
+
+            Planet p = new Planet(pos, Utils.PLAYER_PLANET_RADIUS, false, (float)randProd, new LittleSpaceship(c.getColor()));// add color
             c.getPlanets().add(p);
             p.setOwner(c);
             planets.add(p);
@@ -345,6 +351,7 @@ public class Gameloop extends AnimationTimer implements Serializable {
      */
     private void draw() {
         root.getChildren().removeAll(root.getChildren()); // clear root
+        UIController.drawBackground(root, false);
 
         for (Planet p : planets) // draw all planets
             p.draw(root);
@@ -353,6 +360,7 @@ public class Gameloop extends AnimationTimer implements Serializable {
             for (Squadron s : c.getSquadrons()) {
                 s.draw(root);
             }
+
     }
 
     private void writeObject(ObjectOutputStream oos){
