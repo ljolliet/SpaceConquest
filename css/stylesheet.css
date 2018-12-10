@@ -1,0 +1,13 @@
+.button{
+    -fx-font: bold 18px "Verdana";
+    -fx-padding: 10;
+    -fx-background-color: #B3B3CC;
+    -fx-text-fill: white;
+}
+
+.button:hover{
+    -fx-font: bold 18px "Verdana";
+    -fx-padding: 10;
+    -fx-background-color: #D1D1E0;
+    -fx-effect: dropshadow( one-pass-box , black , 8 , 0.0 , 3 , 0 );
+}

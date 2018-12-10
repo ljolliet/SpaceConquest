@@ -23,6 +23,7 @@ public class Main extends Application {
         stage.setTitle("Space Conquest");
         Group root = new Group();
         Scene scene = new Scene(root);
+        scene.getStylesheets().add("file:css/stylesheet.css");
         stage.setScene(scene);
 
         //Canvas canvas = new Canvas(Utils.WINDOW_WIDTH, Utils.WINDOW_HEIGHT);  <---- Full useless ???

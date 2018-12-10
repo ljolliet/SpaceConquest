@@ -7,6 +7,9 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.CycleMethod;
+import javafx.scene.paint.LinearGradient;
+import javafx.scene.paint.Stop;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
@@ -82,7 +85,7 @@ public class UIController {
 
     public static void generateControlsAndTitle(){
         titleView.setX(Utils.WINDOW_WIDTH/2 - title.getWidth()/2);
-        titleView.setY(Utils.WINDOW_HEIGHT/10);
+        titleView.setY(0);
 
         Rectangle buttonRect = new Rectangle(100,50);
 
@@ -95,18 +98,18 @@ public class UIController {
         quit.setShape(buttonRect);
 
         start.setLayoutX(Utils.WINDOW_WIDTH/2 - Utils.BUTTON_WIDTH/2);
-        start.setLayoutY(3*Utils.WINDOW_HEIGHT/12);
+        start.setLayoutY(4*Utils.WINDOW_HEIGHT/12);
 
         option.setLayoutX(Utils.WINDOW_WIDTH/2 - Utils.BUTTON_WIDTH/2);
-        option.setLayoutY(5*Utils.WINDOW_HEIGHT/12);
+        option.setLayoutY(6*Utils.WINDOW_HEIGHT/12);
 
         quit.setLayoutX(Utils.WINDOW_WIDTH/2 - Utils.BUTTON_WIDTH/2);
-        quit.setLayoutY(7*Utils.WINDOW_HEIGHT/12);
+        quit.setLayoutY(8*Utils.WINDOW_HEIGHT/12);
 
         buttonArea.setX(Utils.WINDOW_WIDTH/2 - Utils.BUTTON_WIDTH/2 - Utils.BUTTON_RECT_PADDING);
-        buttonArea.setY(3*Utils.WINDOW_HEIGHT/12 - Utils.BUTTON_RECT_PADDING);
+        buttonArea.setY(4*Utils.WINDOW_HEIGHT/12 - Utils.BUTTON_RECT_PADDING);
 
-        buttonArea.setHeight(2*Utils.BUTTON_RECT_PADDING + (Utils.WINDOW_HEIGHT - quit.getLayoutY()) );
+        buttonArea.setHeight(4*Utils.BUTTON_RECT_PADDING + (quit.getLayoutY() - start.getLayoutY()));
         buttonArea.setWidth(2*Utils.BUTTON_RECT_PADDING + Utils.BUTTON_WIDTH);
 
         buttonArea.setFill(Utils.BUTTON_RECT_COLOR);
@@ -115,7 +118,10 @@ public class UIController {
 
     public static void drawBackground(Group group, boolean withControl){
         Rectangle space = new Rectangle(Utils.WINDOW_WIDTH, Utils.WINDOW_HEIGHT);
-        space.setFill(Utils.BACKGROUND_COLOR);
+        Stop[] stops = new Stop[] { new Stop(0, Color.BLACK), new Stop(1, Utils.BACKGROUND_COLOR)};
+        LinearGradient lg1 = new LinearGradient(0, 0, 0.75, 1, true, CycleMethod.NO_CYCLE, stops);
+
+        space.setFill(lg1);
 
         group.getChildren().add(space);
 
