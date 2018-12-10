@@ -25,8 +25,8 @@ public class Main extends Application {
         Scene scene = new Scene(root);
         stage.setScene(scene);
 
-        Canvas canvas = new Canvas(Utils.WINDOW_WIDTH, Utils.WINDOW_HEIGHT);
-        root.getChildren().add(canvas);
+        //Canvas canvas = new Canvas(Utils.WINDOW_WIDTH, Utils.WINDOW_HEIGHT);  <---- Full useless ???
+        //root.getChildren().add(canvas);
 
 
         if(Utils.TESTING){
@@ -40,6 +40,7 @@ public class Main extends Application {
             UIController.generateControlsAndTitle();
             UIController.generateOptionControls();
             UIController.drawBackground(root, true);
+            UIController.mainStage = stage;
 
             UIController.start.setOnMouseClicked(event -> {
                 GAMELOOP = new Gameloop(root, scene);

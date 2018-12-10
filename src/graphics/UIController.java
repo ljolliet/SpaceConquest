@@ -1,22 +1,24 @@
 package graphics;
 
+import javafx.collections.FXCollections;
 import javafx.scene.Group;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Slider;
+import javafx.scene.Node;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
-import javafx.util.StringConverter;
+import javafx.stage.Stage;
 import utils.Utils;
 
 import java.util.ArrayList;
 import java.util.Random;
 
 public class UIController {
+
+    public static Stage mainStage = null;
 
     public static ArrayList<Image> assets = new ArrayList<>();
 
@@ -40,9 +42,11 @@ public class UIController {
     public static Text optimization = new Text("Optimization : ");
     public static Text playerNumber = new Text("Number of players : ");
     public static Text neutralNumber = new Text("Number of neutral planets : ");
+    public static Text screenSize = new Text("Screen size : ");
     public static CheckBox optimizationController = new CheckBox();
     public static Slider playerNumberController = new Slider();
     public static Slider neutralNumberController = new Slider();
+    public static ChoiceBox screenSizeController = new ChoiceBox();
 
     public static void loadAssets(){
         assets.add(new Image("file:res/images/planet1.png"));
@@ -135,9 +139,11 @@ public class UIController {
             group.getChildren().remove(optimization);
             group.getChildren().remove(playerNumber);
             group.getChildren().remove(neutralNumber);
+            group.getChildren().remove(screenSize);
             group.getChildren().remove(optimizationController);
             group.getChildren().remove(playerNumberController);
             group.getChildren().remove(neutralNumberController);
+            group.getChildren().remove(screenSizeController);
             group.getChildren().remove(apply);
             OPTION_DISPLAYED = false;
         }else if(!OPTION_DISPLAYED){
@@ -145,6 +151,53 @@ public class UIController {
                 Utils.OPTIMIZED = optimizationController.isSelected();
                 Utils.NB_NEUTRAL_PLANET = (int)neutralNumberController.getValue();
                 Utils.NB_PLAYER = (int)playerNumberController.getValue();
+                int oldWidth = Utils.WINDOW_WIDTH;
+                switch (screenSizeController.getSelectionModel().getSelectedItem().toString()){
+                    case "1920 x 1080":
+                        Utils.WINDOW_WIDTH = 1920;
+                        Utils.WINDOW_HEIGHT = 1080;
+                        Utils.MAX_NB_PLAYER = 5;
+                        Utils.MAX_NB_NEUTRAL_PLANET = 20;
+                        break;
+                    case "1600 x 900":
+                        Utils.WINDOW_WIDTH = 1600;
+                        Utils.WINDOW_HEIGHT = 900;
+                        Utils.MAX_NB_PLAYER = 5;
+                        Utils.MAX_NB_NEUTRAL_PLANET = 15;
+                        if(Utils.NB_NEUTRAL_PLANET > Utils.MAX_NB_NEUTRAL_PLANET){
+                            Utils.NB_NEUTRAL_PLANET = Utils.MAX_NB_NEUTRAL_PLANET;
+                        }
+                        break;
+                    case "1280 x 720":
+                        Utils.WINDOW_WIDTH = 1280;
+                        Utils.WINDOW_HEIGHT = 720;
+                        Utils.MAX_NB_PLAYER = 4;
+                        Utils.MAX_NB_NEUTRAL_PLANET = 10;
+                        if(Utils.NB_PLAYER > Utils.MAX_NB_PLAYER){
+                            Utils.NB_PLAYER = Utils.MAX_NB_PLAYER;
+                        }
+                        if(Utils.NB_NEUTRAL_PLANET > Utils.MAX_NB_NEUTRAL_PLANET){
+                            Utils.NB_NEUTRAL_PLANET = Utils.MAX_NB_NEUTRAL_PLANET;
+                        }
+                        break;
+                    default:
+                        break;
+                }
+                if(Utils.WINDOW_WIDTH != oldWidth){
+                    ArrayList<Node> toDelete = new ArrayList<>();
+                    for(Node n : group.getChildren()){
+                        toDelete.add(n);
+                    }
+                    group.getChildren().removeAll(toDelete);
+                    decoratives = new ArrayList<>();
+                    generateDecoratives();
+                    generateControlsAndTitle();
+                    generateOptionControls();
+                    drawBackground(group, true);
+                    mainStage.setWidth(Utils.WINDOW_WIDTH);
+                    mainStage.setHeight(Utils.WINDOW_HEIGHT);
+                }
+
                 drawOption(group, true);
             });
             group.getChildren().add(optionArea);
@@ -152,9 +205,11 @@ public class UIController {
             group.getChildren().add(optimization);
             group.getChildren().add(playerNumber);
             group.getChildren().add(neutralNumber);
+            group.getChildren().add(screenSize);
             group.getChildren().add(optimizationController);
             group.getChildren().add(playerNumberController);
             group.getChildren().add(neutralNumberController);
+            group.getChildren().add(screenSizeController);
             group.getChildren().add(apply);
             OPTION_DISPLAYED = true;
         }
@@ -186,21 +241,24 @@ public class UIController {
         optimization.setX(optionArea.getX() + 10);
         playerNumber.setX(optionArea.getX() + 10);
         neutralNumber.setX(optionArea.getX() + 10);
+        screenSize.setX(optionArea.getX() + 10);
 
-        optimization.setY(optionArea.getY() + optionArea.getHeight()/8);
-        playerNumber.setY(optionArea.getY() + 3*optionArea.getHeight()/8);
-        neutralNumber.setY(optionArea.getY() + 5*optionArea.getHeight()/8);
+        optimization.setY(optionArea.getY() + optionArea.getHeight()/12);
+        playerNumber.setY(optionArea.getY() + 3*optionArea.getHeight()/12);
+        neutralNumber.setY(optionArea.getY() + 5*optionArea.getHeight()/12);
+        screenSize.setY(optionArea.getY() + 7 * optionArea.getHeight()/12);
 
         optimization.setFill(Utils.TEXT_COLOR);
         playerNumber.setFill(Utils.TEXT_COLOR);
         neutralNumber.setFill(Utils.TEXT_COLOR);
+        screenSize.setFill(Utils.TEXT_COLOR);
 
         optimizationController.setSelected(Utils.OPTIMIZED);
         optimizationController.setLayoutX(optionArea.getX() + optionArea.getWidth()/2);
         optimizationController.setLayoutY(optimization.getY() - 10);
 
         playerNumberController.setMin(2);
-        playerNumberController.setMax(5);
+        playerNumberController.setMax(Utils.MAX_NB_PLAYER);
         playerNumberController.setValue(Utils.NB_PLAYER);
         playerNumberController.setShowTickLabels(true);
         playerNumberController.setShowTickMarks(true);
@@ -211,7 +269,7 @@ public class UIController {
         playerNumberController.setLayoutY(playerNumber.getY() - 10);
 
         neutralNumberController.setMin(5);
-        neutralNumberController.setMax(20);
+        neutralNumberController.setMax(Utils.MAX_NB_NEUTRAL_PLANET);
         neutralNumberController.setValue(Utils.NB_NEUTRAL_PLANET);
         neutralNumberController.setShowTickLabels(true);
         neutralNumberController.setShowTickMarks(true);
@@ -220,5 +278,9 @@ public class UIController {
         neutralNumberController.setLayoutX(optionArea.getX() + optionArea.getWidth()/2);
         neutralNumberController.setLayoutY(neutralNumber.getY() - 10);
 
+        screenSizeController.setLayoutX(optionArea.getX() + optionArea.getWidth()/2);
+        screenSizeController.setLayoutY(screenSize.getY() - 10);
+        screenSizeController.setItems(FXCollections.observableArrayList("1920 x 1080", "1600 x 900", "1280 x 720"));
+        screenSizeController.getSelectionModel().selectFirst();
     }
 }

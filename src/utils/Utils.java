@@ -73,9 +73,19 @@ public class Utils {
     public static int NB_PLAYER = 5;
 
     /**
+     * Max number of player, will be changed depending on the resolution
+     */
+    public static int MAX_NB_PLAYER = 5;
+
+    /**
      * Number of neutral planets.
      */
     public static int NB_NEUTRAL_PLANET = 20;
+
+    /**
+     * Max number of neutral planets, will be changed depending on the resolution
+     */
+    public static int MAX_NB_NEUTRAL_PLANET = 20;
 
     /**
      * Radius' size for neutral planets.
