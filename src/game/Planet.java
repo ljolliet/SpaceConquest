@@ -1,8 +1,12 @@
 package game;
 
 import controllers.Controller;
+import controllers.HumanController;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
+import javafx.scene.control.Slider;
+import javafx.scene.control.Spinner;
+import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -41,6 +45,8 @@ public class Planet implements Serializable{
     private Controller owner;
     private Color color;
 
+    private Slider sending_quantity = new Slider();
+
     private boolean selected = false;
 
     public Planet(Point2D center, int radius, boolean neutral, float production_rate, Spaceship model){
@@ -51,6 +57,17 @@ public class Planet implements Serializable{
         model.setPos(new Point2D(-1,-1)); //so that serialization won't load a null object
         this.radius = radius;
         this.color = model.getColor();
+
+        sending_quantity.setPrefWidth(Utils.PLAYER_PLANET_RADIUS);
+        sending_quantity.setLayoutX(center.getX() - sending_quantity.getPrefWidth()/2);
+        sending_quantity.setLayoutY(center.getY() + radius);
+        sending_quantity.setMin(0);
+        sending_quantity.setMax(100);
+        sending_quantity.setShowTickLabels(true);
+        sending_quantity.setShowTickMarks(true);
+        sending_quantity.setMajorTickUnit(25);
+        sending_quantity.setMinorTickCount(0);
+        sending_quantity.setSnapToTicks(true);
 
     }
 
@@ -216,6 +233,8 @@ public class Planet implements Serializable{
         stack.setLayoutY(center.getY()-radius);
 
         root.getChildren().add(stack);
+        if(owner != null && owner.getClass() == HumanController.class)
+            root.getChildren().add(sending_quantity);
     }
     //---------------------GETTER/SETTER-------------------//
 
@@ -278,6 +297,11 @@ public class Planet implements Serializable{
     public void setMap(HashMap<Point2D, Boolean> map) {
         this.map = map;
     }
+
+    public Slider getSending_quantity() {
+        return sending_quantity;
+    }
+
 
     private void writeObject(ObjectOutputStream oos){
         try {

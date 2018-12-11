@@ -59,7 +59,6 @@ public class Gameloop extends AnimationTimer implements Serializable {
         actualizeShipPos();
         actualizeShipSending();
         actualizeActionsAI();
-
     }
 
     //--------------------INIT-------------//
@@ -242,14 +241,11 @@ public class Gameloop extends AnimationTimer implements Serializable {
     private void initEvents() {
         HumanController hc = (HumanController) controllers.get(0);
 
-
-
         scene.setOnMouseClicked(event -> {
                 for (Squadron s : hc.getSquadrons())
                     if (s.contains(new Point2D(event.getX(), event.getY()))) {
                         hc.setSelectedSquadron(s);
                     }
-
         });
 
         scene.setOnDragDetected(event->{
@@ -264,7 +260,7 @@ public class Gameloop extends AnimationTimer implements Serializable {
         scene.setOnMouseReleased(event->{
         	if(hc.isOnPlanet(event.getX(), event.getY(), planets) || hc.isOnHumanPlanet(event.getX(), event.getY())) {
         	    if (dragging) { //if mouse released during a drag action
-                    hc.getSelectedPlanet().addWaitingShips(hc.getSelectedPlanet().getAvailable_ships(), hc.getPlanetClic(event.getX(), event.getY(), planets), accessibilityMap);
+                    hc.getSelectedPlanet().addWaitingShips((int)(hc.getSelectedPlanet().getAvailable_ships() * (hc.getSelectedPlanet().getSending_quantity().getValue()/100)), hc.getPlanetClic(event.getX(), event.getY(), planets), accessibilityMap);
                     dragging = false;
                 }else{ //if mouse was released not during a drag action
                     if (hc.getSelectedSquadron() != null) {
@@ -276,7 +272,7 @@ public class Gameloop extends AnimationTimer implements Serializable {
         	if(hc.getSelectedPlanet() != null)
                 hc.getSelectedPlanet().setSelected(false);
 
-        	});
+        });
 
     }
 
