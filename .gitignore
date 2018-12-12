@@ -2,6 +2,14 @@
 # Created by https://www.gitignore.io/api/java,linux,eclipse,intellij
 # Edit at https://www.gitignore.io/?templates=java,linux,eclipse,intellij
 
+
+### Added  by ljolliet ###
+
+spaceconquest.xml
+.idea/artifacts/SpaceConquest_jar.xml
+.idea/module_spaceconquest.xml
+spaceconquest.properties
+
 ### Eclipse ###
 
 .metadata

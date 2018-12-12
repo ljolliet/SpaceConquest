@@ -55,7 +55,7 @@ public class ComputerController extends Controller {
         }
     }
 
-
+/*
     @Override
     public void writeObject(ObjectOutputStream oos) {
 
@@ -65,4 +65,6 @@ public class ComputerController extends Controller {
     public void readObject(ObjectInputStream ois) {
 
     }
-}
+
+*/
+    }

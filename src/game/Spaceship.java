@@ -50,7 +50,7 @@ public abstract class  Spaceship implements Serializable{
             borderGlow.setColor(color);
             borderGlow.setOffsetX(0f);
             borderGlow.setOffsetY(0f);
-             polygon.setEffect(borderGlow); // SLOW THE ENTIRE GAME
+            // polygon.setEffect(borderGlow); // SLOW THE ENTIRE GAME
         }
         root.getChildren().add(polygon);
     }
