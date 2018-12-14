@@ -138,24 +138,7 @@ public class UIController {
             group.getChildren().add(start);
             group.getChildren().add(option);
             group.getChildren().add(quit);
-        }
-    }
-
-    public static void drawOption(Group group, boolean closeOption){
-        if(closeOption && OPTION_DISPLAYED){
-            group.getChildren().remove(optionArea);
-            group.getChildren().remove(delimitation);
-            group.getChildren().remove(optimization);
-            group.getChildren().remove(playerNumber);
-            group.getChildren().remove(neutralNumber);
-            group.getChildren().remove(screenSize);
-            group.getChildren().remove(optimizationController);
-            group.getChildren().remove(playerNumberController);
-            group.getChildren().remove(neutralNumberController);
-            group.getChildren().remove(screenSizeController);
-            group.getChildren().remove(apply);
-            OPTION_DISPLAYED = false;
-        }else if(!OPTION_DISPLAYED){
+            
             apply.setOnMouseClicked(event -> {
                 Utils.OPTIMIZED = optimizationController.isSelected();
                 Utils.NB_NEUTRAL_PLANET = (int)neutralNumberController.getValue();
@@ -206,9 +189,9 @@ public class UIController {
                     mainStage.setWidth(Utils.WINDOW_WIDTH);
                     mainStage.setHeight(Utils.WINDOW_HEIGHT);
                 }
-
                 drawOption(group, true);
             });
+            
             group.getChildren().add(optionArea);
             group.getChildren().add(delimitation);
             group.getChildren().add(optimization);
@@ -220,6 +203,40 @@ public class UIController {
             group.getChildren().add(neutralNumberController);
             group.getChildren().add(screenSizeController);
             group.getChildren().add(apply);
+            OPTION_DISPLAYED = true;
+            drawOption(group, true);
+            
+        }
+    }
+
+    public static void drawOption(Group group, boolean closeOption){
+        if(closeOption && OPTION_DISPLAYED){
+        	optionArea.setVisible(false);
+        	delimitation.setVisible(false);
+        	optimization.setVisible(false);
+        	playerNumber.setVisible(false);
+        	neutralNumber.setVisible(false);
+        	screenSize.setVisible(false);
+        	optimizationController.setVisible(false);
+            playerNumberController.setVisible(false);
+            neutralNumberController.setVisible(false);
+            screenSizeController.setVisible(false);
+            apply.setVisible(false);
+            
+            OPTION_DISPLAYED = false;
+        }else if(!closeOption && !OPTION_DISPLAYED){
+        	
+        	optionArea.setVisible(true);
+        	delimitation.setVisible(true);
+        	optimization.setVisible(true);
+        	playerNumber.setVisible(true);
+        	neutralNumber.setVisible(true);
+        	screenSize.setVisible(true);
+        	optimizationController.setVisible(true);
+            playerNumberController.setVisible(true);
+            neutralNumberController.setVisible(true);
+            screenSizeController.setVisible(true);
+            apply.setVisible(true);
             OPTION_DISPLAYED = true;
         }
     }
