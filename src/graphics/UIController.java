@@ -6,6 +6,7 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.CycleMethod;
 import javafx.scene.paint.LinearGradient;
@@ -33,6 +34,8 @@ public class UIController {
     public static Button start = new Button("Start");
     public static Button option = new Button("Options");
     public static Button quit = new Button("Quit");
+    private static VBox vboxMenu = new VBox();
+
 
     public static Rectangle buttonArea = new Rectangle();
 
@@ -288,5 +291,22 @@ public class UIController {
         screenSizeController.setLayoutY(screenSize.getY() - 10);
         screenSizeController.setItems(FXCollections.observableArrayList("1920 x 1080", "1600 x 900", "1280 x 720"));
         screenSizeController.getSelectionModel().selectFirst();
+    }
+
+    public static void generateMenuBar(){
+
+        Menu menu = new Menu("Menu");
+        MenuItem saveItem = new MenuItem("Save");
+              // , new ImageView(new Image("menusample/new.png")));
+        menu.getItems().add(saveItem);
+        MenuBar menuBar = new MenuBar();
+        menuBar.getMenus().addAll(menu);
+        vboxMenu.getChildren().addAll(menuBar);
+
+    }
+
+    public static void displayMenuBar(Group group) {
+        group.getChildren().add(vboxMenu);
+
     }
 }

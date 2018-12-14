@@ -1,6 +1,8 @@
+import controllers.ComputerController;
+import controllers.Controller;
+import controllers.HumanController;
 import controllers.TypeAI;
 import game.Planet;
-import game.Spaceship;
 import game.Squadron;
 import game.spaceships.LittleSpaceship;
 import graphics.UIController;
@@ -17,10 +19,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
-
-import controllers.ComputerController;
-import controllers.Controller;
-import controllers.HumanController;
 
 
 /**
@@ -72,6 +70,7 @@ public class Gameloop extends AnimationTimer implements Serializable {
         initPlanets();
         initEvents();
         initAccessibilityMap();
+        UIController.generateMenuBar();
     }
 
 
@@ -357,6 +356,8 @@ public class Gameloop extends AnimationTimer implements Serializable {
             for (Squadron s : c.getSquadrons()) {
                 s.draw(root);
             }
+        UIController.displayMenuBar(root);
+
 
     }
 
