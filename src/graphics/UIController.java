@@ -293,6 +293,7 @@ public class UIController {
         screenSizeController.getSelectionModel().selectFirst();
     }
 
+    //https://docs.oracle.com/javafx/2/ui_controls/menu_controls.html
     public static void generateMenuBar(){
 
         Menu menu = new Menu("Menu");
