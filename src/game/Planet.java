@@ -5,8 +5,6 @@ import controllers.HumanController;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
 import javafx.scene.control.Slider;
-import javafx.scene.control.Spinner;
-import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;

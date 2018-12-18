@@ -1,5 +1,6 @@
 package graphics;
 
+import game.loop.GameLoop;
 import javafx.collections.FXCollections;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -17,42 +18,44 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import utils.Utils;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class UIController {
+public class GUIController {
 
-    public static Stage mainStage = null;
+    private static Stage mainStage = null;
+    private static GameLoop gameLoop= null;
 
-    public static ArrayList<Image> assets = new ArrayList<>();
+    private static ArrayList<Image> assets = new ArrayList<>();
 
-    public static ArrayList<ImageView> decoratives = new ArrayList<>();
+    private static ArrayList<ImageView> decoratives = new ArrayList<>();
 
-    public static Image title = new Image("file:res/images/title.png");
-    public static ImageView titleView = new ImageView(title);
+    private static Image title = new Image("file:res/images/title.png");
+    private static ImageView titleView = new ImageView(title);
 
-    public static Button start = new Button("Start");
-    public static Button option = new Button("Options");
-    public static Button quit = new Button("Quit");
+    private static Button start = new Button("Start");
+    private static Button option = new Button("Options");
+    private static Button quit = new Button("Quit");
     private static VBox vboxMenu = new VBox();
 
 
-    public static Rectangle buttonArea = new Rectangle();
+    private static Rectangle buttonArea = new Rectangle();
 
     //Options
     public static boolean OPTION_DISPLAYED = false;
 
-    public static Rectangle optionArea = new Rectangle();
-    public static Line delimitation = new Line();
-    public static Button apply = new Button("Apply");
-    public static Text optimization = new Text("Optimization : ");
-    public static Text playerNumber = new Text("Number of players : ");
-    public static Text neutralNumber = new Text("Number of neutral planets : ");
-    public static Text screenSize = new Text("Screen size : ");
-    public static CheckBox optimizationController = new CheckBox();
-    public static Slider playerNumberController = new Slider();
-    public static Slider neutralNumberController = new Slider();
-    public static ChoiceBox screenSizeController = new ChoiceBox();
+    private static Rectangle optionArea = new Rectangle();
+    private static Line delimitation = new Line();
+    private static Button apply = new Button("Apply");
+    private static Text optimization = new Text("Optimization : ");
+    private static Text playerNumber = new Text("Number of players : ");
+    private static Text neutralNumber = new Text("Number of neutral planets : ");
+    private static Text screenSize = new Text("Screen size : ");
+    private static CheckBox optimizationController = new CheckBox();
+    private static Slider playerNumberController = new Slider();
+    private static Slider neutralNumberController = new Slider();
+    private static ChoiceBox screenSizeController = new ChoiceBox();
 
     public static void loadAssets(){
         assets.add(new Image("file:res/images/planet1.png"));
@@ -310,16 +313,52 @@ public class UIController {
         screenSizeController.getSelectionModel().selectFirst();
     }
 
-    //https://docs.oracle.com/javafx/2/ui_controls/menu_controls.html
+    //https://docs.oracle.com/javafx/2/ui_controls/menu_controls.htm
     public static void generateMenuBar(){
 
         Menu menu = new Menu("Menu");
-        MenuItem saveItem = new MenuItem("Save");
-              // , new ImageView(new Image("menusample/new.png")));
+        MenuItem saveItem = new MenuItem("Save", new ImageView(new Image("file:res/images/planet1.png"))); // find a real pic or let this one
+        saveItem.setOnAction(e -> {
+            vboxMenu.setVisible(true);
+            System.out.println("  Saving ...");
+            long t1 = System.currentTimeMillis();
+            try {
+                FileOutputStream fileOut =
+                        new FileOutputStream("save.ser");
+                ObjectOutputStream out = new ObjectOutputStream(fileOut);
+                out.writeObject(gameLoop);
+                out.close();
+                fileOut.close();
+                System.out.printf("  Saved in save.ser (" + (System.currentTimeMillis() - t1) + ")ms");
+            } catch (IOException i) {
+                i.printStackTrace();
+            }
+        });
+        MenuItem loadItem = new MenuItem("Load", new ImageView(new Image("file:res/images/planet2.png"))); // find a real pic
+        loadItem.setOnAction(e -> {
+            vboxMenu.setVisible(true);
+            System.out.println("  Loading ...");
+            long t1 = System.currentTimeMillis();
+            gameLoop = null;
+
+             /*   FileInputStream fileIn = new FileInputStream("save.ser");
+                ObjectInputStream in = new ObjectInputStream(fileIn);
+                GAMELOOP = (GameLoop) in.readObject();
+                in.close();
+                fileIn.close();
+                GAMELOOP.setScene(scene);
+                GAMELOOP.setRoot(root);
+                GAMELOOP.start();
+                System.out.printf("  Loaded in " + (System.currentTimeMillis() - t1) + " ms");*/
+
+
+        });
         menu.getItems().add(saveItem);
+        menu.getItems().add(loadItem);
+
         MenuBar menuBar = new MenuBar();
         menuBar.getMenus().addAll(menu);
-        vboxMenu.getChildren().addAll(menuBar);
+      vboxMenu.getChildren().addAll(menuBar);
 
     }
 
@@ -327,4 +366,24 @@ public class UIController {
         group.getChildren().add(vboxMenu);
 
     }
+
+    public static Button getQuit() {
+        return quit;
+    }
+
+    public static Button getOption() {
+        return option;
+    }
+
+    public static Button getStart() {
+        return start;
+    }
+
+    public static void setMainStage(Stage mainStage) {
+        GUIController.mainStage = mainStage;
+    }
+    public  void setGameLoop(GameLoop gameloop){
+        this.gameLoop = gameloop;
+    }
+
 }

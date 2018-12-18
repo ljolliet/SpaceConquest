@@ -1,9 +1,9 @@
-import graphics.UIController;
+import graphics.GUIController;
+import game.loop.GameLoop;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.canvas.Canvas;
 import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 import utils.Utils;
@@ -15,7 +15,8 @@ public class Main extends Application {
     /**
      * Instance of the game
      */
-    public static Gameloop GAMELOOP;
+    public static GameLoop GAMELOOP;
+    private Scene start;
 
 
     @Override
@@ -30,35 +31,34 @@ public class Main extends Application {
         //root.getChildren().add(canvas);
 
 
-        if(Utils.TESTING){
-            GAMELOOP = new Gameloop(root, scene);
+        if (Utils.TESTING) {
+            GAMELOOP = new GameLoop(root, scene);
             GAMELOOP.start();
-            addSceneEvents(scene,root);
-        }
-        else{
-            UIController.loadAssets();
-            UIController.generateDecoratives();
-            UIController.generateControlsAndTitle();
-            UIController.generateOptionControls();
-            UIController.drawBackground(root, true);
-            UIController.mainStage = stage;
+            addSceneEvents(scene, root);
+        } else {
+            GUIController.loadAssets();
+            GUIController.generateDecoratives();
+            GUIController.generateControlsAndTitle();
+            GUIController.generateOptionControls();
+            GUIController.drawBackground(root, true);
+            GUIController.setMainStage(stage);
 
-            UIController.start.setOnMouseClicked(event -> {
-                GAMELOOP = new Gameloop(root, scene);
+            GUIController.getStart().setOnMouseClicked(event -> {
+                GAMELOOP = new GameLoop(root, scene);
                 GAMELOOP.start();
-                addSceneEvents(scene,root);
+                addSceneEvents(scene, root);
             });
 
-            UIController.option.setOnMouseClicked(event -> {
-                if(UIController.OPTION_DISPLAYED){
-                    UIController.drawOption(root, true);
-                }else{
-                    UIController.drawOption(root, false);
+            GUIController.getOption().setOnMouseClicked(event -> {
+                if (GUIController.OPTION_DISPLAYED) {
+                    GUIController.drawOption(root, true);
+                } else {
+                    GUIController.drawOption(root, false);
                 }
 
             });
 
-            UIController.quit.setOnMouseClicked(event -> {
+            GUIController.getQuit().setOnMouseClicked(event -> {
                 Platform.exit();
                 try {
                     stop();
@@ -74,6 +74,7 @@ public class Main extends Application {
     public void addSceneEvents(Scene scene, Group root){
         scene.setOnKeyPressed(event -> {
             if(event.getCode() == KeyCode.S){
+
                 System.out.println("  Saving ...");
                 long t1 = System.currentTimeMillis();
                 try {
@@ -95,7 +96,7 @@ public class Main extends Application {
                 {
                     FileInputStream fileIn = new FileInputStream("save.ser");
                     ObjectInputStream in = new ObjectInputStream(fileIn);
-                    GAMELOOP = (Gameloop) in.readObject();
+                    GAMELOOP = (GameLoop) in.readObject();
                     in.close();
                     fileIn.close();
                     GAMELOOP.setScene(scene);
@@ -119,4 +120,7 @@ public class Main extends Application {
         launch(args);
     }
 
+    public Scene getStart() {
+        return start;
+    }
 }

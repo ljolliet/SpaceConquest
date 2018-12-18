@@ -6,9 +6,6 @@ import javafx.scene.shape.Polygon;
 import javafx.scene.transform.Rotate;
 import utils.Utils;
 
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-
 public class LittleSpaceship extends Spaceship {
 
     public LittleSpaceship(Color color) {

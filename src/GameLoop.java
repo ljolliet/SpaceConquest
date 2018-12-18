@@ -1,3 +1,5 @@
+package game.loop;
+
 import controllers.ComputerController;
 import controllers.Controller;
 import controllers.HumanController;
@@ -5,7 +7,7 @@ import controllers.TypeAI;
 import game.Planet;
 import game.Squadron;
 import game.spaceships.LittleSpaceship;
-import graphics.UIController;
+import graphics.GUIController;
 import javafx.animation.AnimationTimer;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
@@ -24,7 +26,7 @@ import java.util.Random;
 /**
  * @author tguesdon, ljolliet
  */
-public class Gameloop extends AnimationTimer implements Serializable {
+public class GameLoop extends AnimationTimer implements Serializable {
 
     private Group root;
     private Scene scene;
@@ -40,7 +42,7 @@ public class Gameloop extends AnimationTimer implements Serializable {
      * @param root  containing the object that will be drawn
      * @param scene on which root is drawn
      */
-    public Gameloop(Group root, Scene scene) {
+    public GameLoop(Group root, Scene scene) {
         this.root = root;
         this.scene = scene;
         init();
@@ -70,7 +72,7 @@ public class Gameloop extends AnimationTimer implements Serializable {
         initPlanets();
         initEvents();
         initAccessibilityMap();
-        UIController.generateMenuBar();
+        GUIController.generateMenuBar();
     }
 
 
@@ -347,7 +349,7 @@ public class Gameloop extends AnimationTimer implements Serializable {
     private void draw() {
         root.getChildren().removeAll(root.getChildren()); // clear root
         //if(!Utils.OPTIMIZED)
-            UIController.drawBackground(root, false);
+            GUIController.drawBackground(root, false);
 
         for (Planet p : planets) // draw all planets
             p.draw(root);
@@ -356,12 +358,12 @@ public class Gameloop extends AnimationTimer implements Serializable {
             for (Squadron s : c.getSquadrons()) {
                 s.draw(root);
             }
-        UIController.displayMenuBar(root);
+        GUIController.displayMenuBar(root);
 
 
     }
 
-    private void writeObject(ObjectOutputStream oos){
+    public void writeObject(ObjectOutputStream oos){
         try {
             oos.writeObject(planets);
             oos.writeObject(controllers);
@@ -370,7 +372,7 @@ public class Gameloop extends AnimationTimer implements Serializable {
         }
     }
 
-    private void readObject(ObjectInputStream ois){
+    public void readObject(ObjectInputStream ois){
         try {
             planets = (ArrayList<Planet>) ois.readObject();
             controllers = (ArrayList<Controller>)ois.readObject();
