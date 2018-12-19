@@ -32,7 +32,7 @@ public class GameLoop extends AnimationTimer implements Serializable {
     /**
      * Boolean representing whether or not the player is doing a drag & drop movement.
      */
-    public  boolean dragging = false;
+    public transient boolean dragging = false;
 
     /**
      * List of all controllers in the game.
@@ -403,6 +403,10 @@ public class GameLoop extends AnimationTimer implements Serializable {
                     s.setTarget(s.getTarget(), accessibilityMap);
                 }
             }
+            scene = Main.SCENE;
+            root = Main.GROUP;
+            initEvents();
+            dragging = false;
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {

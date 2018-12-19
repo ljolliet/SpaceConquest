@@ -431,8 +431,6 @@ public class GUIController {
                 Main.GAMELOOP = (GameLoop) in.readObject();
                 in.close();
                 fileIn.close();
-                Main.GAMELOOP.setScene(Main.SCENE);
-                Main.GAMELOOP.setRoot(Main.GROUP);
                 Main.GAMELOOP.start();
                 System.out.println("  Loaded in " + (System.currentTimeMillis() - t1) + " ms");
             } catch (FileNotFoundException e1) {
