@@ -1,6 +1,4 @@
-package graphics;
 
-import game.loop.GameLoop;
 import javafx.collections.FXCollections;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -24,39 +22,108 @@ import java.util.Random;
 
 public class GUIController {
 
+    /**
+     * Stage of the application. Will be set in main function of Main.class
+     */
     private static Stage mainStage = null;
+    /**
+     * Gameloop of the game. JOLIAX
+     */
     private static GameLoop gameLoop= null;
 
+    /**
+     * All assets used in the game.
+     */
     private static ArrayList<Image> assets = new ArrayList<>();
-
+    /**
+     * List of assets used to decorates the background.
+     */
     private static ArrayList<ImageView> decoratives = new ArrayList<>();
-
+    /**
+     * Stylized title of the game.
+     */
     private static Image title = new Image("file:res/images/title.png");
     private static ImageView titleView = new ImageView(title);
 
+    /**
+     * Button used to start the game.
+     */
     private static Button start = new Button("Start");
+    /**
+     * Button used to view and edit options.
+     */
     private static Button option = new Button("Options");
+    /**
+     * Button used to quit the game.
+     */
     private static Button quit = new Button("Quit");
+
+    /**
+     * Menu with button allowing to save and load a game while playing.
+     */
     private static VBox vboxMenu = new VBox();
 
-
+    /**
+     * Rectangle surrounding the buttons start, option and quit.
+     */
     private static Rectangle buttonArea = new Rectangle();
 
-    //Options
+    /**
+     * Boolean representing whether or not the option are displayed.
+     */
     public static boolean OPTION_DISPLAYED = false;
 
+    /**
+     * Rectangle surrounding the options' controllers.
+     */
     private static Rectangle optionArea = new Rectangle();
+    /**
+     * Line between the start, option, quit buttons and the options' controllers.
+     */
     private static Line delimitation = new Line();
+    /**
+     * Button allowing to apply changes made to the options.
+     */
     private static Button apply = new Button("Apply");
+
+    /**
+     * Text aside of the optimization checkbox.
+     */
     private static Text optimization = new Text("Optimization : ");
+    /**
+     * Text aside of the slider on number of players.
+     */
     private static Text playerNumber = new Text("Number of players : ");
+    /**
+     * Text aside of the slider on number of neutral planets.
+     */
     private static Text neutralNumber = new Text("Number of neutral planets : ");
+    /**
+     * Text aside of the choice of screen size.
+     */
     private static Text screenSize = new Text("Screen size : ");
+
+    /**
+     * Checkbox allowing to choose if the game will be optimized or not.
+     */
     private static CheckBox optimizationController = new CheckBox();
+
+    /**
+     * Slider controlling the number of players.
+     */
     private static Slider playerNumberController = new Slider();
+    /**
+     * Slider controlling the number of neutral planets.
+     */
     private static Slider neutralNumberController = new Slider();
+    /**
+     * ChoiceBox controlling the screen size.
+     */
     private static ChoiceBox screenSizeController = new ChoiceBox();
 
+    /**
+     * Load every Image into assets.
+     */
     public static void loadAssets(){
         assets.add(new Image("file:res/images/planet1.png"));
         assets.add(new Image("file:res/images/planet2.png"));
@@ -67,6 +134,9 @@ public class GUIController {
         assets.add(new Image("file:res/images/star4.png"));
     }
 
+    /**
+     * Generate a random list of images from the assets.
+     */
     public static void generateDecoratives(){
         for(int i = 0; i < Utils.DECORATIVE_NUMBER; i++){
             int x = new Random().nextInt(Utils.WINDOW_WIDTH);
@@ -89,6 +159,9 @@ public class GUIController {
         }
     }
 
+    /**
+     * Process position and size of every control. Process position and size of the title.
+     */
     public static void generateControlsAndTitle(){
         titleView.setX(Utils.WINDOW_WIDTH/2 - title.getWidth()/2);
         titleView.setY(0);
@@ -122,6 +195,11 @@ public class GUIController {
 
     }
 
+    /**
+     * Draw the background on a Group.
+     * @param group Group on which the background will be drawn.
+     * @param withControl True if the controls are drawn (main menu), false if not (during game).
+     */
     public static void drawBackground(Group group, boolean withControl){
         Rectangle space = new Rectangle(Utils.WINDOW_WIDTH, Utils.WINDOW_HEIGHT);
         Stop[] stops = new Stop[] { new Stop(0, Color.BLACK), new Stop(1, Utils.BACKGROUND_COLOR)};
@@ -192,7 +270,7 @@ public class GUIController {
                     mainStage.setWidth(Utils.WINDOW_WIDTH);
                     mainStage.setHeight(Utils.WINDOW_HEIGHT);
                 }
-                drawOption(group, true);
+                drawOption( true);
             });
             
             group.getChildren().add(optionArea);
@@ -207,12 +285,16 @@ public class GUIController {
             group.getChildren().add(screenSizeController);
             group.getChildren().add(apply);
             OPTION_DISPLAYED = true;
-            drawOption(group, true);
+            drawOption( true);
             
         }
     }
 
-    public static void drawOption(Group group, boolean closeOption){
+    /**
+     * Make the option panel visible or not depending on closeOption.
+     * @param closeOption If true makes the option panel visible, if not makes it invisible.
+     */
+    public static void drawOption(boolean closeOption){
         if(closeOption && OPTION_DISPLAYED){
         	optionArea.setVisible(false);
         	delimitation.setVisible(false);
@@ -244,6 +326,9 @@ public class GUIController {
         }
     }
 
+    /**
+     * Process position of every controls of the options panel.
+     */
     public static void generateOptionControls(){
         optionArea.setHeight(buttonArea.getHeight());
         optionArea.setWidth(Utils.OPTION_AREA_WIDTH);
@@ -314,6 +399,10 @@ public class GUIController {
     }
 
     //https://docs.oracle.com/javafx/2/ui_controls/menu_controls.htm
+
+    /**
+     * Generate a menu with two buttons. One saving the game and one loading it. JOLIAX
+     */
     public static void generateMenuBar(){
 
         Menu menu = new Menu("Menu");
@@ -362,6 +451,10 @@ public class GUIController {
 
     }
 
+    /**
+     * Add the menu to the group given in parameter.
+     * @param group Group on which the menu will be added.
+     */
     public static void displayMenuBar(Group group) {
         group.getChildren().add(vboxMenu);
 

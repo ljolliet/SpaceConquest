@@ -20,8 +20,8 @@ class PlanetTest {
 
     @org.junit.jupiter.api.Test
     void createSquadron() {
-        Planet p = new Planet(new Point2D(0,0),0,true, 5* Utils.LITTLE_SPACESHIP_NEC_PROD, new LittleSpaceship(Color.BLUE));
-        Planet target = new Planet(new Point2D(100,100),0,false, 0, new LittleSpaceship(Color.BLUE));
+        Planet p = new Planet(new Point2D(0,0),0, 5* Utils.LITTLE_SPACESHIP_NEC_PROD, new LittleSpaceship(Color.BLUE));
+        Planet target = new Planet(new Point2D(100,100),0, 0, new LittleSpaceship(Color.BLUE));
         p.addProduction();
         assertEquals(5,p.getAvailable_ships());
         p.addWaitingShips(5,target,new HashMap<>());
@@ -38,8 +38,8 @@ class PlanetTest {
 
     @org.junit.jupiter.api.Test
     void addWaitingShips() {
-        Planet p = new Planet(new Point2D(0,0),0,false, 5* Utils.LITTLE_SPACESHIP_NEC_PROD, new LittleSpaceship(Color.BLUE));
-        Planet target = new Planet(new Point2D(100,100),0,false, 0, new LittleSpaceship(Color.BLUE));
+        Planet p = new Planet(new Point2D(0,0),0, 5* Utils.LITTLE_SPACESHIP_NEC_PROD, new LittleSpaceship(Color.BLUE));
+        Planet target = new Planet(new Point2D(100,100),0, 0, new LittleSpaceship(Color.BLUE));
         p.addProduction();
 
         assertEquals(5,p.getAvailable_ships());
@@ -54,7 +54,7 @@ class PlanetTest {
 
     @org.junit.jupiter.api.Test
     void addProduction() {
-        Planet p = new Planet(new Point2D(0,0),0,false, 9, new LittleSpaceship(Color.BLUE));
+        Planet p = new Planet(new Point2D(0,0),0, 9, new LittleSpaceship(Color.BLUE));
         p.addProduction(); //9
         if(p.getAvailable_ships() != 0 ){
             fail("Didn't add 1 ship");
@@ -67,7 +67,7 @@ class PlanetTest {
 
     @org.junit.jupiter.api.Test
     void addSpaceship() {
-        Planet p = new Planet(new Point2D(0,0),0,false, 9, new LittleSpaceship(Color.BLUE));
+        Planet p = new Planet(new Point2D(0,0),0, 9, new LittleSpaceship(Color.BLUE));
         p.addSpaceship();
 
         assertEquals(1, p.getAvailable_ships());
@@ -80,15 +80,15 @@ class PlanetTest {
 
     @org.junit.jupiter.api.Test
     void contains() {
-        Planet p1 = new Planet(new Point2D(0,0),50,false, 9, new LittleSpaceship(Color.BLUE));
+        Planet p1 = new Planet(new Point2D(0,0),50, 9, new LittleSpaceship(Color.BLUE));
         assertEquals(true, p1.contains(new Point2D(0,50)));
         assertEquals(false,p1.contains(new Point2D(0,51)));
     }
 
     @org.junit.jupiter.api.Test
     void distantOf() {
-        Planet p1 = new Planet(new Point2D(0,0),0,false, 9, new LittleSpaceship(Color.BLUE));
-        Planet p2 = new Planet(new Point2D(0,100),0,false, 9, new LittleSpaceship(Color.BLUE));
+        Planet p1 = new Planet(new Point2D(0,0),0, 9, new LittleSpaceship(Color.BLUE));
+        Planet p2 = new Planet(new Point2D(0,100),0, 9, new LittleSpaceship(Color.BLUE));
 
         assertEquals(100, p1.distantOf(p2.getCenter()));
         assertEquals(150,p1.distantOf(new Point2D(150,0)));
@@ -96,7 +96,7 @@ class PlanetTest {
 
     @org.junit.jupiter.api.Test
     void changeOwner() {
-        Planet p1 = new Planet(new Point2D(0,0),0,false, 9, new LittleSpaceship(Color.BLUE));
+        Planet p1 = new Planet(new Point2D(0,0),0, 9, new LittleSpaceship(Color.BLUE));
 
         ComputerController owner1 = new ComputerController(Color.BLUE, TypeAI.CLASSIC);
         ComputerController owner2 = new ComputerController(Color.RED, TypeAI.CLASSIC);
@@ -113,7 +113,7 @@ class PlanetTest {
 
     @org.junit.jupiter.api.Test
     void isLaunchReady() {
-        Planet p1 = new Planet(new Point2D(0,0),0,false, 9, new LittleSpaceship(Color.BLUE));
+        Planet p1 = new Planet(new Point2D(0,0),0, 9, new LittleSpaceship(Color.BLUE));
         ComputerController owner1 = new ComputerController(Color.BLUE, TypeAI.CLASSIC);
         p1.setOwner(owner1);
 
@@ -133,9 +133,9 @@ class PlanetTest {
 
     @org.junit.jupiter.api.Test
     void nearestEnnemyPlanet() {
-        Planet p1 = new Planet(new Point2D(0,0),0,false, 9, new LittleSpaceship(Color.BLUE));
-        Planet p2 = new Planet(new Point2D(0,100),0,false, 9, new LittleSpaceship(Color.BLUE));
-        Planet p3 = new Planet(new Point2D(0,200),0,false, 9, new LittleSpaceship(Color.BLUE));
+        Planet p1 = new Planet(new Point2D(0,0),0, 9, new LittleSpaceship(Color.BLUE));
+        Planet p2 = new Planet(new Point2D(0,100),0, 9, new LittleSpaceship(Color.BLUE));
+        Planet p3 = new Planet(new Point2D(0,200),0, 9, new LittleSpaceship(Color.BLUE));
 
         ComputerController owner1 = new ComputerController(Color.BLUE, TypeAI.CLASSIC);
         ComputerController owner2 = new ComputerController(Color.RED, TypeAI.CLASSIC);

@@ -1,5 +1,3 @@
-import graphics.GUIController;
-import game.loop.GameLoop;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Group;
@@ -16,8 +14,6 @@ public class Main extends Application {
      * Instance of the game
      */
     public static GameLoop GAMELOOP;
-    private Scene start;
-
 
     @Override
     public void start(Stage stage) {
@@ -34,7 +30,7 @@ public class Main extends Application {
         if (Utils.TESTING) {
             GAMELOOP = new GameLoop(root, scene);
             GAMELOOP.start();
-            addSceneEvents(scene, root);
+            //addSceneEvents(scene, root);
         } else {
             GUIController.loadAssets();
             GUIController.generateDecoratives();
@@ -46,7 +42,7 @@ public class Main extends Application {
             GUIController.getStart().setOnMouseClicked(event -> {
                 GAMELOOP = new GameLoop(root, scene);
                 GAMELOOP.start();
-                addSceneEvents(scene, root);
+                //addSceneEvents(scene, root);
             });
 
             GUIController.getOption().setOnMouseClicked(event -> {
@@ -71,6 +67,12 @@ public class Main extends Application {
         stage.show();
     }
 
+    /**
+     * Add events allowing to save the game with "S" and load with "L".
+     * @param
+     * @param
+     */
+    /*
     public void addSceneEvents(Scene scene, Group root){
         scene.setOnKeyPressed(event -> {
             if(event.getCode() == KeyCode.S){
@@ -113,14 +115,10 @@ public class Main extends Application {
                 }
             }
         });
-    }
+    } */
 
 
     public static void main(String[] args) {
         launch(args);
-    }
-
-    public Scene getStart() {
-        return start;
     }
 }

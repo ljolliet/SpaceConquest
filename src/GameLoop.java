@@ -1,4 +1,3 @@
-package game.loop;
 
 import controllers.ComputerController;
 import controllers.Controller;
@@ -7,7 +6,6 @@ import controllers.TypeAI;
 import game.Planet;
 import game.Squadron;
 import game.spaceships.LittleSpaceship;
-import graphics.GUIController;
 import javafx.animation.AnimationTimer;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
@@ -31,11 +29,23 @@ public class GameLoop extends AnimationTimer implements Serializable {
     private Group root;
     private Scene scene;
 
+    /**
+     * Boolean representing whether or not the player is doing a drag & drop movement.
+     */
     public  boolean dragging = false;
 
+    /**
+     * List of all controllers in the game.
+     */
     private ArrayList<Controller> controllers = new ArrayList<>();
+    /**
+     * List of all planets in the game.
+     */
     private ArrayList<Planet> planets = new ArrayList<>();
 
+    /**
+     * Accessibility map. If accessibilityMap.get(Point p) is true, it means that p is accessible.
+     */
     private HashMap<Point2D, Boolean> accessibilityMap = new HashMap<>();
 
     /**
@@ -124,7 +134,7 @@ public class GameLoop extends AnimationTimer implements Serializable {
             double minProdRate = Utils.PLAYER_PRODUCTION_RATE - Utils.PRODUCTION_VARIATION * Utils.PLAYER_PRODUCTION_RATE / 100;
             double randProd = minProdRate + (maxProdRate - minProdRate) * (new Random()).nextDouble();
 
-            Planet p = new Planet(pos, Utils.PLAYER_PLANET_RADIUS, false, (float)randProd, new LittleSpaceship(c.getColor()));// add color
+            Planet p = new Planet(pos, Utils.PLAYER_PLANET_RADIUS, (float)randProd, new LittleSpaceship(c.getColor()));// add color
             c.getPlanets().add(p);
             p.setOwner(c);
             planets.add(p);
@@ -189,7 +199,7 @@ public class GameLoop extends AnimationTimer implements Serializable {
         int randX = new Random().nextInt(maxX + 1 - min) + min;
         int randY = new Random().nextInt(maxY + 1 - min) + min;
         boolean isPosFree = true;
-        Planet tmp = new Planet(new Point2D(randX, randY), Utils.NEUTRAL_PLANET_RADIUS, true, 0, new LittleSpaceship(Utils.NEUTRAL_PLANET_COLOR));
+        Planet tmp = new Planet(new Point2D(randX, randY), Utils.NEUTRAL_PLANET_RADIUS, 0, new LittleSpaceship(Utils.NEUTRAL_PLANET_COLOR));
 
         int maxHp = Utils.NEUTRAL_HP_RANGE + Utils.HP_VARIATION * Utils.NEUTRAL_HP_RANGE / 100;
         int minHp = Utils.NEUTRAL_HP_RANGE - Utils.HP_VARIATION * Utils.NEUTRAL_HP_RANGE / 100;

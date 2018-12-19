@@ -37,6 +37,7 @@ This version also managed :
 - Save / Restore
 - La position et la taille des planètes ainsi que le type des vaisseaux (vitesse, temps pour leur production, puissance d'attaque) qu'elles produisent au départ sont déterminés de façon aléatoire au début de la partie.
 - javadoc
+- Ecran de fin
 ### Improvements v2.x
 
 ##### v2.0 :

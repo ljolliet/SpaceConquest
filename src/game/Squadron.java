@@ -16,19 +16,37 @@ import java.util.LinkedList;
 
 public class Squadron implements Serializable{
 
+    /**
+     * List of all spaceship in this squadron.
+     */
     private ArrayList<Spaceship> spaceships;
+    /**
+     * Squadron's target.
+     */
     private Planet target;
+    /**
+     * Squadron's owner.
+     */
     private Controller owner;
+    /**
+     * Boolean representing whether or not the squadron is selected by the human player.
+     */
     private boolean selected = false;
 
-
+    /**
+     * Constructor of the squadron.
+     * @param spaceships The list of spaceship that are contained in this squadron.
+     * @param owner Squadron's owner.
+     */
     public Squadron(ArrayList<Spaceship> spaceships, Controller owner) {
         this.spaceships = spaceships;
         this.owner = owner;
     }
 
-
-    private void processSpaceShipPos() {
+    /**
+     * For each spaceships remove the first step if they are close enough. Make the Spaceship point towards the next step.
+     */
+    private void processSpaceShipNextStep() {
         for (Spaceship s : spaceships) {
             if (!s.getSteps().isEmpty() && Math.sqrt(Math.pow(s.getSteps().getFirst().getX() - s.getPos().getX(), 2) + Math.pow(s.getSteps().getFirst().getY() - s.getPos().getY(), 2)) < 2) {
                 s.getSteps().removeFirst();
@@ -41,21 +59,28 @@ public class Squadron implements Serializable{
         }
     }
 
+    /**
+     * Set a new target for this squadron and actualize steps of the spaceships.
+     * @param newTarget The new target.
+     * @param accessibilityMap Accessibilty map of the spaceships.
+     */
     public void setTarget(Planet newTarget, HashMap<Point2D, Boolean> accessibilityMap) {
         target = newTarget;
 
-        //------Work in progress------//
         HashMap<Point2D, Boolean> squadAccessibilityMap = getSquadAccessibilityMap(target, accessibilityMap);
         for (Spaceship sp : spaceships) {
             sp.setSteps(MathUtils.pathfinder(sp.pos, target.getCenter(), squadAccessibilityMap));
         }
     }
 
+    /**
+     * Make the spaceships move towards their targets and check if there is a collision.
+     */
     public void sendToTarget() {
         ArrayList<Spaceship> spaceShipToRemove = new ArrayList();
         Spaceship tmpShip;
         if (this.target != null) {
-            processSpaceShipPos();
+            processSpaceShipNextStep();
             for (Spaceship s : spaceships) {
                 s.moveForward();
                 if ((tmpShip = this.target.checkCollision(s, this.owner)) != null)
@@ -67,6 +92,12 @@ public class Squadron implements Serializable{
 
     }
 
+    /**
+     * Create an accessibility map where the target planet is accessible.
+     * @param target The target of the squadron.
+     * @param globalAccessibleMap The global accessible map, where every target is inaccessible.
+     * @return
+     */
     private HashMap<Point2D, Boolean> getSquadAccessibilityMap(Planet target, HashMap<Point2D, Boolean> globalAccessibleMap) {
         HashMap<Point2D, Boolean> tmp = (HashMap<Point2D, Boolean>) globalAccessibleMap.clone();
         for (Point2D p : tmp.keySet()) {
@@ -76,12 +107,19 @@ public class Squadron implements Serializable{
         return tmp;
     }
 
-    //-------GETTER SETTER---------//
-
-    public ArrayList<Spaceship> getSpaceships() {
-        return spaceships;
+    public boolean contains(Point2D pos) {
+        for (Spaceship s : spaceships)
+            if (s.contains(pos))
+                return true;
+        return false;
     }
 
+    //--------------------------DRAW-----------------//
+
+    /**
+     * Drawing of the ships.
+     * @param root
+     */
     public void draw(Group root) {
         if (!Utils.OPTIMIZED) {
             //long t1 = System.currentTimeMillis();
@@ -112,21 +150,12 @@ public class Squadron implements Serializable{
 
     }
 
-    public boolean contains(Point2D pos) {
-        for (Spaceship s : spaceships)
-            if (s.contains(pos))
-                return true;
-        return false;
-    }
+    //-------------------------------SERIALIZATION----------------------//
 
-    public void setSelected(boolean selected) {
-        this.selected = selected;
-    }
-
-    public Controller getOwner() { //ONly for test -> should we keep it ?
-        return owner;
-    }
-
+    /**
+     * Write the squadron on "save.ser"
+     * @param oos the stream on which the squadron is written.
+     */
     private void writeObject(ObjectOutputStream oos){
         try {
             oos.writeObject(spaceships);
@@ -137,6 +166,10 @@ public class Squadron implements Serializable{
         }
     }
 
+    /**
+     * Read the squadron from "save.ser"
+     * @param ois the stream from which the squadron is read.
+     */
     private void readObject(ObjectInputStream ois){
         try {
             spaceships = (ArrayList<Spaceship>)ois.readObject();
@@ -148,6 +181,25 @@ public class Squadron implements Serializable{
             e.printStackTrace();
         }
     }
+
+
+    //-------GETTER SETTER---------//
+
+
+    public ArrayList<Spaceship> getSpaceships() {
+        return spaceships;
+    }
+
+
+    public void setSelected(boolean selected) {
+        this.selected = selected;
+    }
+
+    public Controller getOwner() { //ONly for test -> should we keep it ?
+        return owner;
+    }
+
+
 
     public Planet getTarget() {
         return target;

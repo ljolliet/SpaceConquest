@@ -15,22 +15,56 @@ import java.util.LinkedList;
 
 public abstract class  Spaceship implements Serializable{
 
+    /**
+     * Damage made by this spaceship when hitting an ennemy planet.
+     */
     protected int damage;
+    /**
+     * Amount of production to create this spaceship.
+     */
     protected int necessary_production;
-    protected int angle = 0;
+    /**
+     * Speed of this spaceship.
+     */
     protected double speed;
+    /**
+     * JOLIAX
+     */
+    protected int angle = 0;
+    /**
+     * Lenght of the spaceship.
+     */
     protected double length;
+    /**
+     * Position of the spaceship.
+     */
     protected Point2D pos;
+    /**
+     * Color of the spaceship.
+     */
     protected Color color;
 
+    /**
+     * List of every steps (position) between this spaceship and his target.
+     */
     protected LinkedList<Point2D> steps; //list of coordinates to get to the target
+    /**
+     * Direction on which the spaceship point towards. JOLIAX
+     */
     protected Point2D direction = Point2D.ZERO;
 
+    /**
+     * Constructor of the spaceship.
+     * @param color
+     */
     public Spaceship(Color color) {
         this.color = color;
     }
 
-
+    /**
+     * Get a clone of this spaceship.
+     * @return a Spaceship with exactly the same caracteristics.
+     */
     public abstract Spaceship getInstance();
 
 
@@ -63,7 +97,9 @@ public abstract class  Spaceship implements Serializable{
         this.angle = Math.floorMod((int) Math.toDegrees(theta), 360); // angle in degrees this mod is better than %
     }
 
-
+    /**
+     * Move the spaceship towards its target.
+     */
     public void moveForward(){
         this.setPos(this.getPos().add(MathUtils.getRotatedVector(this.direction.multiply(speed), this.angle)));
     }
