@@ -47,9 +47,9 @@ public class Main extends Application {
 
             GUIController.getOption().setOnMouseClicked(event -> {
                 if (GUIController.OPTION_DISPLAYED) {
-                    GUIController.drawOption(root, true);
+                    GUIController.drawOption(true);
                 } else {
-                    GUIController.drawOption(root, false);
+                    GUIController.drawOption(false);
                 }
 
             });
