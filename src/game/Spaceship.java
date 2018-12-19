@@ -168,6 +168,17 @@ public abstract class  Spaceship implements Serializable{
             oos.writeObject(color.getOpacity());
             oos.writeObject(direction.getX());
             oos.writeObject(direction.getY());
+            if(steps != null){
+                oos.writeObject(true);
+                oos.writeObject(steps.size());
+                for(Point2D p : steps){
+                    oos.writeObject(p.getX());
+                    oos.writeObject(p.getY());
+                }
+            }else{
+                oos.writeObject(false);
+            }
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -188,6 +199,15 @@ public abstract class  Spaceship implements Serializable{
             double opacity = (double)ois.readObject();
             double xDirection = (double)ois.readObject();
             double yDirection = (double)ois.readObject();
+            boolean stepsWritten = (boolean)ois.readObject();
+            if(stepsWritten){
+                int sizeSteps = (int)ois.readObject();
+                steps = new LinkedList<>();
+                for(int i = 0; i < sizeSteps; i++){
+                    steps.add(new Point2D((double)ois.readObject(), (double)ois.readObject()));
+                }
+            }
+
             pos = new Point2D(x,y);
             direction = new Point2D(xDirection, yDirection);
             color = new Color(r,g,b,opacity);

@@ -15,20 +15,30 @@ public class Main extends Application {
      */
     public static GameLoop GAMELOOP;
 
+    /**
+     * Group on which everything will be drawn.
+     */
+    public static Group GROUP;
+
+    /**
+     * Scene of the javaFX application.
+     */
+    public static Scene SCENE;
+
     @Override
     public void start(Stage stage) {
         stage.setTitle("Space Conquest");
-        Group root = new Group();
-        Scene scene = new Scene(root);
-        scene.getStylesheets().add("file:css/stylesheet.css");
-        stage.setScene(scene);
+        GROUP = new Group();
+        SCENE = new Scene(GROUP);
+        GROUP.getStylesheets().add("file:css/stylesheet.css");
+        stage.setScene(SCENE);
 
         //Canvas canvas = new Canvas(Utils.WINDOW_WIDTH, Utils.WINDOW_HEIGHT);  <---- Full useless ???
         //root.getChildren().add(canvas);
 
 
         if (Utils.TESTING) {
-            GAMELOOP = new GameLoop(root, scene);
+            GAMELOOP = new GameLoop(GROUP, SCENE);
             GAMELOOP.start();
             //addSceneEvents(scene, root);
         } else {
@@ -36,11 +46,11 @@ public class Main extends Application {
             GUIController.generateDecoratives();
             GUIController.generateControlsAndTitle();
             GUIController.generateOptionControls();
-            GUIController.drawBackground(root, true);
+            GUIController.drawBackground(GROUP, true);
             GUIController.setMainStage(stage);
 
             GUIController.getStart().setOnMouseClicked(event -> {
-                GAMELOOP = new GameLoop(root, scene);
+                GAMELOOP = new GameLoop(GROUP, SCENE);
                 GAMELOOP.start();
                 //addSceneEvents(scene, root);
             });

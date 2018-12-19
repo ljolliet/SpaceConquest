@@ -26,10 +26,6 @@ public class GUIController {
      * Stage of the application. Will be set in main function of Main.class
      */
     private static Stage mainStage = null;
-    /**
-     * Gameloop of the game. JOLIAX
-     */
-    private static GameLoop gameLoop= null;
 
     /**
      * All assets used in the game.
@@ -412,13 +408,12 @@ public class GUIController {
             System.out.println("  Saving ...");
             long t1 = System.currentTimeMillis();
             try {
-                FileOutputStream fileOut =
-                        new FileOutputStream("save.ser");
+                FileOutputStream fileOut = new FileOutputStream("save.ser");
                 ObjectOutputStream out = new ObjectOutputStream(fileOut);
-                out.writeObject(gameLoop);
+                out.writeObject(Main.GAMELOOP);
                 out.close();
                 fileOut.close();
-                System.out.printf("  Saved in save.ser (" + (System.currentTimeMillis() - t1) + ")ms");
+                System.out.println("  Saved in save.ser (" + (System.currentTimeMillis() - t1) + ")ms");
             } catch (IOException i) {
                 i.printStackTrace();
             }
@@ -428,17 +423,25 @@ public class GUIController {
             vboxMenu.setVisible(true);
             System.out.println("  Loading ...");
             long t1 = System.currentTimeMillis();
-            gameLoop = null;
 
-             /*   FileInputStream fileIn = new FileInputStream("save.ser");
+            FileInputStream fileIn = null;
+            try {
+                fileIn = new FileInputStream("save.ser");
                 ObjectInputStream in = new ObjectInputStream(fileIn);
-                GAMELOOP = (GameLoop) in.readObject();
+                Main.GAMELOOP = (GameLoop) in.readObject();
                 in.close();
                 fileIn.close();
-                GAMELOOP.setScene(scene);
-                GAMELOOP.setRoot(root);
-                GAMELOOP.start();
-                System.out.printf("  Loaded in " + (System.currentTimeMillis() - t1) + " ms");*/
+                Main.GAMELOOP.setScene(Main.SCENE);
+                Main.GAMELOOP.setRoot(Main.GROUP);
+                Main.GAMELOOP.start();
+                System.out.println("  Loaded in " + (System.currentTimeMillis() - t1) + " ms");
+            } catch (FileNotFoundException e1) {
+                e1.printStackTrace();
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            } catch (ClassNotFoundException e1) {
+                e1.printStackTrace();
+            }
 
 
         });
@@ -447,7 +450,7 @@ public class GUIController {
 
         MenuBar menuBar = new MenuBar();
         menuBar.getMenus().addAll(menu);
-      vboxMenu.getChildren().addAll(menuBar);
+        vboxMenu.getChildren().addAll(menuBar);
 
     }
 
@@ -474,9 +477,6 @@ public class GUIController {
 
     public static void setMainStage(Stage mainStage) {
         GUIController.mainStage = mainStage;
-    }
-    public  void setGameLoop(GameLoop gameloop){
-        this.gameLoop = gameloop;
     }
 
 }

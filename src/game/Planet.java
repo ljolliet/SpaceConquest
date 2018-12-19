@@ -43,7 +43,7 @@ public class Planet implements Serializable{
     /**
      * Slider allowing the player to choose which percentage of his ships he wants to send.
      */
-    private Slider sending_quantity = new Slider();
+    private transient Slider sending_quantity = new Slider();
 
     /**
      * Available ships for launch.
@@ -60,7 +60,7 @@ public class Planet implements Serializable{
     /**
      * Accessibility map of the ships that will be launched.
      */
-    private HashMap<Point2D, Boolean> map = new HashMap<>();
+    private transient HashMap<Point2D, Boolean> map = new HashMap<>();
     /**
      * Ship that is a model for the planet production, each ship will be a clone of this one.
      */
@@ -84,7 +84,7 @@ public class Planet implements Serializable{
     private boolean selected = false;
 
     /**
-     * Constructor. Initialize Slider.
+     * Constructor.
      * @param center Center of the planet as a Point2D.
      * @param radius Radius of the planet as an int.
      * @param production_rate Production generated each frame, as a float.
@@ -98,6 +98,14 @@ public class Planet implements Serializable{
         this.radius = radius;
         this.color = model.getColor();
 
+        initSlider();
+
+    }
+
+    /**
+     * Initialize Slider.
+     */
+    public void initSlider(){
         sending_quantity.setPrefWidth(Utils.PLAYER_PLANET_RADIUS);
         sending_quantity.setLayoutX(center.getX() - sending_quantity.getPrefWidth()/2);
         sending_quantity.setLayoutY(center.getY() + radius);
@@ -108,7 +116,6 @@ public class Planet implements Serializable{
         sending_quantity.setMajorTickUnit(25);
         sending_quantity.setMinorTickCount(0);
         sending_quantity.setSnapToTicks(true);
-
     }
 
     /**
@@ -153,7 +160,12 @@ public class Planet implements Serializable{
             s.rotate(angle);
         }
 
-        squad.setTarget(target, map);
+        if(map == null){
+            System.out.println("MAP NULLE");
+        }else{
+            squad.setTarget(target, map);
+
+        }
         owner.getSquadrons().add(squad);
 
 		return squad;
@@ -353,6 +365,9 @@ public class Planet implements Serializable{
             oos.writeObject(model);
             oos.writeObject(owner);
             oos.writeObject(target);
+            if(map == null){
+             System.out.println("SAVING NULL MAP");
+            }
             oos.writeObject(map.size());
             for(Point2D p : map.keySet())
             {
@@ -393,6 +408,8 @@ public class Planet implements Serializable{
             }
             center = new Point2D(x,y);
             color = new Color(r,g,b,opacity);
+            sending_quantity = new Slider();
+            initSlider();
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {

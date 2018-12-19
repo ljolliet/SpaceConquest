@@ -26,8 +26,8 @@ import java.util.Random;
  */
 public class GameLoop extends AnimationTimer implements Serializable {
 
-    private Group root;
-    private Scene scene;
+    private transient Group root;
+    private transient Scene scene;
 
     /**
      * Boolean representing whether or not the player is doing a drag & drop movement.
@@ -46,7 +46,7 @@ public class GameLoop extends AnimationTimer implements Serializable {
     /**
      * Accessibility map. If accessibilityMap.get(Point p) is true, it means that p is accessible.
      */
-    private HashMap<Point2D, Boolean> accessibilityMap = new HashMap<>();
+    private transient HashMap<Point2D, Boolean> accessibilityMap = new HashMap<>();
 
     /**
      * @param root  containing the object that will be drawn
@@ -238,6 +238,7 @@ public class GameLoop extends AnimationTimer implements Serializable {
      * Fill the accessibility map by creating a grid of points and checking if they are part of a planet
      */
     private void initAccessibilityMap() {
+        accessibilityMap = new HashMap<>();
         long t0 = System.currentTimeMillis();
         for (int i = 0; i < Utils.WINDOW_WIDTH; i += Utils.COLUMN_SIZE) {
             for (int j = 0; j < Utils.WINDOW_HEIGHT; j += Utils.COLUMN_SIZE) {
@@ -382,7 +383,7 @@ public class GameLoop extends AnimationTimer implements Serializable {
 
     }
 
-    public void writeObject(ObjectOutputStream oos){
+    private void writeObject(ObjectOutputStream oos){
         try {
             oos.writeObject(planets);
             oos.writeObject(controllers);
@@ -391,7 +392,7 @@ public class GameLoop extends AnimationTimer implements Serializable {
         }
     }
 
-    public void readObject(ObjectInputStream ois){
+    private void readObject(ObjectInputStream ois){
         try {
             planets = (ArrayList<Planet>) ois.readObject();
             controllers = (ArrayList<Controller>)ois.readObject();
@@ -408,6 +409,15 @@ public class GameLoop extends AnimationTimer implements Serializable {
             e.printStackTrace();
         }
     }
+
+    /*
+    public void read(ObjectInputStream ois){
+        readObject(ois);
+    }
+
+    public void write(ObjectOutputStream oos){
+        writeObject(oos);
+    } */
 
     public void setRoot(Group root) {
         this.root = root;
