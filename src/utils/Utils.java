@@ -108,6 +108,11 @@ public class Utils {
     public static int PLAYER_PLANET_RADIUS = 3*LITTLE_SPACESHIP_LENGTH;
 
     /**
+     * Maximum percentage that can be withdrawn or added to the radius of a planet.
+     */
+    public static int RADIUS_VARIATION = 20;
+
+    /**
      * Minimal distance between a planet and the border of the screen at initialization
      */
     public static int DISTANCE_BORDER = 2*PLAYER_PLANET_RADIUS;

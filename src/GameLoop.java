@@ -134,7 +134,11 @@ public class GameLoop extends AnimationTimer implements Serializable {
             double minProdRate = Utils.PLAYER_PRODUCTION_RATE - Utils.PRODUCTION_VARIATION * Utils.PLAYER_PRODUCTION_RATE / 100;
             double randProd = minProdRate + (maxProdRate - minProdRate) * (new Random()).nextDouble();
 
-            Planet p = new Planet(pos, Utils.PLAYER_PLANET_RADIUS, (float)randProd, new LittleSpaceship(c.getColor()));// add color
+            double maxRadius = Utils.PLAYER_PLANET_RADIUS + Utils.RADIUS_VARIATION * Utils.PLAYER_PLANET_RADIUS / 100;
+            double minRadius = Utils.PLAYER_PLANET_RADIUS - Utils.RADIUS_VARIATION * Utils.PLAYER_PLANET_RADIUS / 100;
+            double randRadius = minRadius + (maxRadius - minRadius) * (new Random()).nextDouble();
+
+            Planet p = new Planet(pos, (int)randRadius, (float)randProd, new LittleSpaceship(c.getColor()));// add color
             c.getPlanets().add(p);
             p.setOwner(c);
             planets.add(p);
@@ -198,8 +202,13 @@ public class GameLoop extends AnimationTimer implements Serializable {
 
         int randX = new Random().nextInt(maxX + 1 - min) + min;
         int randY = new Random().nextInt(maxY + 1 - min) + min;
+
+        double maxRadius = Utils.NEUTRAL_PLANET_RADIUS + Utils.RADIUS_VARIATION * Utils.NEUTRAL_PLANET_RADIUS / 100;
+        double minRadius = Utils.NEUTRAL_PLANET_RADIUS - Utils.RADIUS_VARIATION * Utils.NEUTRAL_PLANET_RADIUS / 100;
+        double randRadius = minRadius + (maxRadius - minRadius) * (new Random()).nextDouble();
+
         boolean isPosFree = true;
-        Planet tmp = new Planet(new Point2D(randX, randY), Utils.NEUTRAL_PLANET_RADIUS, 0, new LittleSpaceship(Utils.NEUTRAL_PLANET_COLOR));
+        Planet tmp = new Planet(new Point2D(randX, randY), (int)randRadius, 0, new LittleSpaceship(Utils.NEUTRAL_PLANET_COLOR));
 
         int maxHp = Utils.NEUTRAL_HP_RANGE + Utils.HP_VARIATION * Utils.NEUTRAL_HP_RANGE / 100;
         int minHp = Utils.NEUTRAL_HP_RANGE - Utils.HP_VARIATION * Utils.NEUTRAL_HP_RANGE / 100;
