@@ -2,11 +2,8 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 import utils.Utils;
-
-import java.io.*;
 
 public class Main extends Application {
 
@@ -38,7 +35,7 @@ public class Main extends Application {
 
 
         if (Utils.TESTING) {
-            GAMELOOP = new GameLoop(GROUP, SCENE);
+            GAMELOOP = new GameLoop();
             GAMELOOP.start();
             //addSceneEvents(scene, root);
         } else {
@@ -50,7 +47,7 @@ public class Main extends Application {
             GUIController.setMainStage(stage);
 
             GUIController.getStart().setOnMouseClicked(event -> {
-                GAMELOOP = new GameLoop(GROUP, SCENE);
+                GAMELOOP = new GameLoop();
                 GAMELOOP.start();
                 //addSceneEvents(scene, root);
             });

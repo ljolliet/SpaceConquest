@@ -1,4 +1,6 @@
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -14,6 +16,7 @@ import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import utils.Utils;
 
 import java.io.*;
@@ -38,7 +41,7 @@ public class GUIController {
     /**
      * Stylized title of the game.
      */
-    private static Image title = new Image("file:res/images/title.png");
+    private static Image title = new Image("file:resources/images/title.png");
     private static ImageView titleView = new ImageView(title);
 
     /**
@@ -118,16 +121,26 @@ public class GUIController {
     private static ChoiceBox screenSizeController = new ChoiceBox();
 
     /**
+     * Alert sent after saving.
+     */
+    private static Alert saveAlert = new Alert(Alert.AlertType.INFORMATION, "Game saved in \"save.ser\"");
+
+    /**
+     * Alert sent after loading.
+     */
+    private static Alert loadAlert = new Alert(Alert.AlertType.INFORMATION, "Game loaded successfuly !");
+
+    /**
      * Load every Image into assets.
      */
     public static void loadAssets(){
-        assets.add(new Image("file:res/images/planet1.png"));
-        assets.add(new Image("file:res/images/planet2.png"));
-        assets.add(new Image("file:res/images/blackhole1.png"));
-        assets.add(new Image("file:res/images/star1.png"));
-        assets.add(new Image("file:res/images/star2.png"));
-        assets.add(new Image("file:res/images/star3.png"));
-        assets.add(new Image("file:res/images/star4.png"));
+        assets.add(new Image("file:resources/images/planet1.png"));
+        assets.add(new Image("file:resources/images/planet2.png"));
+        assets.add(new Image("file:resources/images/blackhole1.png"));
+        assets.add(new Image("file:resources/images/star1.png"));
+        assets.add(new Image("file:resources/images/star2.png"));
+        assets.add(new Image("file:resources/images/star3.png"));
+        assets.add(new Image("file:resources/images/star4.png"));
     }
 
     /**
@@ -400,56 +413,63 @@ public class GUIController {
      * Generate a menu with two buttons. One saving the game and one loading it.
      */
     public static void generateMenuBar(){
+        if(vboxMenu.getChildren().isEmpty()) {
+            Menu menu = new Menu("Menu");
+            MenuItem saveItem = new MenuItem("Save", new ImageView(new Image("file:resources/images/planet1.png"))); // find a real pic or let this one
+            saveItem.setOnAction(e -> {
+                vboxMenu.setVisible(true);
+                System.out.println("  Saving ...");
+                long t1 = System.currentTimeMillis();
+                try {
+                    FileOutputStream fileOut = new FileOutputStream("save.ser");
+                    ObjectOutputStream out = new ObjectOutputStream(fileOut);
+                    out.writeObject(Main.GAMELOOP);
+                    out.close();
+                    fileOut.close();
+                    System.out.println("  Saved in save.ser (" + (System.currentTimeMillis() - t1) + ")ms");
+                    saveAlert.show();
+                    Timeline timeline = new Timeline(new KeyFrame(Duration.millis(2500), ae -> saveAlert.close()));
+                    timeline.play();
+                } catch (IOException i) {
+                    i.printStackTrace();
+                }
+            });
+            MenuItem loadItem = new MenuItem("Load", new ImageView(new Image("file:resources/images/planet2.png"))); // find a real pic
+            loadItem.setOnAction(e -> {
+                vboxMenu.setVisible(true);
+                System.out.println("  Loading ...");
+                long t1 = System.currentTimeMillis();
 
-        Menu menu = new Menu("Menu");
-        MenuItem saveItem = new MenuItem("Save", new ImageView(new Image("file:res/images/planet1.png"))); // find a real pic or let this one
-        saveItem.setOnAction(e -> {
-            vboxMenu.setVisible(true);
-            System.out.println("  Saving ...");
-            long t1 = System.currentTimeMillis();
-            try {
-                FileOutputStream fileOut = new FileOutputStream("save.ser");
-                ObjectOutputStream out = new ObjectOutputStream(fileOut);
-                out.writeObject(Main.GAMELOOP);
-                out.close();
-                fileOut.close();
-                System.out.println("  Saved in save.ser (" + (System.currentTimeMillis() - t1) + ")ms");
-            } catch (IOException i) {
-                i.printStackTrace();
-            }
-        });
-        MenuItem loadItem = new MenuItem("Load", new ImageView(new Image("file:res/images/planet2.png"))); // find a real pic
-        loadItem.setOnAction(e -> {
-            vboxMenu.setVisible(true);
-            System.out.println("  Loading ...");
-            long t1 = System.currentTimeMillis();
-
-            FileInputStream fileIn = null;
-            try {
-                fileIn = new FileInputStream("save.ser");
-                ObjectInputStream in = new ObjectInputStream(fileIn);
-                Main.GAMELOOP = (GameLoop) in.readObject();
-                in.close();
-                fileIn.close();
-                Main.GAMELOOP.start();
-                System.out.println("  Loaded in " + (System.currentTimeMillis() - t1) + " ms");
-            } catch (FileNotFoundException e1) {
-                e1.printStackTrace();
-            } catch (IOException e1) {
-                e1.printStackTrace();
-            } catch (ClassNotFoundException e1) {
-                e1.printStackTrace();
-            }
+                FileInputStream fileIn = null;
+                try {
+                    fileIn = new FileInputStream("save.ser");
+                    ObjectInputStream in = new ObjectInputStream(fileIn);
+                    Main.GAMELOOP.stop();
+                    Main.GAMELOOP = (GameLoop) in.readObject();
+                    in.close();
+                    fileIn.close();
+                    Main.GAMELOOP.start();
+                    System.out.println("  Loaded in " + (System.currentTimeMillis() - t1) + " ms");
+                    loadAlert.show();
+                    Timeline timeline = new Timeline(new KeyFrame(Duration.millis(2500), ae -> loadAlert.close()));
+                    timeline.play();
+                } catch (FileNotFoundException e1) {
+                    e1.printStackTrace();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                } catch (ClassNotFoundException e1) {
+                    e1.printStackTrace();
+                }
 
 
-        });
-        menu.getItems().add(saveItem);
-        menu.getItems().add(loadItem);
+            });
+            menu.getItems().add(saveItem);
+            menu.getItems().add(loadItem);
 
-        MenuBar menuBar = new MenuBar();
-        menuBar.getMenus().addAll(menu);
-        vboxMenu.getChildren().addAll(menuBar);
-
+            MenuBar menuBar = new MenuBar();
+            menuBar.getMenus().addAll(menu);
+            vboxMenu.getChildren().addAll(menuBar);
+        }
     }
 
     /**

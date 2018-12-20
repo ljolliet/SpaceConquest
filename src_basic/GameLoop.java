@@ -493,6 +493,7 @@ public class GameLoop extends AnimationTimer implements Serializable {
             winText = new Text("");
             menuButton = new Button("Back to main menu");
             initEvents();
+
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {

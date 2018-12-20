@@ -1,4 +1,6 @@
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -14,6 +16,7 @@ import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import utils.Utils;
 
 import java.io.*;
@@ -116,6 +119,16 @@ public class GUIController {
      * ChoiceBox controlling the screen size.
      */
     private static ChoiceBox screenSizeController = new ChoiceBox();
+
+    /**
+     * Alert sent after saving.
+     */
+    private static Alert saveAlert = new Alert(Alert.AlertType.INFORMATION, "Game saved in \"save.ser\"");
+
+    /**
+     * Alert sent after loading.
+     */
+    private static Alert loadAlert = new Alert(Alert.AlertType.INFORMATION, "Game loaded successfuly !");
 
     /**
      * Load every Image into assets.
@@ -414,6 +427,9 @@ public class GUIController {
                     out.close();
                     fileOut.close();
                     System.out.println("  Saved in save.ser (" + (System.currentTimeMillis() - t1) + ")ms");
+                    saveAlert.show();
+                    Timeline timeline = new Timeline(new KeyFrame(Duration.millis(2500), ae -> saveAlert.close()));
+                    timeline.play();
                 } catch (IOException i) {
                     i.printStackTrace();
                 }
@@ -434,6 +450,9 @@ public class GUIController {
                     fileIn.close();
                     Main.GAMELOOP.start();
                     System.out.println("  Loaded in " + (System.currentTimeMillis() - t1) + " ms");
+                    loadAlert.show();
+                    Timeline timeline = new Timeline(new KeyFrame(Duration.millis(2500), ae -> loadAlert.close()));
+                    timeline.play();
                 } catch (FileNotFoundException e1) {
                     e1.printStackTrace();
                 } catch (IOException e1) {

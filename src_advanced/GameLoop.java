@@ -10,6 +10,13 @@ import javafx.animation.AnimationTimer;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.effect.Effect;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import utils.Utils;
 
 import java.io.IOException;
@@ -25,9 +32,6 @@ import java.util.Random;
  * @author tguesdon, ljolliet
  */
 public class GameLoop extends AnimationTimer implements Serializable {
-
-    private transient Group root;
-    private transient Scene scene;
 
     /**
      * Boolean representing whether or not the player is doing a drag & drop movement.
@@ -48,13 +52,29 @@ public class GameLoop extends AnimationTimer implements Serializable {
      */
     private transient HashMap<Point2D, Boolean> accessibilityMap = new HashMap<>();
 
+    //---------------------VICTORY SCREEN-----------------------------//
     /**
-     * @param root  containing the object that will be drawn
-     * @param scene on which root is drawn
+     * Boolean representing whether or not a player won the game.
      */
-    public GameLoop(Group root, Scene scene) {
-        this.root = root;
-        this.scene = scene;
+    private boolean gameWon = false;
+
+    /**
+     * The winner of the game.
+     */
+    private transient Controller winner;
+
+    /**
+     * Text displayed when a player win.
+     */
+    private transient Text winText = new Text("");
+
+    private transient Button menuButton = new Button("Back to main menu");
+    //----------------------------------------------------------------//
+
+    /**
+     * Constructor. Call initialization function.
+     */
+    public GameLoop() {
         init();
     }
 
@@ -64,11 +84,17 @@ public class GameLoop extends AnimationTimer implements Serializable {
      */
     @Override
     public void handle(long now) {
-        draw();
-        actualizeProduction();
-        actualizeShipPos();
-        actualizeShipSending();
-        actualizeActionsAI();
+        if(!gameWon){
+            draw();
+            actualizeProduction();
+            actualizeShipPos();
+            actualizeShipSending();
+            actualizeActionsAI();
+            gameWon = checkWin();
+        }else{
+            drawWin();
+        }
+
     }
 
     //--------------------INIT-------------//
@@ -262,43 +288,81 @@ public class GameLoop extends AnimationTimer implements Serializable {
     private void initEvents() {
         HumanController hc = (HumanController) controllers.get(0);
 
-        scene.setOnMouseClicked(event -> {
-                for (Squadron s : hc.getSquadrons())
+        Main.SCENE.setOnMouseClicked(event -> {
+            if(!gameWon){
+                for (Squadron s : hc.getSquadrons()) {
                     if (s.contains(new Point2D(event.getX(), event.getY()))) {
                         hc.setSelectedSquadron(s);
                     }
+                }
+            }else{
+                if(event.getX() > menuButton.getLayoutX() && event.getX() < menuButton.getLayoutX() + menuButton.getWidth()
+                        && event.getY() > menuButton.getLayoutY() && event.getY() < menuButton.getLayoutY() + menuButton.getHeight()){
+                    Main.GROUP.getChildren().removeAll(Main.GROUP.getChildren());
+                    GUIController.drawBackground(Main.GROUP, true);
+                    this.stop();
+                }
+            }
+
+
         });
 
-        scene.setOnDragDetected(event->{
+        Main.SCENE.setOnDragDetected(event->{
+            if(!gameWon){
         	if(hc.isOnHumanPlanet(event.getX(), event.getY())) {
         		dragging = true;
         		Planet p = hc.getHumanPlanetClick(event.getX(), event.getY());
         		p.setSelected(true);
         		hc.setSelectedPlanet(p);
-        	}
+            }}
         	});
 
-        scene.setOnMouseReleased(event->{
-        	if(hc.isOnPlanet(event.getX(), event.getY(), planets) || hc.isOnHumanPlanet(event.getX(), event.getY())) {
-        	    if (dragging) { //if mouse released during a drag action
-                    hc.getSelectedPlanet().addWaitingShips((int)(hc.getSelectedPlanet().getAvailable_ships() * (hc.getSelectedPlanet().getSending_quantity().getValue()/100)), hc.getPlanetClic(event.getX(), event.getY(), planets), accessibilityMap);
-                    dragging = false;
-                }else{ //if mouse was released not during a drag action
-                    if (hc.getSelectedSquadron() != null) {
-                        hc.setTarget(hc.getPlanetClic(event.getX(), event.getY(), planets), accessibilityMap);
+        Main.SCENE.setOnMouseReleased(event->{
+            if(!gameWon) {
+                if (hc.isOnPlanet(event.getX(), event.getY(), planets) || hc.isOnHumanPlanet(event.getX(), event.getY())) {
+                    if (dragging) { //if mouse released during a drag action
+                        hc.getSelectedPlanet().addWaitingShips((int) (hc.getSelectedPlanet().getAvailable_ships() * (hc.getSelectedPlanet().getSending_quantity().getValue() / 100)), hc.getPlanetClic(event.getX(), event.getY(), planets), accessibilityMap);
+                        dragging = false;
+                    } else { //if mouse was released not during a drag action
+                        if (hc.getSelectedSquadron() != null) {
+                            hc.setTarget(hc.getPlanetClic(event.getX(), event.getY(), planets), accessibilityMap);
+                        }
                     }
                 }
-            }
 
-        	if(hc.getSelectedPlanet() != null)
-                hc.getSelectedPlanet().setSelected(false);
+                if (hc.getSelectedPlanet() != null)
+                    hc.getSelectedPlanet().setSelected(false);
 
-        });
+            }});
+
+
 
     }
 
     //-----------------PROCESS---------------------//
 
+    /**
+     * Check if the game is won by a controller.
+     * @return true if the game is won, false otherwise.
+     */
+    private boolean checkWin(){
+        int nbPlayerAlive = 0;
+        for(Controller c : controllers){
+            if(c.getPlanets().size() > 0){
+                nbPlayerAlive ++;
+                winner = c;
+            }
+        }
+        if(nbPlayerAlive == 1){
+            System.out.println("WIN");
+            return true;
+        }else{
+            winner = null;
+            return false;
+        }
+
+
+    }
 
     /**
      * Actualize the production of all planets
@@ -367,20 +431,42 @@ public class GameLoop extends AnimationTimer implements Serializable {
      * Call every draw function of the game's elements
      */
     private void draw() {
-        root.getChildren().removeAll(root.getChildren()); // clear root
+        Main.GROUP.getChildren().removeAll(Main.GROUP.getChildren()); // clear root
         //if(!Utils.OPTIMIZED)
-            GUIController.drawBackground(root, false);
+            GUIController.drawBackground(Main.GROUP, false);
 
         for (Planet p : planets) // draw all planets
-            p.draw(root);
+            p.draw(Main.GROUP);
 
         for (Controller c : controllers)
             for (Squadron s : c.getSquadrons()) {
-                s.draw(root);
+                s.draw(Main.GROUP);
             }
-        GUIController.displayMenuBar(root);
+        GUIController.displayMenuBar(Main.GROUP);
+    }
 
+    /**
+     * Draw the win screen, with winner color.
+     */
+    private void drawWin(){
+        Main.GROUP.getChildren().removeAll(Main.GROUP.getChildren());
 
+        winText.setText("The winner is the " + Utils.COLOR_STRING.get(Utils.PLANET_COLOR.indexOf(winner.getColor())) + " player ! ");
+        winText.setFill(winner.getColor());
+        winText.setFont(Font.font("Verdana", FontWeight.BOLD,40));
+        winText.setTextAlignment(TextAlignment.CENTER);
+        winText.setX(Utils.WINDOW_WIDTH/2 - winText.getLayoutBounds().getWidth()/2 );
+        winText.setY(Utils.WINDOW_HEIGHT/3 - winText.getLayoutBounds().getHeight()/2);
+        winText.setStroke(winner.getColor().darker());
+        winText.setStrokeWidth(2.);
+
+        menuButton.setLayoutX(Utils.WINDOW_WIDTH/2 - menuButton.getWidth()/2);
+        menuButton.setLayoutY(2*Utils.WINDOW_HEIGHT/3 - menuButton.getHeight()/2);
+
+        GUIController.drawBackground(Main.GROUP, false);
+
+        Main.GROUP.getChildren().add(winText);
+        Main.GROUP.getChildren().add(menuButton);
     }
 
     private void writeObject(ObjectOutputStream oos){
@@ -403,10 +489,11 @@ public class GameLoop extends AnimationTimer implements Serializable {
                     s.setTarget(s.getTarget(), accessibilityMap);
                 }
             }
-            scene = Main.SCENE;
-            root = Main.GROUP;
-            initEvents();
             dragging = false;
+            winText = new Text("");
+            menuButton = new Button("Back to main menu");
+            initEvents();
+
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
@@ -423,11 +510,4 @@ public class GameLoop extends AnimationTimer implements Serializable {
         writeObject(oos);
     } */
 
-    public void setRoot(Group root) {
-        this.root = root;
-    }
-
-    public void setScene(Scene scene) {
-        this.scene = scene;
-    }
 }
