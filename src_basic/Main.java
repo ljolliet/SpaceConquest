@@ -35,7 +35,7 @@ public class Main extends Application {
 
 
         if (Utils.TESTING) {
-            GAMELOOP = new GameLoop(GROUP, SCENE);
+            GAMELOOP = new GameLoop();
             GAMELOOP.start();
             //addSceneEvents(scene, root);
         } else {
@@ -47,7 +47,7 @@ public class Main extends Application {
             GUIController.setMainStage(stage);
 
             GUIController.getStart().setOnMouseClicked(event -> {
-                GAMELOOP = new GameLoop(GROUP, SCENE);
+                GAMELOOP = new GameLoop();
                 GAMELOOP.start();
                 //addSceneEvents(scene, root);
             });

@@ -33,9 +33,6 @@ import java.util.Random;
  */
 public class GameLoop extends AnimationTimer implements Serializable {
 
-    private transient Group root;
-    private transient Scene scene;
-
     /**
      * Boolean representing whether or not the player is doing a drag & drop movement.
      */
@@ -75,12 +72,9 @@ public class GameLoop extends AnimationTimer implements Serializable {
     //----------------------------------------------------------------//
 
     /**
-     * @param root  containing the object that will be drawn
-     * @param scene on which root is drawn
+     * Constructor. Call initialization function.
      */
-    public GameLoop(Group root, Scene scene) {
-        this.root = root;
-        this.scene = scene;
+    public GameLoop() {
         init();
     }
 
@@ -294,7 +288,7 @@ public class GameLoop extends AnimationTimer implements Serializable {
     private void initEvents() {
         HumanController hc = (HumanController) controllers.get(0);
 
-        scene.setOnMouseClicked(event -> {
+        Main.SCENE.setOnMouseClicked(event -> {
             if(!gameWon){
                 for (Squadron s : hc.getSquadrons()) {
                     if (s.contains(new Point2D(event.getX(), event.getY()))) {
@@ -304,7 +298,7 @@ public class GameLoop extends AnimationTimer implements Serializable {
             }else{
                 if(event.getX() > menuButton.getLayoutX() && event.getX() < menuButton.getLayoutX() + menuButton.getWidth()
                         && event.getY() > menuButton.getLayoutY() && event.getY() < menuButton.getLayoutY() + menuButton.getHeight()){
-                    root.getChildren().removeAll(root.getChildren());
+                    Main.GROUP.getChildren().removeAll(Main.GROUP.getChildren());
                     GUIController.drawBackground(Main.GROUP, true);
                     this.stop();
                 }
@@ -313,7 +307,7 @@ public class GameLoop extends AnimationTimer implements Serializable {
 
         });
 
-        scene.setOnDragDetected(event->{
+        Main.SCENE.setOnDragDetected(event->{
             if(!gameWon){
         	if(hc.isOnHumanPlanet(event.getX(), event.getY())) {
         		dragging = true;
@@ -323,7 +317,7 @@ public class GameLoop extends AnimationTimer implements Serializable {
             }}
         	});
 
-        scene.setOnMouseReleased(event->{
+        Main.SCENE.setOnMouseReleased(event->{
             if(!gameWon) {
                 if (hc.isOnPlanet(event.getX(), event.getY(), planets) || hc.isOnHumanPlanet(event.getX(), event.getY())) {
                     if (dragging) { //if mouse released during a drag action
@@ -437,25 +431,25 @@ public class GameLoop extends AnimationTimer implements Serializable {
      * Call every draw function of the game's elements
      */
     private void draw() {
-        root.getChildren().removeAll(root.getChildren()); // clear root
+        Main.GROUP.getChildren().removeAll(Main.GROUP.getChildren()); // clear root
         //if(!Utils.OPTIMIZED)
-            GUIController.drawBackground(root, false);
+            GUIController.drawBackground(Main.GROUP, false);
 
         for (Planet p : planets) // draw all planets
-            p.draw(root);
+            p.draw(Main.GROUP);
 
         for (Controller c : controllers)
             for (Squadron s : c.getSquadrons()) {
-                s.draw(root);
+                s.draw(Main.GROUP);
             }
-        GUIController.displayMenuBar(root);
+        GUIController.displayMenuBar(Main.GROUP);
     }
 
     /**
      * Draw the win screen, with winner color.
      */
     private void drawWin(){
-        root.getChildren().removeAll(root.getChildren());
+        Main.GROUP.getChildren().removeAll(Main.GROUP.getChildren());
 
         winText.setText("The winner is the " + Utils.COLOR_STRING.get(Utils.PLANET_COLOR.indexOf(winner.getColor())) + " player ! ");
         winText.setFill(winner.getColor());
@@ -469,10 +463,10 @@ public class GameLoop extends AnimationTimer implements Serializable {
         menuButton.setLayoutX(Utils.WINDOW_WIDTH/2 - menuButton.getWidth()/2);
         menuButton.setLayoutY(2*Utils.WINDOW_HEIGHT/3 - menuButton.getHeight()/2);
 
-        GUIController.drawBackground(root, false);
+        GUIController.drawBackground(Main.GROUP, false);
 
-        root.getChildren().add(winText);
-        root.getChildren().add(menuButton);
+        Main.GROUP.getChildren().add(winText);
+        Main.GROUP.getChildren().add(menuButton);
     }
 
     private void writeObject(ObjectOutputStream oos){
@@ -495,8 +489,6 @@ public class GameLoop extends AnimationTimer implements Serializable {
                     s.setTarget(s.getTarget(), accessibilityMap);
                 }
             }
-            scene = Main.SCENE;
-            root = Main.GROUP;
             dragging = false;
             winText = new Text("");
             menuButton = new Button("Back to main menu");
@@ -517,11 +509,4 @@ public class GameLoop extends AnimationTimer implements Serializable {
         writeObject(oos);
     } */
 
-    public void setRoot(Group root) {
-        this.root = root;
-    }
-
-    public void setScene(Scene scene) {
-        this.scene = scene;
-    }
 }
