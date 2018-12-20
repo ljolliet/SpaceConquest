@@ -125,17 +125,7 @@ public class Squadron implements Serializable{
             //long t1 = System.currentTimeMillis();
             for (Spaceship sp : spaceships) {
                 sp.draw(root, selected);
-                if (sp.getSteps() != null) {
-                /*for(Point2D p : sp.getSteps()){
-                    //System.out.println(" X : " + p.getX() + ", Y : " + p.getY());
-                    Circle c = new Circle(p.getX(),p.getY(),4);
-                    c.setFill(Color.BLACK);
-
-                    root.getChildren().add(c);
-                }*/
-                }
             }
-            //System.out.println("Non optimized draw squad time : " + (System.currentTimeMillis() - t1));
         } else {
             //long t1 = System.currentTimeMillis();
             LinkedList<Point2D> pointsDrawn = new LinkedList<>();
@@ -145,7 +135,6 @@ public class Squadron implements Serializable{
                     pointsDrawn.add(sp.getPos());
                 }
             }
-            //System.out.println("Optimized draw squad time : " + (System.currentTimeMillis() - t1));
         }
 
     }

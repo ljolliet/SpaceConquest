@@ -407,7 +407,7 @@ public class GUIController {
         screenSizeController.getSelectionModel().selectFirst();
     }
 
-    //https://docs.oracle.com/javafx/2/ui_controls/menu_controls.htm
+
 
     /**
      * Generate a menu with two buttons. One saving the game and one loading it.
@@ -415,7 +415,7 @@ public class GUIController {
     public static void generateMenuBar(){
         if(vboxMenu.getChildren().isEmpty()) {
             Menu menu = new Menu("Menu");
-            MenuItem saveItem = new MenuItem("Save", new ImageView(new Image("file:resources/images/planet1.png"))); // find a real pic or let this one
+            MenuItem saveItem = new MenuItem("Save", new ImageView(new Image("file:resources/images/planet1.png")));
             saveItem.setOnAction(e -> {
                 vboxMenu.setVisible(true);
                 System.out.println("  Saving ...");
@@ -434,7 +434,7 @@ public class GUIController {
                     i.printStackTrace();
                 }
             });
-            MenuItem loadItem = new MenuItem("Load", new ImageView(new Image("file:resources/images/planet2.png"))); // find a real pic
+            MenuItem loadItem = new MenuItem("Load", new ImageView(new Image("file:resources/images/planet2.png")));
             loadItem.setOnAction(e -> {
                 vboxMenu.setVisible(true);
                 System.out.println("  Loading ...");

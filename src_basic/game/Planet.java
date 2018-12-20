@@ -35,7 +35,7 @@ public class Planet implements Serializable{
     /**
      * Radius of the planet.
      */
-    private int radius; //optional
+    private int radius;
     /**
      * Color of the planet.
      */
@@ -125,7 +125,6 @@ public class Planet implements Serializable{
      */
     public Squadron createSquadron(int size){
         ArrayList<Spaceship> spaceships = new ArrayList<>();
-        //use "i" instead of spaceship sp : on_ground_spaceship in case that a spaceship is added during execution ??
         if(size > Utils.WAVE_SIZE_MAX)
             size = Utils.WAVE_SIZE_MAX;
 
@@ -146,8 +145,6 @@ public class Planet implements Serializable{
      * @return The created Squadron.
      */
     public Squadron sendShip(int amount){
-        //add the squadron to the player controller
-        //if player maybe visual/sound alert
         Squadron squad = createSquadron(amount);
 
         //withdraw spaceship in the squadron from the on ground spaceships && assign pos
@@ -229,7 +226,7 @@ public class Planet implements Serializable{
      * @param owner New owner of the planet.
      * @param spaceship New spaceship used as model for the planet.
      */
-    public void changeOwner(Controller owner, Spaceship spaceship) { // add the spaceship as a model
+    public void changeOwner(Controller owner, Spaceship spaceship) {
         this.waiting_for_launch = 0;
         if(this.owner != null)
             this.owner.getPlanets().remove(this);

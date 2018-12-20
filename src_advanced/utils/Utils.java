@@ -60,7 +60,7 @@ public class Utils {
     /**
      * Production added by frame (=/= number of ship).
      */
-    public static final float PLAYER_PRODUCTION_RATE = 1; // Double ?
+    public static final float PLAYER_PRODUCTION_RATE = 1;
 
     /**
      * Maximal percentage of production that can be withdrawn or added to the production
@@ -95,7 +95,7 @@ public class Utils {
     /**
      * Base HP before variation calculation for neutral planets.
      */
-    public static final int NEUTRAL_HP_RANGE = 100; //600 ?
+    public static final int NEUTRAL_HP_RANGE = 100;
 
     /**
      * Maximum percentage of HP that can be withdrawn or added to neutral planets when they are generated.
@@ -131,11 +131,6 @@ public class Utils {
      * Distance between the ship and the planet at ship's spawn.
      */
     public static int DISTANCE_PLANET_SHIPS = 15;
-
-    /**
-     * Distance around a planet where ships cannot go.
-     */
-    public static int ADDITIONAL_HITBOX_RANGE = 6;     //must be < DISTANCE_PLANET_SHIP -> bug < 6 ??
 
     /**
      * Color for neutral planets.

@@ -32,12 +32,6 @@ This version also managed :
 - Save/restore a match
 
 
-
-
-##### TODO for Basics :
-- Save / Restore
-- javadoc 
-- Ecran de fin (Detection de la fin + Affichage)
 ### Advanced
 
 ##### v2.0 :

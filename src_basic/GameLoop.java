@@ -8,11 +8,7 @@ import game.Squadron;
 import game.spaceships.LittleSpaceship;
 import javafx.animation.AnimationTimer;
 import javafx.geometry.Point2D;
-import javafx.scene.Group;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.effect.Effect;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
@@ -271,7 +267,7 @@ public class GameLoop extends AnimationTimer implements Serializable {
                 Point2D pos = new Point2D(i, j);
                 boolean accessible = true;
                 for (Planet p : planets) {
-                    if (p.contains(pos))  //.containsHitbox(pos)
+                    if (p.contains(pos))
                         accessible = false;
                 }
                 accessibilityMap.put(pos, accessible);
@@ -381,7 +377,7 @@ public class GameLoop extends AnimationTimer implements Serializable {
      */
     private void actualizeShipPos() {
         if (Utils.OPTIMIZED) {
-            for (Controller c : controllers) { // refactor in a method
+            for (Controller c : controllers) {
                 ArrayList<Squadron> toRemove = new ArrayList<>();
                 for (Squadron s : c.getSquadrons()) {
                     s.sendToTarget();
@@ -402,7 +398,6 @@ public class GameLoop extends AnimationTimer implements Serializable {
 
     }
 
-    //COMPLEXITY TO BAD ?
     private void actualizeShipSending(){
         for(Controller c : controllers){
             for(Planet p : c.getPlanets()){
@@ -500,14 +495,4 @@ public class GameLoop extends AnimationTimer implements Serializable {
             e.printStackTrace();
         }
     }
-
-    /*
-    public void read(ObjectInputStream ois){
-        readObject(ois);
-    }
-
-    public void write(ObjectOutputStream oos){
-        writeObject(oos);
-    } */
-
 }
