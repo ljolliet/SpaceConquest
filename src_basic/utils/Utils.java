@@ -148,6 +148,11 @@ public class Utils {
     public static List<Color> PLANET_COLOR =  Arrays.asList(Color.RED,Color.BLUEVIOLET, Color.GOLDENROD, Color.LIGHTSKYBLUE, Color.YELLOWGREEN);
 
     /**
+     * Generic name of the colors.
+     */
+    public static List<String> COLOR_STRING = Arrays.asList("RED" , "PURPLE", "YELLOW", "BLUE", "GREEN");
+
+    /**
      * Color of the halo when a planet is selected.
      */
     public static Paint HALO_COLOR = PLANET_COLOR.get(0).darker();
