@@ -80,9 +80,10 @@ public abstract class  Spaceship implements Serializable{
         if(selected)
         {
             DropShadow borderGlow = new DropShadow();
-            borderGlow.setColor(color);
+            borderGlow.setColor(Color.WHITE);
             borderGlow.setOffsetX(0f);
             borderGlow.setOffsetY(0f);
+            polygon.setEffect(borderGlow);
         }
         root.getChildren().add(polygon);
     }
