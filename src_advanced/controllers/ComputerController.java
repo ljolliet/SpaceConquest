@@ -1,7 +1,5 @@
 package controllers;
 
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -24,8 +22,9 @@ public class ComputerController extends Controller {
 
     /**
      * Constructor. Used to set the color and AI type of the controller.
+     *
      * @param color Color of the controller.
-     * @param type AI type of the controller. (CLASSIC, SAFE, AGGRESSIVE).
+     * @param type  AI type of the controller. (CLASSIC, SAFE, AGGRESSIVE).
      */
     public ComputerController(Color color, TypeAI type) {
         super(color);
@@ -34,8 +33,9 @@ public class ComputerController extends Controller {
 
     /**
      * Function called every frame. Check if the AI has to make a decision, and call the decision function if so.
+     *
      * @param all_planets All planets of the current game.
-     * @param map Accessibility map of the current game.
+     * @param map         Accessibility map of the current game.
      */
     public void process(ArrayList<Planet> all_planets, HashMap<Point2D, Boolean> map) {
         if (currentTime == Utils.AI_ACTION_TIME) {
@@ -48,8 +48,9 @@ public class ComputerController extends Controller {
 
     /**
      * Choose which percentage of ships will be send given the AI type then send them to the nearest ennemy target.
+     *
      * @param all_planets All planets of the current game.
-     * @param map Accessibility map of the current game.
+     * @param map         Accessibility map of the current game.
      */
     public void shipSendingDecision(ArrayList<Planet> all_planets, HashMap<Point2D, Boolean> map) {
         int ratio;

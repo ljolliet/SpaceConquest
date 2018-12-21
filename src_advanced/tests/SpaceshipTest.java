@@ -32,10 +32,10 @@ class SpaceshipTest {
     @Test
     void contains() {
         LittleSpaceship spaceship = new LittleSpaceship(Color.BLUE);
-        spaceship.setPos(new Point2D(25,25));
+        spaceship.setPos(new Point2D(25, 25));
         spaceship.initPolygon();
 
-        assertEquals(false, spaceship.contains(new Point2D(150,150)));
-        assertEquals(true, spaceship.contains(new Point2D(25,25)));
+        assertEquals(false, spaceship.contains(new Point2D(150, 150)));
+        assertEquals(true, spaceship.contains(new Point2D(25, 25)));
     }
 }

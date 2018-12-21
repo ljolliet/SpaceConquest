@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 
-public class Squadron implements Serializable{
+public class Squadron implements Serializable {
 
     /**
      * List of all spaceship in this squadron.
@@ -35,8 +35,9 @@ public class Squadron implements Serializable{
 
     /**
      * Constructor of the squadron.
+     *
      * @param spaceships The list of spaceship that are contained in this squadron.
-     * @param owner Squadron's owner.
+     * @param owner      Squadron's owner.
      */
     public Squadron(ArrayList<Spaceship> spaceships, Controller owner) {
         this.spaceships = spaceships;
@@ -61,7 +62,8 @@ public class Squadron implements Serializable{
 
     /**
      * Set a new target for this squadron and actualize steps of the spaceships.
-     * @param newTarget The new target.
+     *
+     * @param newTarget        The new target.
      * @param accessibilityMap Accessibilty map of the spaceships.
      */
     public void setTarget(Planet newTarget, HashMap<Point2D, Boolean> accessibilityMap) {
@@ -94,7 +96,8 @@ public class Squadron implements Serializable{
 
     /**
      * Create an accessibility map where the target planet is accessible.
-     * @param target The target of the squadron.
+     *
+     * @param target              The target of the squadron.
      * @param globalAccessibleMap The global accessible map, where every target is inaccessible.
      * @return
      */
@@ -118,6 +121,7 @@ public class Squadron implements Serializable{
 
     /**
      * Drawing of the ships.
+     *
      * @param root
      */
     public void draw(Group root) {
@@ -143,9 +147,10 @@ public class Squadron implements Serializable{
 
     /**
      * Write the squadron in "save.ser"
+     *
      * @param oos the stream in which the squadron is written.
      */
-    private void writeObject(ObjectOutputStream oos){
+    private void writeObject(ObjectOutputStream oos) {
         try {
             oos.writeObject(spaceships);
             oos.writeObject(target);
@@ -157,11 +162,12 @@ public class Squadron implements Serializable{
 
     /**
      * Read the squadron from "save.ser"
+     *
      * @param ois the stream from which the squadron is read.
      */
-    private void readObject(ObjectInputStream ois){
+    private void readObject(ObjectInputStream ois) {
         try {
-            spaceships = (ArrayList<Spaceship>)ois.readObject();
+            spaceships = (ArrayList<Spaceship>) ois.readObject();
             target = (Planet) ois.readObject();
             owner = (Controller) ois.readObject();
         } catch (IOException e) {
@@ -187,7 +193,6 @@ public class Squadron implements Serializable{
     public Controller getOwner() { //ONly for test -> should we keep it ?
         return owner;
     }
-
 
 
     public Planet getTarget() {

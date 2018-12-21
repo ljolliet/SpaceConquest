@@ -72,19 +72,19 @@ public class GameLoop extends AnimationTimer implements Serializable {
     }
 
     /**
-     * @see javafx.animation.AnimationTimer#handle(long)
      * @param now
+     * @see javafx.animation.AnimationTimer#handle(long)
      */
     @Override
     public void handle(long now) {
-        if(!gameWon){
+        if (!gameWon) {
             draw();
             actualizeProduction();
             actualizeShipPos();
             actualizeShipSending();
             actualizeActionsAI();
             gameWon = checkWin();
-        }else{
+        } else {
             drawWin();
         }
 
@@ -112,9 +112,9 @@ public class GameLoop extends AnimationTimer implements Serializable {
         controllers.add(new HumanController(Utils.PLANET_COLOR.get(0)));
         //start at 1 because 0 is the human
         for (int i = 1; i < Utils.NB_PLAYER; i++) {
-            int rand = (int)(Math.random() * 3);
+            int rand = (int) (Math.random() * 3);
             TypeAI type;
-            switch (rand){
+            switch (rand) {
                 case 0:
                     type = TypeAI.CLASSIC;
                     break;
@@ -122,7 +122,7 @@ public class GameLoop extends AnimationTimer implements Serializable {
                     type = TypeAI.SAFE;
                     break;
                 case 2:
-                    type =TypeAI.AGGRESSIVE;
+                    type = TypeAI.AGGRESSIVE;
                     break;
                 default:
                     type = TypeAI.CLASSIC;
@@ -157,7 +157,7 @@ public class GameLoop extends AnimationTimer implements Serializable {
             double minRadius = Utils.PLAYER_PLANET_RADIUS - Utils.RADIUS_VARIATION * Utils.PLAYER_PLANET_RADIUS / 100;
             double randRadius = minRadius + (maxRadius - minRadius) * (new Random()).nextDouble();
 
-            Planet p = new Planet(pos, (int)randRadius, (float)randProd, new LittleSpaceship(c.getColor()));// add color
+            Planet p = new Planet(pos, (int) randRadius, (float) randProd, new LittleSpaceship(c.getColor()));// add color
             c.getPlanets().add(p);
             p.setOwner(c);
             planets.add(p);
@@ -180,11 +180,11 @@ public class GameLoop extends AnimationTimer implements Serializable {
 
         boolean isFree = true;
 
-        if(pos.distance(new Point2D(pos.getX(), 0)) < Utils.DISTANCE_BORDER || pos.distance(new Point2D(0, pos.getY())) < Utils.DISTANCE_BORDER
-                || pos.distance(new Point2D(pos.getX(), Utils.WINDOW_HEIGHT)) < Utils.DISTANCE_BORDER || pos.distance(new Point2D(Utils.WINDOW_WIDTH, pos.getY())) < Utils.DISTANCE_BORDER )
+        if (pos.distance(new Point2D(pos.getX(), 0)) < Utils.DISTANCE_BORDER || pos.distance(new Point2D(0, pos.getY())) < Utils.DISTANCE_BORDER
+                || pos.distance(new Point2D(pos.getX(), Utils.WINDOW_HEIGHT)) < Utils.DISTANCE_BORDER || pos.distance(new Point2D(Utils.WINDOW_WIDTH, pos.getY())) < Utils.DISTANCE_BORDER)
             isFree = false;
 
-        if(isFree){
+        if (isFree) {
             for (Planet p : planets) {
                 if (p.distantOf(pos) < Utils.DISTANCE_BETWEEN_PLAYERS) {
                     isFree = false;
@@ -227,7 +227,7 @@ public class GameLoop extends AnimationTimer implements Serializable {
         double randRadius = minRadius + (maxRadius - minRadius) * (new Random()).nextDouble();
 
         boolean isPosFree = true;
-        Planet tmp = new Planet(new Point2D(randX, randY), (int)randRadius, 0, new LittleSpaceship(Utils.NEUTRAL_PLANET_COLOR));
+        Planet tmp = new Planet(new Point2D(randX, randY), (int) randRadius, 0, new LittleSpaceship(Utils.NEUTRAL_PLANET_COLOR));
 
         int maxHp = Utils.NEUTRAL_HP_RANGE + Utils.HP_VARIATION * Utils.NEUTRAL_HP_RANGE / 100;
         int minHp = Utils.NEUTRAL_HP_RANGE - Utils.HP_VARIATION * Utils.NEUTRAL_HP_RANGE / 100;
@@ -235,8 +235,8 @@ public class GameLoop extends AnimationTimer implements Serializable {
 
         tmp.setAvailable_ships(hp);
 
-        if(tmp.getCenter().distance(new Point2D(tmp.getCenter().getX(), 0)) < Utils.DISTANCE_BORDER || tmp.getCenter().distance(new Point2D(0, tmp.getCenter().getY())) < Utils.DISTANCE_BORDER
-                || tmp.getCenter().distance(new Point2D(tmp.getCenter().getX(), Utils.WINDOW_HEIGHT)) < Utils.DISTANCE_BORDER || tmp.getCenter().distance(new Point2D(Utils.WINDOW_WIDTH, tmp.getCenter().getY())) < Utils.DISTANCE_BORDER )
+        if (tmp.getCenter().distance(new Point2D(tmp.getCenter().getX(), 0)) < Utils.DISTANCE_BORDER || tmp.getCenter().distance(new Point2D(0, tmp.getCenter().getY())) < Utils.DISTANCE_BORDER
+                || tmp.getCenter().distance(new Point2D(tmp.getCenter().getX(), Utils.WINDOW_HEIGHT)) < Utils.DISTANCE_BORDER || tmp.getCenter().distance(new Point2D(Utils.WINDOW_WIDTH, tmp.getCenter().getY())) < Utils.DISTANCE_BORDER)
             isPosFree = false;
 
         for (Planet p : planets) {
@@ -282,15 +282,15 @@ public class GameLoop extends AnimationTimer implements Serializable {
         HumanController hc = (HumanController) controllers.get(0);
 
         Main.SCENE.setOnMouseClicked(event -> {
-            if(!gameWon){
+            if (!gameWon) {
                 for (Squadron s : hc.getSquadrons()) {
                     if (s.contains(new Point2D(event.getX(), event.getY()))) {
                         hc.setSelectedSquadron(s);
                     }
                 }
-            }else{
-                if(event.getX() > menuButton.getLayoutX() && event.getX() < menuButton.getLayoutX() + menuButton.getWidth()
-                        && event.getY() > menuButton.getLayoutY() && event.getY() < menuButton.getLayoutY() + menuButton.getHeight()){
+            } else {
+                if (event.getX() > menuButton.getLayoutX() && event.getX() < menuButton.getLayoutX() + menuButton.getWidth()
+                        && event.getY() > menuButton.getLayoutY() && event.getY() < menuButton.getLayoutY() + menuButton.getHeight()) {
                     Main.GROUP.getChildren().removeAll(Main.GROUP.getChildren());
                     GUIController.drawBackground(Main.GROUP, true);
                     this.stop();
@@ -300,18 +300,19 @@ public class GameLoop extends AnimationTimer implements Serializable {
 
         });
 
-        Main.SCENE.setOnDragDetected(event->{
-            if(!gameWon){
-        	if(hc.isOnHumanPlanet(event.getX(), event.getY())) {
-        		dragging = true;
-        		Planet p = hc.getHumanPlanetClick(event.getX(), event.getY());
-        		p.setSelected(true);
-        		hc.setSelectedPlanet(p);
-            }}
-        	});
+        Main.SCENE.setOnDragDetected(event -> {
+            if (!gameWon) {
+                if (hc.isOnHumanPlanet(event.getX(), event.getY())) {
+                    dragging = true;
+                    Planet p = hc.getHumanPlanetClick(event.getX(), event.getY());
+                    p.setSelected(true);
+                    hc.setSelectedPlanet(p);
+                }
+            }
+        });
 
-        Main.SCENE.setOnMouseReleased(event->{
-            if(!gameWon) {
+        Main.SCENE.setOnMouseReleased(event -> {
+            if (!gameWon) {
                 if (hc.isOnPlanet(event.getX(), event.getY(), planets) || hc.isOnHumanPlanet(event.getX(), event.getY())) {
                     if (dragging) { //if mouse released during a drag action
                         hc.getSelectedPlanet().addWaitingShips((int) (hc.getSelectedPlanet().getAvailable_ships() * (hc.getSelectedPlanet().getSending_quantity().getValue() / 100)), hc.getPlanetClic(event.getX(), event.getY(), planets), accessibilityMap);
@@ -326,8 +327,8 @@ public class GameLoop extends AnimationTimer implements Serializable {
                 if (hc.getSelectedPlanet() != null)
                     hc.getSelectedPlanet().setSelected(false);
 
-            }});
-
+            }
+        });
 
 
     }
@@ -336,20 +337,21 @@ public class GameLoop extends AnimationTimer implements Serializable {
 
     /**
      * Check if the game is won by a controller.
+     *
      * @return true if the game is won, false otherwise.
      */
-    private boolean checkWin(){
+    private boolean checkWin() {
         int nbPlayerAlive = 0;
-        for(Controller c : controllers){
-            if(c.getPlanets().size() > 0){
-                nbPlayerAlive ++;
+        for (Controller c : controllers) {
+            if (c.getPlanets().size() > 0) {
+                nbPlayerAlive++;
                 winner = c;
             }
         }
-        if(nbPlayerAlive == 1){
+        if (nbPlayerAlive == 1) {
             System.out.println("WIN");
             return true;
-        }else{
+        } else {
             winner = null;
             return false;
         }
@@ -398,16 +400,16 @@ public class GameLoop extends AnimationTimer implements Serializable {
     /**
      * Launch the currently waiting ships if there is no other ships around the planet.
      */
-    private void actualizeShipSending(){
-        for(Controller c : controllers){
-            for(Planet p : c.getPlanets()){
-                if(p.isLaunchReady() && p.getWaiting_for_launch() > 0){
-                    if(c.getClass() == HumanController.class)
-                        ((HumanController)c).launchShip(p);
+    private void actualizeShipSending() {
+        for (Controller c : controllers) {
+            for (Planet p : c.getPlanets()) {
+                if (p.isLaunchReady() && p.getWaiting_for_launch() > 0) {
+                    if (c.getClass() == HumanController.class)
+                        ((HumanController) c).launchShip(p);
                     else {
-                    	p.sendShip(Utils.WAVE_SIZE);
+                        p.sendShip(Utils.WAVE_SIZE);
                     }
-                    	
+
                 }
             }
         }
@@ -416,12 +418,12 @@ public class GameLoop extends AnimationTimer implements Serializable {
     /**
      * Call the decision making function of each AI.
      */
-    private void actualizeActionsAI(){
-    	for(Controller c : controllers) {
-    		if(c.getClass() == ComputerController.class) {
-    			((ComputerController)c).process(planets, accessibilityMap);
-    		}
-    	}
+    private void actualizeActionsAI() {
+        for (Controller c : controllers) {
+            if (c.getClass() == ComputerController.class) {
+                ((ComputerController) c).process(planets, accessibilityMap);
+            }
+        }
     }
 
 
@@ -431,7 +433,7 @@ public class GameLoop extends AnimationTimer implements Serializable {
     private void draw() {
         Main.GROUP.getChildren().removeAll(Main.GROUP.getChildren()); // clear root
         //if(!Utils.OPTIMIZED)
-            GUIController.drawBackground(Main.GROUP, false);
+        GUIController.drawBackground(Main.GROUP, false);
 
         for (Planet p : planets) // draw all planets
             p.draw(Main.GROUP);
@@ -446,20 +448,20 @@ public class GameLoop extends AnimationTimer implements Serializable {
     /**
      * Draw the win screen, with winner color.
      */
-    private void drawWin(){
+    private void drawWin() {
         Main.GROUP.getChildren().removeAll(Main.GROUP.getChildren());
 
         winText.setText("The winner is the " + Utils.COLOR_STRING.get(Utils.PLANET_COLOR.indexOf(winner.getColor())) + " player ! ");
         winText.setFill(winner.getColor());
-        winText.setFont(Font.font("Verdana", FontWeight.BOLD,40));
+        winText.setFont(Font.font("Verdana", FontWeight.BOLD, 40));
         winText.setTextAlignment(TextAlignment.CENTER);
-        winText.setX(Utils.WINDOW_WIDTH/2 - winText.getLayoutBounds().getWidth()/2 );
-        winText.setY(Utils.WINDOW_HEIGHT/3 - winText.getLayoutBounds().getHeight()/2);
+        winText.setX(Utils.WINDOW_WIDTH / 2 - winText.getLayoutBounds().getWidth() / 2);
+        winText.setY(Utils.WINDOW_HEIGHT / 3 - winText.getLayoutBounds().getHeight() / 2);
         winText.setStroke(winner.getColor().darker());
         winText.setStrokeWidth(2.);
 
-        menuButton.setLayoutX(Utils.WINDOW_WIDTH/2 - menuButton.getWidth()/2);
-        menuButton.setLayoutY(2*Utils.WINDOW_HEIGHT/3 - menuButton.getHeight()/2);
+        menuButton.setLayoutX(Utils.WINDOW_WIDTH / 2 - menuButton.getWidth() / 2);
+        menuButton.setLayoutY(2 * Utils.WINDOW_HEIGHT / 3 - menuButton.getHeight() / 2);
 
         GUIController.drawBackground(Main.GROUP, false);
 
@@ -469,9 +471,10 @@ public class GameLoop extends AnimationTimer implements Serializable {
 
     /**
      * Save the gameloop's data in "save.ser".
+     *
      * @param oos The stream used to write data.
      */
-    private void writeObject(ObjectOutputStream oos){
+    private void writeObject(ObjectOutputStream oos) {
         try {
             oos.writeObject(planets);
             oos.writeObject(controllers);
@@ -479,18 +482,20 @@ public class GameLoop extends AnimationTimer implements Serializable {
             e.printStackTrace();
         }
     }
+
     /**
      * Read the gameloop from "save.ser".
+     *
      * @param ois The stream used to read gameloop.
      */
-    private void readObject(ObjectInputStream ois){
+    private void readObject(ObjectInputStream ois) {
         try {
             planets = (ArrayList<Planet>) ois.readObject();
-            controllers = (ArrayList<Controller>)ois.readObject();
+            controllers = (ArrayList<Controller>) ois.readObject();
             accessibilityMap = new HashMap<>();
             initAccessibilityMap();
-            for(Controller c : controllers){
-                for(Squadron s : c.getSquadrons()){
+            for (Controller c : controllers) {
+                for (Squadron s : c.getSquadrons()) {
                     s.setTarget(s.getTarget(), accessibilityMap);
                 }
             }

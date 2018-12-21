@@ -3,6 +3,7 @@ package utils;
 import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -21,7 +22,7 @@ public class Utils {
      */
     public static int WINDOW_WIDTH = 1920;
 
-	/**
+    /**
      * If true the game will run optimized code on some functions.
      */
     public static boolean OPTIMIZED = true;
@@ -40,7 +41,7 @@ public class Utils {
     public static final int LITTLE_SPACESHIP_NEC_PROD = 10;
 
     /**
-     *  Length of a little spaceship in px.
+     * Length of a little spaceship in px.
      */
     public static final int LITTLE_SPACESHIP_LENGTH = 25;
 
@@ -50,7 +51,7 @@ public class Utils {
     public static final int LITTLE_SPACESHIP_DAMAGE = 1;
 
     /**
-     *  Speed of a little spaceship in px/frame.
+     * Speed of a little spaceship in px/frame.
      */
     public static final double LITTLE_SPACESHIP_SPEED = 2.; // Not more than 3
 
@@ -90,7 +91,7 @@ public class Utils {
     /**
      * Radius' size for neutral planets.
      */
-    public static final int NEUTRAL_PLANET_RADIUS = 2*LITTLE_SPACESHIP_LENGTH;
+    public static final int NEUTRAL_PLANET_RADIUS = 2 * LITTLE_SPACESHIP_LENGTH;
 
     /**
      * Base HP before variation calculation for neutral planets.
@@ -105,7 +106,7 @@ public class Utils {
     /**
      * Radius' size for player planets.
      */
-    public static int PLAYER_PLANET_RADIUS = 3*LITTLE_SPACESHIP_LENGTH;
+    public static int PLAYER_PLANET_RADIUS = 3 * LITTLE_SPACESHIP_LENGTH;
 
     /**
      * Maximum percentage that can be withdrawn or added to the radius of a planet.
@@ -115,17 +116,17 @@ public class Utils {
     /**
      * Minimal distance between a planet and the border of the screen at initialization
      */
-    public static int DISTANCE_BORDER = 2*PLAYER_PLANET_RADIUS;
+    public static int DISTANCE_BORDER = 2 * PLAYER_PLANET_RADIUS;
 
     /**
      * Minimal distance between two player's planet at initialization.
      */
-    public static int DISTANCE_BETWEEN_PLAYERS = 3*PLAYER_PLANET_RADIUS;
+    public static int DISTANCE_BETWEEN_PLAYERS = 3 * PLAYER_PLANET_RADIUS;
 
     /**
      * Minimal distance between a neutral planet and every other planet at initialization.
      */
-    public static int DISTANCE_BETWEEN_NEUTRAL = 2*PLAYER_PLANET_RADIUS;
+    public static int DISTANCE_BETWEEN_NEUTRAL = 2 * PLAYER_PLANET_RADIUS;
 
     /**
      * Distance between the ship and the planet at ship's spawn.
@@ -140,12 +141,12 @@ public class Utils {
     /**
      * List of colors for players.
      */
-    public static List<Color> PLANET_COLOR =  Arrays.asList(Color.RED,Color.BLUEVIOLET, Color.GOLDENROD, Color.LIGHTSKYBLUE, Color.YELLOWGREEN);
+    public static List<Color> PLANET_COLOR = Arrays.asList(Color.RED, Color.BLUEVIOLET, Color.GOLDENROD, Color.LIGHTSKYBLUE, Color.YELLOWGREEN);
 
     /**
      * Generic name of the colors.
      */
-    public static List<String> COLOR_STRING = Arrays.asList("RED" , "PURPLE", "YELLOW", "BLUE", "GREEN");
+    public static List<String> COLOR_STRING = Arrays.asList("RED", "PURPLE", "YELLOW", "BLUE", "GREEN");
 
     /**
      * Color of the halo when a planet is selected.
@@ -216,7 +217,7 @@ public class Utils {
     /**
      * Color of the background
      */
-    public static Color BACKGROUND_COLOR = Color.rgb(0,0,51); //Nightblue
+    public static Color BACKGROUND_COLOR = Color.rgb(0, 0, 51); //Nightblue
 
     /**
      * Width of buttons in the user interface
@@ -231,17 +232,17 @@ public class Utils {
     /**
      * Size of padding around buttons
      */
-    public static int BUTTON_RECT_PADDING = BUTTON_WIDTH/4;
+    public static int BUTTON_RECT_PADDING = BUTTON_WIDTH / 4;
 
     /**
      * Color of the rectangle surrounding buttons
      */
-    public static Color BUTTON_RECT_COLOR = Color.rgb(77,0,77, 0.75);
+    public static Color BUTTON_RECT_COLOR = Color.rgb(77, 0, 77, 0.75);
 
     /**
      * Width of the rectangle around options
      */
-    public static int OPTION_AREA_WIDTH = Utils.WINDOW_WIDTH/5;
+    public static int OPTION_AREA_WIDTH = Utils.WINDOW_WIDTH / 5;
 
     /**
      * Option text color

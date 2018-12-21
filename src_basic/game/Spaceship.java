@@ -6,13 +6,14 @@ import javafx.scene.effect.DropShadow;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import utils.MathUtils;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.LinkedList;
 
-public abstract class  Spaceship implements Serializable{
+public abstract class Spaceship implements Serializable {
 
     /**
      * Damage made by this spaceship when hitting an ennemy planet.
@@ -54,6 +55,7 @@ public abstract class  Spaceship implements Serializable{
 
     /**
      * Constructor of the spaceship.
+     *
      * @param color
      */
     public Spaceship(Color color) {
@@ -62,6 +64,7 @@ public abstract class  Spaceship implements Serializable{
 
     /**
      * Get a clone of this spaceship.
+     *
      * @return a Spaceship with exactly the same caracteristics.
      */
     public abstract Spaceship getInstance();
@@ -69,6 +72,7 @@ public abstract class  Spaceship implements Serializable{
 
     /**
      * Draw a spaceship and adds it to root.
+     *
      * @param root
      * @param selected
      */
@@ -77,8 +81,7 @@ public abstract class  Spaceship implements Serializable{
         Polygon polygon = initPolygon();
         polygon.setFill(color);
 
-        if(selected)
-        {
+        if (selected) {
             DropShadow borderGlow = new DropShadow();
             borderGlow.setColor(Color.WHITE);
             borderGlow.setOffsetX(0f);
@@ -90,32 +93,34 @@ public abstract class  Spaceship implements Serializable{
 
     /**
      * Rotate the spaceship.
+     *
      * @param theta Rotation's angle in radians.
      */
-    public void rotate(double theta){ // theta in  radians
+    public void rotate(double theta) { // theta in  radians
         this.angle = Math.floorMod((int) Math.toDegrees(theta), 360); // angle in degrees this mod is better than %
     }
 
     /**
      * Move the spaceship towards its target.
      */
-    public void moveForward(){
+    public void moveForward() {
         this.setPos(this.getPos().add(MathUtils.getRotatedVector(this.direction.multiply(speed), this.angle)));
     }
 
     /**
      * Ensure that the Spaceship contains the point.
+     *
      * @param point A Point in space.
      * @return True if the spaceship contains the point.
      */
-    public boolean contains(Point2D point){
+    public boolean contains(Point2D point) {
         Polygon polygon = initPolygon();
-        return  polygon.contains(point);
+        return polygon.contains(point);
     }
 
 
     @Override
-    public String toString(){
+    public String toString() {
         return "X : " + pos.getX() + ", Y : " + pos.getY();
     }
 
@@ -129,7 +134,9 @@ public abstract class  Spaceship implements Serializable{
         return pos;
     }
 
-    public void setPos(Point2D pos) { this.pos = pos;  }
+    public void setPos(Point2D pos) {
+        this.pos = pos;
+    }
 
     public LinkedList<Point2D> getSteps() {
         return steps;
@@ -142,6 +149,7 @@ public abstract class  Spaceship implements Serializable{
     public Color getColor() {
         return color;
     }
+
     public int getDamage() {
         return damage;
     }
@@ -154,9 +162,10 @@ public abstract class  Spaceship implements Serializable{
 
     /**
      * Write the spaceship in "save.ser"
+     *
      * @param oos the stream in which the spaceship is written.
      */
-    private void writeObject(ObjectOutputStream oos){
+    private void writeObject(ObjectOutputStream oos) {
         try {
             oos.writeObject(damage);
             oos.writeObject(necessary_production);
@@ -171,14 +180,14 @@ public abstract class  Spaceship implements Serializable{
             oos.writeObject(color.getOpacity());
             oos.writeObject(direction.getX());
             oos.writeObject(direction.getY());
-            if(steps != null){
+            if (steps != null) {
                 oos.writeObject(true);
                 oos.writeObject(steps.size());
-                for(Point2D p : steps){
+                for (Point2D p : steps) {
                     oos.writeObject(p.getX());
                     oos.writeObject(p.getY());
                 }
-            }else{
+            } else {
                 oos.writeObject(false);
             }
 
@@ -189,35 +198,36 @@ public abstract class  Spaceship implements Serializable{
 
     /**
      * Read spaceship from "save.ser"
+     *
      * @param ois the stream from which the spaceship is read.
      */
-    private void readObject(ObjectInputStream ois){
+    private void readObject(ObjectInputStream ois) {
         try {
-            damage = (int)ois.readObject();
-            necessary_production = (int)ois.readObject();
-            angle = (int)ois.readObject();
-            speed = (double)ois.readObject();
-            length = (double)ois.readObject();
-            double x = (double)ois.readObject();
-            double y = (double)ois.readObject();
-            double r = (double)ois.readObject();
-            double g = (double)ois.readObject();
-            double b = (double)ois.readObject();
-            double opacity = (double)ois.readObject();
-            double xDirection = (double)ois.readObject();
-            double yDirection = (double)ois.readObject();
-            boolean stepsWritten = (boolean)ois.readObject();
-            if(stepsWritten){
-                int sizeSteps = (int)ois.readObject();
+            damage = (int) ois.readObject();
+            necessary_production = (int) ois.readObject();
+            angle = (int) ois.readObject();
+            speed = (double) ois.readObject();
+            length = (double) ois.readObject();
+            double x = (double) ois.readObject();
+            double y = (double) ois.readObject();
+            double r = (double) ois.readObject();
+            double g = (double) ois.readObject();
+            double b = (double) ois.readObject();
+            double opacity = (double) ois.readObject();
+            double xDirection = (double) ois.readObject();
+            double yDirection = (double) ois.readObject();
+            boolean stepsWritten = (boolean) ois.readObject();
+            if (stepsWritten) {
+                int sizeSteps = (int) ois.readObject();
                 steps = new LinkedList<>();
-                for(int i = 0; i < sizeSteps; i++){
-                    steps.add(new Point2D((double)ois.readObject(), (double)ois.readObject()));
+                for (int i = 0; i < sizeSteps; i++) {
+                    steps.add(new Point2D((double) ois.readObject(), (double) ois.readObject()));
                 }
             }
 
-            pos = new Point2D(x,y);
+            pos = new Point2D(x, y);
             direction = new Point2D(xDirection, yDirection);
-            color = new Color(r,g,b,opacity);
+            color = new Color(r, g, b, opacity);
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {

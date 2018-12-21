@@ -133,7 +133,7 @@ public class GUIController {
     /**
      * Load every Image into assets.
      */
-    public static void loadAssets(){
+    public static void loadAssets() {
         assets.add(new Image("file:resources/images/planet1.png"));
         assets.add(new Image("file:resources/images/planet2.png"));
         assets.add(new Image("file:resources/images/blackhole1.png"));
@@ -146,8 +146,8 @@ public class GUIController {
     /**
      * Generate a random list of images from the assets.
      */
-    public static void generateDecoratives(){
-        for(int i = 0; i < Utils.DECORATIVE_NUMBER; i++){
+    public static void generateDecoratives() {
+        for (int i = 0; i < Utils.DECORATIVE_NUMBER; i++) {
             int x = new Random().nextInt(Utils.WINDOW_WIDTH);
             int y = new Random().nextInt(Utils.WINDOW_HEIGHT);
             int decorativeIndex = new Random().nextInt(assets.size());
@@ -171,34 +171,34 @@ public class GUIController {
     /**
      * Process position and size of every control. Process position and size of the title.
      */
-    public static void generateControlsAndTitle(){
-        titleView.setX(Utils.WINDOW_WIDTH/2 - title.getWidth()/2);
+    public static void generateControlsAndTitle() {
+        titleView.setX(Utils.WINDOW_WIDTH / 2 - title.getWidth() / 2);
         titleView.setY(0);
 
-        Rectangle buttonRect = new Rectangle(100,50);
+        Rectangle buttonRect = new Rectangle(100, 50);
 
-        start.setPrefSize(Utils.BUTTON_WIDTH,Utils.BUTTON_HEIGHT);
-        option.setPrefSize(Utils.BUTTON_WIDTH,Utils.BUTTON_HEIGHT);
-        quit.setPrefSize(Utils.BUTTON_WIDTH,Utils.BUTTON_HEIGHT);
+        start.setPrefSize(Utils.BUTTON_WIDTH, Utils.BUTTON_HEIGHT);
+        option.setPrefSize(Utils.BUTTON_WIDTH, Utils.BUTTON_HEIGHT);
+        quit.setPrefSize(Utils.BUTTON_WIDTH, Utils.BUTTON_HEIGHT);
 
         start.setShape(buttonRect);
         option.setShape(buttonRect);
         quit.setShape(buttonRect);
 
-        start.setLayoutX(Utils.WINDOW_WIDTH/2 - Utils.BUTTON_WIDTH/2);
-        start.setLayoutY(4*Utils.WINDOW_HEIGHT/12);
+        start.setLayoutX(Utils.WINDOW_WIDTH / 2 - Utils.BUTTON_WIDTH / 2);
+        start.setLayoutY(4 * Utils.WINDOW_HEIGHT / 12);
 
-        option.setLayoutX(Utils.WINDOW_WIDTH/2 - Utils.BUTTON_WIDTH/2);
-        option.setLayoutY(6*Utils.WINDOW_HEIGHT/12);
+        option.setLayoutX(Utils.WINDOW_WIDTH / 2 - Utils.BUTTON_WIDTH / 2);
+        option.setLayoutY(6 * Utils.WINDOW_HEIGHT / 12);
 
-        quit.setLayoutX(Utils.WINDOW_WIDTH/2 - Utils.BUTTON_WIDTH/2);
-        quit.setLayoutY(8*Utils.WINDOW_HEIGHT/12);
+        quit.setLayoutX(Utils.WINDOW_WIDTH / 2 - Utils.BUTTON_WIDTH / 2);
+        quit.setLayoutY(8 * Utils.WINDOW_HEIGHT / 12);
 
-        buttonArea.setX(Utils.WINDOW_WIDTH/2 - Utils.BUTTON_WIDTH/2 - Utils.BUTTON_RECT_PADDING);
-        buttonArea.setY(4*Utils.WINDOW_HEIGHT/12 - Utils.BUTTON_RECT_PADDING);
+        buttonArea.setX(Utils.WINDOW_WIDTH / 2 - Utils.BUTTON_WIDTH / 2 - Utils.BUTTON_RECT_PADDING);
+        buttonArea.setY(4 * Utils.WINDOW_HEIGHT / 12 - Utils.BUTTON_RECT_PADDING);
 
-        buttonArea.setHeight(4*Utils.BUTTON_RECT_PADDING + (quit.getLayoutY() - start.getLayoutY()));
-        buttonArea.setWidth(2*Utils.BUTTON_RECT_PADDING + Utils.BUTTON_WIDTH);
+        buttonArea.setHeight(4 * Utils.BUTTON_RECT_PADDING + (quit.getLayoutY() - start.getLayoutY()));
+        buttonArea.setWidth(2 * Utils.BUTTON_RECT_PADDING + Utils.BUTTON_WIDTH);
 
         buttonArea.setFill(Utils.BUTTON_RECT_COLOR);
 
@@ -206,35 +206,36 @@ public class GUIController {
 
     /**
      * Draw the background on a Group.
-     * @param group Group on which the background will be drawn.
+     *
+     * @param group       Group on which the background will be drawn.
      * @param withControl True if the controls are drawn (main menu), false if not (during game).
      */
-    public static void drawBackground(Group group, boolean withControl){
+    public static void drawBackground(Group group, boolean withControl) {
         Rectangle space = new Rectangle(Utils.WINDOW_WIDTH, Utils.WINDOW_HEIGHT);
-        Stop[] stops = new Stop[] { new Stop(0, Color.BLACK), new Stop(1, Utils.BACKGROUND_COLOR)};
+        Stop[] stops = new Stop[]{new Stop(0, Color.BLACK), new Stop(1, Utils.BACKGROUND_COLOR)};
         LinearGradient lg1 = new LinearGradient(0, 0, 0.75, 1, true, CycleMethod.NO_CYCLE, stops);
 
         space.setFill(lg1);
 
         group.getChildren().add(space);
 
-        for(ImageView iv : decoratives){
+        for (ImageView iv : decoratives) {
             group.getChildren().add(iv);
         }
 
-        if(withControl){
+        if (withControl) {
             group.getChildren().add(buttonArea);
             group.getChildren().add(titleView);
             group.getChildren().add(start);
             group.getChildren().add(option);
             group.getChildren().add(quit);
-            
+
             apply.setOnMouseClicked(event -> {
                 Utils.OPTIMIZED = optimizationController.isSelected();
-                Utils.NB_NEUTRAL_PLANET = (int)neutralNumberController.getValue();
-                Utils.NB_PLAYER = (int)playerNumberController.getValue();
+                Utils.NB_NEUTRAL_PLANET = (int) neutralNumberController.getValue();
+                Utils.NB_PLAYER = (int) playerNumberController.getValue();
                 int oldWidth = Utils.WINDOW_WIDTH;
-                switch (screenSizeController.getSelectionModel().getSelectedItem().toString()){
+                switch (screenSizeController.getSelectionModel().getSelectedItem().toString()) {
                     case "1920 x 1080":
                         Utils.WINDOW_WIDTH = 1920;
                         Utils.WINDOW_HEIGHT = 1080;
@@ -246,7 +247,7 @@ public class GUIController {
                         Utils.WINDOW_HEIGHT = 900;
                         Utils.MAX_NB_PLAYER = 5;
                         Utils.MAX_NB_NEUTRAL_PLANET = 15;
-                        if(Utils.NB_NEUTRAL_PLANET > Utils.MAX_NB_NEUTRAL_PLANET){
+                        if (Utils.NB_NEUTRAL_PLANET > Utils.MAX_NB_NEUTRAL_PLANET) {
                             Utils.NB_NEUTRAL_PLANET = Utils.MAX_NB_NEUTRAL_PLANET;
                         }
                         break;
@@ -255,19 +256,19 @@ public class GUIController {
                         Utils.WINDOW_HEIGHT = 720;
                         Utils.MAX_NB_PLAYER = 4;
                         Utils.MAX_NB_NEUTRAL_PLANET = 10;
-                        if(Utils.NB_PLAYER > Utils.MAX_NB_PLAYER){
+                        if (Utils.NB_PLAYER > Utils.MAX_NB_PLAYER) {
                             Utils.NB_PLAYER = Utils.MAX_NB_PLAYER;
                         }
-                        if(Utils.NB_NEUTRAL_PLANET > Utils.MAX_NB_NEUTRAL_PLANET){
+                        if (Utils.NB_NEUTRAL_PLANET > Utils.MAX_NB_NEUTRAL_PLANET) {
                             Utils.NB_NEUTRAL_PLANET = Utils.MAX_NB_NEUTRAL_PLANET;
                         }
                         break;
                     default:
                         break;
                 }
-                if(Utils.WINDOW_WIDTH != oldWidth){
+                if (Utils.WINDOW_WIDTH != oldWidth) {
                     ArrayList<Node> toDelete = new ArrayList<>();
-                    for(Node n : group.getChildren()){
+                    for (Node n : group.getChildren()) {
                         toDelete.add(n);
                     }
                     group.getChildren().removeAll(toDelete);
@@ -279,9 +280,9 @@ public class GUIController {
                     mainStage.setWidth(Utils.WINDOW_WIDTH);
                     mainStage.setHeight(Utils.WINDOW_HEIGHT);
                 }
-                drawOption( true);
+                drawOption(true);
             });
-            
+
             group.getChildren().add(optionArea);
             group.getChildren().add(delimitation);
             group.getChildren().add(optimization);
@@ -294,39 +295,40 @@ public class GUIController {
             group.getChildren().add(screenSizeController);
             group.getChildren().add(apply);
             OPTION_DISPLAYED = true;
-            drawOption( true);
-            
+            drawOption(true);
+
         }
     }
 
     /**
      * Make the option panel visible or not depending on closeOption.
+     *
      * @param closeOption If true makes the option panel visible, if not makes it invisible.
      */
-    public static void drawOption(boolean closeOption){
-        if(closeOption && OPTION_DISPLAYED){
-        	optionArea.setVisible(false);
-        	delimitation.setVisible(false);
-        	optimization.setVisible(false);
-        	playerNumber.setVisible(false);
-        	neutralNumber.setVisible(false);
-        	screenSize.setVisible(false);
-        	optimizationController.setVisible(false);
+    public static void drawOption(boolean closeOption) {
+        if (closeOption && OPTION_DISPLAYED) {
+            optionArea.setVisible(false);
+            delimitation.setVisible(false);
+            optimization.setVisible(false);
+            playerNumber.setVisible(false);
+            neutralNumber.setVisible(false);
+            screenSize.setVisible(false);
+            optimizationController.setVisible(false);
             playerNumberController.setVisible(false);
             neutralNumberController.setVisible(false);
             screenSizeController.setVisible(false);
             apply.setVisible(false);
-            
+
             OPTION_DISPLAYED = false;
-        }else if(!closeOption && !OPTION_DISPLAYED){
-        	
-        	optionArea.setVisible(true);
-        	delimitation.setVisible(true);
-        	optimization.setVisible(true);
-        	playerNumber.setVisible(true);
-        	neutralNumber.setVisible(true);
-        	screenSize.setVisible(true);
-        	optimizationController.setVisible(true);
+        } else if (!closeOption && !OPTION_DISPLAYED) {
+
+            optionArea.setVisible(true);
+            delimitation.setVisible(true);
+            optimization.setVisible(true);
+            playerNumber.setVisible(true);
+            neutralNumber.setVisible(true);
+            screenSize.setVisible(true);
+            optimizationController.setVisible(true);
             playerNumberController.setVisible(true);
             neutralNumberController.setVisible(true);
             screenSizeController.setVisible(true);
@@ -338,7 +340,7 @@ public class GUIController {
     /**
      * Process position of every controls of the options panel.
      */
-    public static void generateOptionControls(){
+    public static void generateOptionControls() {
         optionArea.setHeight(buttonArea.getHeight());
         optionArea.setWidth(Utils.OPTION_AREA_WIDTH);
 
@@ -355,10 +357,10 @@ public class GUIController {
 
         delimitation.setFill(Color.BLACK);
 
-        Rectangle buttonRect = new Rectangle(Utils.BUTTON_WIDTH,Utils.BUTTON_HEIGHT);
-        apply.setPrefSize(Utils.BUTTON_WIDTH,Utils.BUTTON_HEIGHT);
+        Rectangle buttonRect = new Rectangle(Utils.BUTTON_WIDTH, Utils.BUTTON_HEIGHT);
+        apply.setPrefSize(Utils.BUTTON_WIDTH, Utils.BUTTON_HEIGHT);
         apply.setShape(buttonRect);
-        apply.setLayoutX(optionArea.getX() + optionArea.getWidth()/2 - Utils.BUTTON_WIDTH/2);
+        apply.setLayoutX(optionArea.getX() + optionArea.getWidth() / 2 - Utils.BUTTON_WIDTH / 2);
         apply.setLayoutY(quit.getLayoutY());
 
         optimization.setX(optionArea.getX() + 10);
@@ -366,10 +368,10 @@ public class GUIController {
         neutralNumber.setX(optionArea.getX() + 10);
         screenSize.setX(optionArea.getX() + 10);
 
-        optimization.setY(optionArea.getY() + optionArea.getHeight()/12);
-        playerNumber.setY(optionArea.getY() + 3*optionArea.getHeight()/12);
-        neutralNumber.setY(optionArea.getY() + 5*optionArea.getHeight()/12);
-        screenSize.setY(optionArea.getY() + 7 * optionArea.getHeight()/12);
+        optimization.setY(optionArea.getY() + optionArea.getHeight() / 12);
+        playerNumber.setY(optionArea.getY() + 3 * optionArea.getHeight() / 12);
+        neutralNumber.setY(optionArea.getY() + 5 * optionArea.getHeight() / 12);
+        screenSize.setY(optionArea.getY() + 7 * optionArea.getHeight() / 12);
 
         optimization.setFill(Utils.TEXT_COLOR);
         playerNumber.setFill(Utils.TEXT_COLOR);
@@ -377,7 +379,7 @@ public class GUIController {
         screenSize.setFill(Utils.TEXT_COLOR);
 
         optimizationController.setSelected(Utils.OPTIMIZED);
-        optimizationController.setLayoutX(optionArea.getX() + optionArea.getWidth()/2);
+        optimizationController.setLayoutX(optionArea.getX() + optionArea.getWidth() / 2);
         optimizationController.setLayoutY(optimization.getY() - 10);
 
         playerNumberController.setMin(2);
@@ -388,7 +390,7 @@ public class GUIController {
         playerNumberController.setMajorTickUnit(1);
         playerNumberController.setMinorTickCount(0);
         playerNumberController.setSnapToTicks(true);
-        playerNumberController.setLayoutX(optionArea.getX() + optionArea.getWidth()/2);
+        playerNumberController.setLayoutX(optionArea.getX() + optionArea.getWidth() / 2);
         playerNumberController.setLayoutY(playerNumber.getY() - 10);
 
         neutralNumberController.setMin(5);
@@ -398,22 +400,21 @@ public class GUIController {
         neutralNumberController.setShowTickMarks(true);
         neutralNumberController.setMajorTickUnit(4);
         neutralNumberController.setSnapToTicks(true);
-        neutralNumberController.setLayoutX(optionArea.getX() + optionArea.getWidth()/2);
+        neutralNumberController.setLayoutX(optionArea.getX() + optionArea.getWidth() / 2);
         neutralNumberController.setLayoutY(neutralNumber.getY() - 10);
 
-        screenSizeController.setLayoutX(optionArea.getX() + optionArea.getWidth()/2);
+        screenSizeController.setLayoutX(optionArea.getX() + optionArea.getWidth() / 2);
         screenSizeController.setLayoutY(screenSize.getY() - 10);
         screenSizeController.setItems(FXCollections.observableArrayList("1920 x 1080", "1600 x 900", "1280 x 720"));
         screenSizeController.getSelectionModel().selectFirst();
     }
 
 
-
     /**
      * Generate a menu with two buttons. One saving the game and one loading it.
      */
-    public static void generateMenuBar(){
-        if(vboxMenu.getChildren().isEmpty()) {
+    public static void generateMenuBar() {
+        if (vboxMenu.getChildren().isEmpty()) {
             Menu menu = new Menu("Menu");
             MenuItem saveItem = new MenuItem("Save", new ImageView(new Image("file:resources/images/planet1.png")));
             saveItem.setOnAction(e -> {
@@ -474,6 +475,7 @@ public class GUIController {
 
     /**
      * Add the menu to the group given in parameter.
+     *
      * @param group Group on which the menu will be added.
      */
     public static void displayMenuBar(Group group) {

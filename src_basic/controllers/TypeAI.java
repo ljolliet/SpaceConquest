@@ -7,7 +7,7 @@ package controllers;
  * AGGRESSIVE will send 50%.
  */
 public enum TypeAI {
-	CLASSIC,
-	SAFE,
-	AGGRESSIVE;
+    CLASSIC,
+    SAFE,
+    AGGRESSIVE;
 }

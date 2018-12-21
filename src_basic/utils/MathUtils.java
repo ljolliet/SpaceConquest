@@ -29,9 +29,9 @@ public class MathUtils {
     }
 
     /**
-     * @param start Starting position.
+     * @param start       Starting position.
      * @param destination Position that need to be reached.
-     * @param map Map of dots with their accessibility as a boolean.
+     * @param map         Map of dots with their accessibility as a boolean.
      * @return a list of position that is a path without obstacles from start to destination.
      */
     public static LinkedList<Point2D> pathfinder(Point2D start, Point2D destination, HashMap<Point2D, Boolean> map) {
@@ -51,9 +51,10 @@ public class MathUtils {
 
     /**
      * Process and add to the steps list the next position of the path.
-     * @param steps Actual path.
+     *
+     * @param steps       Actual path.
      * @param destination Position that need to be reached.
-     * @param map Map of dots with their accessibility as a boolean.
+     * @param map         Map of dots with their accessibility as a boolean.
      */
     private static void addNext(LinkedList<Point2D> steps, Point2D destination, HashMap<Point2D, Boolean> map) {
         TreeSet<Point2D> neighbours = new TreeSet<>((o1, o2) -> {
@@ -75,7 +76,7 @@ public class MathUtils {
     }
 
     /**
-     * @param p Target point.
+     * @param p   Target point.
      * @param map Map of dots with their accessibility as a boolean.
      * @return A list of position that are neighbours of the point p in the map and that are accessible.
      */
@@ -101,7 +102,7 @@ public class MathUtils {
     }
 
     /**
-     * @param start Starting position.
+     * @param start       Starting position.
      * @param destination Position that need to be reached.
      * @return The neighbour of destination on the grid that is less distant of start.
      */
@@ -131,10 +132,9 @@ public class MathUtils {
     }
 
     /**
-     *
-     * @param start Starting position.
+     * @param start       Starting position.
      * @param destination Position that need to be reached.
-     * @param map Map of dots with their accessibility as a boolean.
+     * @param map         Map of dots with their accessibility as a boolean.
      * @return The neighbour of start on the grid that is less distant of destination.
      */
     private static Point2D firstPoint(Point2D start, Point2D destination, HashMap<Point2D, Boolean> map) {
@@ -183,7 +183,6 @@ public class MathUtils {
     }
 
     /**
-     *
      * @param center
      * @param spaceshipPos
      * @param spaceshipDirection
@@ -208,9 +207,8 @@ public class MathUtils {
     }
 
     /**
-     *
      * @param direction A direction vector
-     * @param angle Angle of the rotation in degrees
+     * @param angle     Angle of the rotation in degrees
      * @return The vector rotated with the angle
      */
     public static Point2D getRotatedVector(Point2D direction, double angle) {

@@ -21,7 +21,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Planet implements Serializable{
+public class Planet implements Serializable {
 
     /**
      * Graphics attributes :
@@ -85,16 +85,17 @@ public class Planet implements Serializable{
 
     /**
      * Constructor.
-     * @param center Center of the planet as a Point2D.
-     * @param radius Radius of the planet as an int.
+     *
+     * @param center          Center of the planet as a Point2D.
+     * @param radius          Radius of the planet as an int.
      * @param production_rate Production generated each frame, as a float.
-     * @param model Ship that will be cloned for future produced ships.
+     * @param model           Ship that will be cloned for future produced ships.
      */
-    public Planet(Point2D center, int radius, float production_rate, Spaceship model){
+    public Planet(Point2D center, int radius, float production_rate, Spaceship model) {
         this.center = center;
         this.production_rate = production_rate;
         this.model = model;
-        model.setPos(new Point2D(-1,-1)); //so that serialization won't load a null object
+        model.setPos(new Point2D(-1, -1)); //so that serialization won't load a null object
         this.radius = radius;
         this.color = model.getColor();
 
@@ -105,9 +106,9 @@ public class Planet implements Serializable{
     /**
      * Initialize Slider.
      */
-    public void initSlider(){
+    public void initSlider() {
         sending_quantity.setPrefWidth(Utils.PLAYER_PLANET_RADIUS);
-        sending_quantity.setLayoutX(center.getX() - sending_quantity.getPrefWidth()/2);
+        sending_quantity.setLayoutX(center.getX() - sending_quantity.getPrefWidth() / 2);
         sending_quantity.setLayoutY(center.getY() + radius);
         sending_quantity.setMin(0);
         sending_quantity.setMax(100);
@@ -120,20 +121,21 @@ public class Planet implements Serializable{
 
     /**
      * Create a squadron object with size given.
+     *
      * @param size Number of ships contained in the squadron.
      * @return An object squadron with as much ships as given size.
      */
-    public Squadron createSquadron(int size){
+    public Squadron createSquadron(int size) {
         ArrayList<Spaceship> spaceships = new ArrayList<>();
-        if(size > Utils.WAVE_SIZE_MAX)
+        if (size > Utils.WAVE_SIZE_MAX)
             size = Utils.WAVE_SIZE_MAX;
 
-        if(size > waiting_for_launch)
+        if (size > waiting_for_launch)
             size = waiting_for_launch;
 
         waiting_for_launch -= size;
 
-        for(int i = 0; i < size; i++) {
+        for (int i = 0; i < size; i++) {
             spaceships.add(model.getInstance());
         }
         return new Squadron(spaceships, this.owner);
@@ -141,41 +143,42 @@ public class Planet implements Serializable{
 
     /**
      * Add a squadron to the owner of the planet and set the target for this squadron.
+     *
      * @param amount Amount of ship in the squadron.
      * @return The created Squadron.
      */
-    public Squadron sendShip(int amount){
+    public Squadron sendShip(int amount) {
         Squadron squad = createSquadron(amount);
 
         //withdraw spaceship in the squadron from the on ground spaceships && assign pos
         ArrayList<double[]> pos = MathUtils.dotAroundACircle(center, radius, squad.getSpaceships().size());
 
-        for(int i = 0; i < squad.getSpaceships().size(); i++){
+        for (int i = 0; i < squad.getSpaceships().size(); i++) {
             squad.getSpaceships().get(i).setPos(new Point2D(pos.get(i)[0], pos.get(i)[1]));
             Spaceship s = squad.getSpaceships().get(i);
             double angle = MathUtils.pointOnOffPlanet(center, s.getPos(), s.getDirection(), false);
             s.rotate(angle);
         }
 
-        if(map == null){
+        if (map == null) {
             System.out.println("MAP NULLE");
-        }else{
+        } else {
             squad.setTarget(target, map);
 
         }
         owner.getSquadrons().add(squad);
 
-		return squad;
+        return squad;
     }
 
     /**
      * Withdraw ships from the available ships and add them to the waiting for launch ships. Actualize the accessibility map and target planet which will be needed when sending those ships.
+     *
      * @param amount Amount of ships added to the waiting queue.
      * @param target Planet target of the ships.
-     * @param map Accessibility map of the ships.
+     * @param map    Accessibility map of the ships.
      */
-    public void addWaitingShips(int amount, Planet target, HashMap<Point2D,Boolean> map)
-    {
+    public void addWaitingShips(int amount, Planet target, HashMap<Point2D, Boolean> map) {
         this.target = target;
         this.map = map;
         waiting_for_launch += amount;
@@ -186,10 +189,10 @@ public class Planet implements Serializable{
     /**
      * Add production rate to the total production, and if there is enough production produce a ship and withdraw the production used.
      */
-    public void addProduction(){
+    public void addProduction() {
         total_production += production_rate;
-        if(total_production >= model.necessary_production){
-            float producted_ships = total_production/ model.necessary_production;
+        if (total_production >= model.necessary_production) {
+            float producted_ships = total_production / model.necessary_production;
             available_ships += producted_ships;
             total_production -= producted_ships * model.necessary_production;
         }
@@ -198,22 +201,24 @@ public class Planet implements Serializable{
     /**
      * Add 1 spaceship to the available ships.
      */
-    public void addSpaceship(){
-        available_ships ++;
+    public void addSpaceship() {
+        available_ships++;
     }
 
     /**
      * Check if a position is contained inside the planet's circle.
+     *
      * @param p Position that will be checked.
      * @return True if p is contained in the planet's circle, false otherwise.
      */
-    public boolean contains(Point2D p){
+    public boolean contains(Point2D p) {
         double dist = Math.sqrt(Math.pow(center.getX() - p.getX(), 2) + Math.pow(center.getY() - p.getY(), 2));
         return dist <= this.radius;
     }
 
     /**
      * Process the distance between a position and the planet's center.
+     *
      * @param pos Position which we want to know the distance from the planet's center.
      * @return The distance between pos and the planet's center.
      */
@@ -223,12 +228,13 @@ public class Planet implements Serializable{
 
     /**
      * Change the owner of this planet.
-     * @param owner New owner of the planet.
+     *
+     * @param owner     New owner of the planet.
      * @param spaceship New spaceship used as model for the planet.
      */
     public void changeOwner(Controller owner, Spaceship spaceship) {
         this.waiting_for_launch = 0;
-        if(this.owner != null)
+        if (this.owner != null)
             this.owner.getPlanets().remove(this);
         setOwner(owner);
         this.color = owner.getColor();
@@ -239,18 +245,18 @@ public class Planet implements Serializable{
 
     /**
      * Check if there is a collision between a spaceship and the planet. If there is one and that the spaceship is an ennemy, the planet looses available ships, if the spaceship is an allied the planet gains available ships.
-     * @param spaceship The ship colliding with the planet.
+     *
+     * @param spaceship      The ship colliding with the planet.
      * @param spaceShipOwner The owner of the spaceship.
      * @return null if there is a collision, spaceship otherwise.
      */
     public Spaceship checkCollision(Spaceship spaceship, Controller spaceShipOwner) {
-        if(contains(spaceship.getPos()) ) {
+        if (contains(spaceship.getPos())) {
             if (this.getOwner() != spaceShipOwner) {
                 this.setHit(spaceship.getDamage());
                 if (this.available_ships <= 0)
-                    this.changeOwner(spaceShipOwner,spaceship);
-            }
-            else
+                    this.changeOwner(spaceShipOwner, spaceship);
+            } else
                 this.addSpaceship();
             return spaceship;
         }
@@ -259,14 +265,15 @@ public class Planet implements Serializable{
 
     /**
      * Check if there isn't a spaceship too close to the planet for the launch of the next wave of spaceship.
+     *
      * @return true if there isn't any spaceship too close, false otherwise.
      */
-    public boolean isLaunchReady(){
+    public boolean isLaunchReady() {
         boolean res = true;
 
-        for(Squadron s : owner.getSquadrons()){
-            for(Spaceship sp : s.getSpaceships()){
-                if(this.distantOf(sp.pos) < radius + Utils.ALLOWED_RANGE_TAKE_OFF)
+        for (Squadron s : owner.getSquadrons()) {
+            for (Spaceship sp : s.getSpaceships()) {
+                if (this.distantOf(sp.pos) < radius + Utils.ALLOWED_RANGE_TAKE_OFF)
                     res = false;
             }
         }
@@ -276,55 +283,57 @@ public class Planet implements Serializable{
 
     /**
      * Get the nearest ennemy planet around this one.
+     *
      * @param all_planets A list containing all the planets in the game.
      * @return the nearest ennemy planet.
      */
     public Planet nearestEnnemyPlanet(ArrayList<Planet> all_planets) {
-		Planet res = null;
-		
-		double minDist = Utils.WINDOW_WIDTH;
-		
-		for(Planet p : all_planets) {
-			if(p.getOwner() != this.getOwner() && this.distantOf(p.center) < minDist) {
-				minDist = this.distantOf(p.center);
-				res = p;
-			}
-		}
-    	
-    	return res;
+        Planet res = null;
+
+        double minDist = Utils.WINDOW_WIDTH;
+
+        for (Planet p : all_planets) {
+            if (p.getOwner() != this.getOwner() && this.distantOf(p.center) < minDist) {
+                minDist = this.distantOf(p.center);
+                res = p;
+            }
+        }
+
+        return res;
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return "[Planet] position : " + center.getX() + ";" + center.getY() + ", production :" + total_production + ", nb ships : " + available_ships;
     }
-    
+
     //---------------------DRAW-------------------//
 
     /**
      * Drawing of the planet.
+     *
      * @param root Group on which the planet is drawn.
      */
     public void draw(Group root) {
 
-        if(selected){
-            Circle c = new Circle(center.getX(),center.getY(), radius + Utils.SELECTED_HALO_SIZE);
+        if (selected) {
+            Circle c = new Circle(center.getX(), center.getY(), radius + Utils.SELECTED_HALO_SIZE);
             Point2D pScreen = new Point2D(MouseInfo.getPointerInfo().getLocation().getX(), MouseInfo.getPointerInfo().getLocation().getY());
             Point2D p2 = root.screenToLocal(pScreen);
-            Line l = new Line(center.getX(), center.getY(),p2.getX(),p2.getY());
+            Line l = new Line(center.getX(), center.getY(), p2.getX(), p2.getY());
 
             l.setStrokeWidth(5);
             l.setStroke(Utils.HALO_COLOR);
 
             c.setFill(Utils.HALO_COLOR);
-            root.getChildren().addAll(c,l);
+            root.getChildren().addAll(c, l);
         }
 
-        Circle c = new Circle(0,0,radius);
+        Circle c = new Circle(0, 0, radius);
         c.setFill(color);
 
         //create a text inside a circle
-        final Text text = new Text (String.valueOf(available_ships));
+        final Text text = new Text(String.valueOf(available_ships));
         text.setStroke(Color.BLACK);
 
 
@@ -332,11 +341,11 @@ public class Planet implements Serializable{
         StackPane stack = new StackPane();
 
         stack.getChildren().addAll(c, text);
-        stack.setLayoutX(center.getX()-radius);
-        stack.setLayoutY(center.getY()-radius);
+        stack.setLayoutX(center.getX() - radius);
+        stack.setLayoutY(center.getY() - radius);
 
         root.getChildren().add(stack);
-        if(owner != null && owner.getClass() == HumanController.class)
+        if (owner != null && owner.getClass() == HumanController.class)
             root.getChildren().add(sending_quantity);
     }
 
@@ -344,9 +353,10 @@ public class Planet implements Serializable{
 
     /**
      * Write the object in "save.ser"
+     *
      * @param oos The stream on which the object is written.
      */
-    private void writeObject(ObjectOutputStream oos){
+    private void writeObject(ObjectOutputStream oos) {
         try {
             oos.writeObject(center.getX());
             oos.writeObject(center.getY());
@@ -362,12 +372,11 @@ public class Planet implements Serializable{
             oos.writeObject(model);
             oos.writeObject(owner);
             oos.writeObject(target);
-            if(map == null){
-             System.out.println("SAVING NULL MAP");
+            if (map == null) {
+                System.out.println("SAVING NULL MAP");
             }
             oos.writeObject(map.size());
-            for(Point2D p : map.keySet())
-            {
+            for (Point2D p : map.keySet()) {
                 oos.writeObject(p.getX());
                 oos.writeObject(p.getY());
                 oos.writeObject(map.get(p));
@@ -379,13 +388,14 @@ public class Planet implements Serializable{
 
     /**
      * Load the planet from "save.ser"
+     *
      * @param ois The stream from which the object is read.
      */
-    private void readObject(ObjectInputStream ois){
+    private void readObject(ObjectInputStream ois) {
 
         try {
-            double x = (double)ois.readObject();
-            double y = (double)ois.readObject();
+            double x = (double) ois.readObject();
+            double y = (double) ois.readObject();
             double r = (double) ois.readObject();
             double g = (double) ois.readObject();
             double b = (double) ois.readObject();
@@ -396,15 +406,15 @@ public class Planet implements Serializable{
             production_rate = (float) ois.readObject();
             radius = (int) ois.readObject();
             model = (Spaceship) ois.readObject();
-            owner = (Controller)ois.readObject();
-            target = (Planet)ois.readObject();
-            int mapSize = (int)ois.readObject();
+            owner = (Controller) ois.readObject();
+            target = (Planet) ois.readObject();
+            int mapSize = (int) ois.readObject();
             map = new HashMap<>();
-            for(int i = 0; i < mapSize; i++){
-                map.put(new Point2D((double)ois.readObject(),(double)ois.readObject()), (Boolean)ois.readObject());
+            for (int i = 0; i < mapSize; i++) {
+                map.put(new Point2D((double) ois.readObject(), (double) ois.readObject()), (Boolean) ois.readObject());
             }
-            center = new Point2D(x,y);
-            color = new Color(r,g,b,opacity);
+            center = new Point2D(x, y);
+            color = new Color(r, g, b, opacity);
             sending_quantity = new Slider();
             initSlider();
         } catch (IOException e) {
@@ -429,7 +439,9 @@ public class Planet implements Serializable{
         return radius;
     }
 
-    public Point2D getCenter() { return center; }
+    public Point2D getCenter() {
+        return center;
+    }
 
     public int getAvailable_ships() {
         return available_ships;
@@ -440,7 +452,7 @@ public class Planet implements Serializable{
     }
 
     public void setHit(int damage) {
-        this.available_ships-=damage;
+        this.available_ships -= damage;
     }
 
     public void setSelected(boolean selected) {
@@ -450,7 +462,6 @@ public class Planet implements Serializable{
     public int getWaiting_for_launch() {
         return waiting_for_launch;
     }
-
 
 
     public Planet getTarget() {

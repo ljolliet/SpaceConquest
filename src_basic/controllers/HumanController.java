@@ -6,9 +6,6 @@ import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
 import utils.Utils;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -25,6 +22,7 @@ public class HumanController extends Controller {
 
     /**
      * Controller. Set the color of the controller.
+     *
      * @param color Color of the controller.
      */
     public HumanController(Color color) {
@@ -33,6 +31,7 @@ public class HumanController extends Controller {
 
     /**
      * Check if a position(x,y) is on a planet belonging to the human player.
+     *
      * @param x X position to be checked.
      * @param y Y position to be checked.
      * @return True if the position is contained in a planet belonging to the human player, false otherwise.
@@ -49,6 +48,7 @@ public class HumanController extends Controller {
 
     /**
      * Get the human planet containing the position(x,y).
+     *
      * @param x X position.
      * @param y Y position.
      * @return The planet containing the position(x,y).
@@ -67,8 +67,9 @@ public class HumanController extends Controller {
 
     /**
      * Check if the position(x,y) is on a planet which doesn't belong to this controller.
-     * @param x X position to be checked.
-     * @param y Y position to be checked.
+     *
+     * @param x       X position to be checked.
+     * @param y       Y position to be checked.
      * @param planets List of every planets in the current game.
      * @return True if the position(x,y) is contained in a planet.
      */
@@ -84,8 +85,9 @@ public class HumanController extends Controller {
 
     /**
      * Get the planet containing the position(x,y). There is no need to check owner because this function is called in a if on isOnPlanet().
-     * @param x X position.
-     * @param y Y position.
+     *
+     * @param x       X position.
+     * @param y       Y position.
      * @param planets List of every planets in the current game.
      * @return The planet containing the position(x,y).
      */
@@ -103,6 +105,7 @@ public class HumanController extends Controller {
 
     /**
      * Call sending ships function of a planet.
+     *
      * @param p The planet that will send its ships.
      */
     public void launchShip(Planet p) {
@@ -112,7 +115,8 @@ public class HumanController extends Controller {
 
     /**
      * Set the target of the selected squadron.
-     * @param p The new target.
+     *
+     * @param p                The new target.
      * @param accessibilityMap Accessibility map of the squadron.
      */
     public void setTarget(Planet p, HashMap<Point2D, Boolean> accessibilityMap) {
@@ -123,25 +127,26 @@ public class HumanController extends Controller {
 
     /**
      * Change the selected squadron. Change the selected boolean of this squadron.
+     *
      * @param selectedSquadron
      */
     public void setSelectedSquadron(Squadron selectedSquadron) {
-        if(this.selectedSquadron != null)
-        	this.selectedSquadron.setSelected(false);
-        
+        if (this.selectedSquadron != null)
+            this.selectedSquadron.setSelected(false);
+
         this.selectedSquadron = selectedSquadron;
         selectedSquadron.setSelected(true);
     }
 
-	public Planet getSelectedPlanet() {
-		return selectedPlanet;
-	}
+    public Planet getSelectedPlanet() {
+        return selectedPlanet;
+    }
 
-	public void setSelectedPlanet(Planet selectedPlanet) {
-		this.selectedPlanet = selectedPlanet;
-	}
+    public void setSelectedPlanet(Planet selectedPlanet) {
+        this.selectedPlanet = selectedPlanet;
+    }
 
-	public Squadron getSelectedSquadron() {
-		return selectedSquadron;
-	}
+    public Squadron getSelectedSquadron() {
+        return selectedSquadron;
+    }
 }
