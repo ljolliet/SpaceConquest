@@ -5,6 +5,7 @@ import controllers.HumanController;
 import controllers.TypeAI;
 import game.Planet;
 import game.Squadron;
+import game.spaceships.BigSpaceship;
 import game.spaceships.LittleSpaceship;
 import javafx.animation.AnimationTimer;
 import javafx.geometry.Point2D;
@@ -173,7 +174,14 @@ public class GameLoop extends AnimationTimer implements Serializable {
             double minRadius = Utils.PLAYER_PLANET_RADIUS - Utils.RADIUS_VARIATION * Utils.PLAYER_PLANET_RADIUS / 100;
             double randRadius = minRadius + (maxRadius - minRadius) * (new Random()).nextDouble();
 
-            Planet p = new Planet(pos, (int)randRadius, (float)randProd, new LittleSpaceship(c.getColor()));// add color
+            int randShip = (new Random()).nextInt(2);
+            Planet p = null;
+            if(randShip == 0){
+                p = new Planet(pos, (int)randRadius, (float)randProd, new LittleSpaceship(c.getColor()));// add color
+            }else if(randShip == 1){
+                p = new Planet(pos, (int)randRadius, (float)randProd, new BigSpaceship(c.getColor()));// add color
+            }
+
             c.getPlanets().add(p);
             p.setOwner(c);
             planets.add(p);

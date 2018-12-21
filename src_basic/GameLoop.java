@@ -396,7 +396,7 @@ public class GameLoop extends AnimationTimer implements Serializable {
     }
 
     /**
-     * GUEDONZ
+     * Launch the currently waiting ships if there is no other ships around the planet.
      */
     private void actualizeShipSending(){
         for(Controller c : controllers){
@@ -414,7 +414,7 @@ public class GameLoop extends AnimationTimer implements Serializable {
     }
 
     /**
-     * GUEDONZ
+     * Call the decision making function of each AI.
      */
     private void actualizeActionsAI(){
     	for(Controller c : controllers) {
@@ -468,7 +468,8 @@ public class GameLoop extends AnimationTimer implements Serializable {
     }
 
     /**
-     * GUEDONZ
+     * Save the gameloop's data in "save.ser".
+     * @param oos The stream used to write data.
      */
     private void writeObject(ObjectOutputStream oos){
         try {
@@ -479,7 +480,8 @@ public class GameLoop extends AnimationTimer implements Serializable {
         }
     }
     /**
-     * GUEDONZ
+     * Read the gameloop from "save.ser".
+     * @param ois The stream used to read gameloop.
      */
     private void readObject(ObjectInputStream ois){
         try {
