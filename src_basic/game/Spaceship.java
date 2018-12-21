@@ -6,7 +6,6 @@ import javafx.scene.effect.DropShadow;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import utils.MathUtils;
-
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -152,6 +151,10 @@ public abstract class  Spaceship implements Serializable{
         this.color = color;
     }
 
+    /**
+     * Write the spaceship in "save.ser"
+     * @param oos the stream in which the spaceship is written.
+     */
     private void writeObject(ObjectOutputStream oos){
         try {
             oos.writeObject(damage);
@@ -183,6 +186,10 @@ public abstract class  Spaceship implements Serializable{
         }
     }
 
+    /**
+     * Read spaceship from "save.ser"
+     * @param ois the stream from which the spaceship is read.
+     */
     private void readObject(ObjectInputStream ois){
         try {
             damage = (int)ois.readObject();

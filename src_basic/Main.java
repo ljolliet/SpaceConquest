@@ -5,6 +5,10 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import utils.Utils;
 
+
+/**
+ * @author tguesdon, ljolliet
+ */
 public class Main extends Application {
 
     /**

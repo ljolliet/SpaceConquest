@@ -24,9 +24,6 @@ import java.util.HashMap;
 import java.util.Random;
 
 
-/**
- * @author tguesdon, ljolliet
- */
 public class GameLoop extends AnimationTimer implements Serializable {
 
     /**
@@ -398,6 +395,9 @@ public class GameLoop extends AnimationTimer implements Serializable {
 
     }
 
+    /**
+     * GUEDONZ
+     */
     private void actualizeShipSending(){
         for(Controller c : controllers){
             for(Planet p : c.getPlanets()){
@@ -412,7 +412,10 @@ public class GameLoop extends AnimationTimer implements Serializable {
             }
         }
     }
-    
+
+    /**
+     * GUEDONZ
+     */
     private void actualizeActionsAI(){
     	for(Controller c : controllers) {
     		if(c.getClass() == ComputerController.class) {
@@ -464,6 +467,9 @@ public class GameLoop extends AnimationTimer implements Serializable {
         Main.GROUP.getChildren().add(menuButton);
     }
 
+    /**
+     * GUEDONZ
+     */
     private void writeObject(ObjectOutputStream oos){
         try {
             oos.writeObject(planets);
@@ -472,7 +478,9 @@ public class GameLoop extends AnimationTimer implements Serializable {
             e.printStackTrace();
         }
     }
-
+    /**
+     * GUEDONZ
+     */
     private void readObject(ObjectInputStream ois){
         try {
             planets = (ArrayList<Planet>) ois.readObject();

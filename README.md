@@ -3,18 +3,18 @@
 #### Java Project
 
 Space Conquest is a Java project created during our final year of an IT bachelor's degree in University of Bordeaux (FR).
-It's a strategy game where you are the Ambassador of the red planet and will have to conquest all planets around.
+It's a strategy game where you are the Ambassador of a red planet and will have to conquest all planets around.
 
 
 ##### To run this game :
 ###### On Linux 
     java -jar spaceConquest.jar
-###### On Windows
-    TODO or click
+    or 
+    run the main with IntellIJ or Eclipse
 
 ##### Rules :
 To conquest another planet you'll have to send spaceships on it using drag and drop. You also can choose the amount of spaceships sent (in %), 
-using the slider below the planet.
+using the slider below the planet. You also can organize your troupes, moving them from one of your planet to another.
 
 ##### To patch :
     
@@ -43,17 +43,9 @@ This version also managed :
 
 ##### v2.1 :
 - Sprite Spaceship
-- color variation (image + filter ?)
+- color variation on images
 -
 -
-
-
-
-##### DON'T FORGET :
-- put in private the methods that can -> Alt + Maj + i on IntelliJ
-- Check function annotation in java
-- create jar at the end and check its functioning
-- javadoc
 
 
 

@@ -142,8 +142,8 @@ public class Squadron implements Serializable{
     //-------------------------------SERIALIZATION----------------------//
 
     /**
-     * Write the squadron on "save.ser"
-     * @param oos the stream on which the squadron is written.
+     * Write the squadron in "save.ser"
+     * @param oos the stream in which the squadron is written.
      */
     private void writeObject(ObjectOutputStream oos){
         try {

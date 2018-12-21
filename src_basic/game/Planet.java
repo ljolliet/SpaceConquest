@@ -443,11 +443,6 @@ public class Planet implements Serializable{
         this.available_ships-=damage;
     }
 
-
-    public boolean isSelected() {
-        return selected;
-    }
-
     public void setSelected(boolean selected) {
         this.selected = selected;
     }
@@ -456,9 +451,6 @@ public class Planet implements Serializable{
         return waiting_for_launch;
     }
 
-    public void setWaiting_for_launch(int waiting_for_launch) {
-        this.waiting_for_launch = waiting_for_launch;
-    }
 
 
     public Planet getTarget() {
@@ -473,9 +465,6 @@ public class Planet implements Serializable{
         return map;
     }
 
-    public void setMap(HashMap<Point2D, Boolean> map) {
-        this.map = map;
-    }
 
     public Slider getSending_quantity() {
         return sending_quantity;
