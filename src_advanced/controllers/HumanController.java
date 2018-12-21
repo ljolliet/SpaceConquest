@@ -106,8 +106,7 @@ public class HumanController extends Controller {
      * @param p The planet that will send its ships.
      */
     public void launchShip(Planet p) {
-        Squadron squad = p.sendShip(Utils.WAVE_SIZE);
-        this.setSelectedSquadron(squad);
+        p.sendShip(Utils.WAVE_SIZE);
     }
 
     /**

@@ -1,10 +1,10 @@
 
+import game.Squadron;
 import controllers.ComputerController;
 import controllers.Controller;
 import controllers.HumanController;
 import controllers.TypeAI;
 import game.Planet;
-import game.Squadron;
 import game.spaceships.BigSpaceship;
 import game.spaceships.LittleSpaceship;
 import javafx.animation.AnimationTimer;
@@ -355,6 +355,14 @@ public class GameLoop extends AnimationTimer implements Serializable {
                     hc.getSelectedPlanet().setSelected(false);
 
                 if(startSelection != null){
+                    int actual = 0;
+                    for(Squadron s : controllers.get(0).getSquadrons()){
+                        if(s.shipsInRectangle(selectionRect) > actual){
+                            ((HumanController) controllers.get(0)).setSelectedSquadron(s);
+                            s.setSelected(true);
+                        }
+                    }
+
                     startSelection = null;
                 }
             }});

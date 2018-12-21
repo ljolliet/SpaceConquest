@@ -3,6 +3,7 @@ package game;
 import controllers.Controller;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
+import javafx.scene.shape.Rectangle;
 import utils.MathUtils;
 import utils.Utils;
 
@@ -112,6 +113,24 @@ public class Squadron implements Serializable{
             if (s.contains(pos))
                 return true;
         return false;
+    }
+
+    /**
+     * Check how many ships are contained in a rectangle.
+     * @param rect Rectangle to be checked.
+     * @return The number of ships in the rectangle.
+     */
+    public int shipsInRectangle(Rectangle rect){
+       int contained = 0;
+
+       for(Spaceship sp : spaceships){
+           if(sp.getPos().getX() > rect.getX() && sp.getPos().getX() < rect.getX() + rect.getWidth()
+                   && sp.getPos().getY() > rect.getY() && sp.getPos().getY() < rect.getY() + rect.getHeight()){
+               contained ++;
+           }
+       }
+
+       return contained;
     }
 
     //--------------------------DRAW-----------------//
