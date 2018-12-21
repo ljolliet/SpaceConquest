@@ -9,12 +9,15 @@ import game.spaceships.LittleSpaceship;
 import javafx.animation.AnimationTimer;
 import javafx.geometry.Point2D;
 import javafx.scene.control.Button;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import utils.Utils;
 
+import java.awt.*;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -47,6 +50,16 @@ public class GameLoop extends AnimationTimer implements Serializable {
      * Accessibility map. If accessibilityMap.get(Point p) is true, it means that p is accessible.
      */
     private transient HashMap<Point2D, Boolean> accessibilityMap = new HashMap<>();
+
+    /**
+     * Rectangle used to select squadron.
+     */
+    private transient Rectangle selectionRect = new Rectangle();
+
+    /**
+     * First point of the selection rectangle, will get a value when the user click on the screen.
+     */
+    private transient Point2D startSelection = null;
 
     //---------------------VICTORY SCREEN-----------------------------//
     /**
@@ -290,6 +303,7 @@ public class GameLoop extends AnimationTimer implements Serializable {
                     if (s.contains(new Point2D(event.getX(), event.getY()))) {
                         hc.setSelectedSquadron(s);
                     }
+
                 }
             }else{
                 if(event.getX() > menuButton.getLayoutX() && event.getX() < menuButton.getLayoutX() + menuButton.getWidth()
@@ -310,7 +324,10 @@ public class GameLoop extends AnimationTimer implements Serializable {
         		Planet p = hc.getHumanPlanetClick(event.getX(), event.getY());
         		p.setSelected(true);
         		hc.setSelectedPlanet(p);
-            }}
+            }else{
+        	    startSelection = new Point2D(event.getX(), event.getY());
+        	    }
+            }
         	});
 
         Main.SCENE.setOnMouseReleased(event->{
@@ -329,6 +346,9 @@ public class GameLoop extends AnimationTimer implements Serializable {
                 if (hc.getSelectedPlanet() != null)
                     hc.getSelectedPlanet().setSelected(false);
 
+                if(startSelection != null){
+                    startSelection = null;
+                }
             }});
 
 
@@ -428,7 +448,7 @@ public class GameLoop extends AnimationTimer implements Serializable {
     private void draw() {
         Main.GROUP.getChildren().removeAll(Main.GROUP.getChildren()); // clear root
         //if(!Utils.OPTIMIZED)
-            GUIController.drawBackground(Main.GROUP, false);
+        GUIController.drawBackground(Main.GROUP, false);
 
         for (Planet p : planets) // draw all planets
             p.draw(Main.GROUP);
@@ -438,6 +458,25 @@ public class GameLoop extends AnimationTimer implements Serializable {
                 s.draw(Main.GROUP);
             }
         GUIController.displayMenuBar(Main.GROUP);
+
+        if(startSelection != null){
+            selectionRect.setX(startSelection.getX());
+            selectionRect.setY(startSelection.getY());
+            selectionRect.setWidth(Math.sqrt(Math.pow(MouseInfo.getPointerInfo().getLocation().getX() - startSelection.getX(), 2)));
+            selectionRect.setHeight(Math.sqrt(Math.pow(MouseInfo.getPointerInfo().getLocation().getY() - startSelection.getY(), 2)));
+            if(MouseInfo.getPointerInfo().getLocation().getX() - startSelection.getX() < 0){
+                selectionRect.setX( MouseInfo.getPointerInfo().getLocation().getX());
+            }
+            if(MouseInfo.getPointerInfo().getLocation().getY() - startSelection.getY() < 0){
+                selectionRect.setY( MouseInfo.getPointerInfo().getLocation().getY());
+            }
+            selectionRect.setStrokeWidth(2.0);
+            selectionRect.setStroke(Color.WHITE);
+            selectionRect.setFill(Color.TRANSPARENT);
+            Main.GROUP.getChildren().add(selectionRect);
+        }
+
+
     }
 
     /**

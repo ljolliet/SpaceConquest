@@ -12,17 +12,31 @@ import utils.Utils;
 
 public class ComputerController extends Controller {
 
+    /**
+     * Enum describing the behaviour of the AI. (CLASSIC, SAFE, AGGRESSIVE).
+     */
     private TypeAI type;
 
+    /**
+     * Integer used to make the AI send ships every 60 frames.
+     */
     int currentTime = 60;
 
+    /**
+     * Constructor. Used to set the color and AI type of the controller.
+     * @param color Color of the controller.
+     * @param type AI type of the controller. (CLASSIC, SAFE, AGGRESSIVE).
+     */
     public ComputerController(Color color, TypeAI type) {
         super(color);
         this.type = type;
     }
-    //AI function which will control the spaceships and planet production
-    //maybe thread ?
 
+    /**
+     * Function called every frame. Check if the AI has to make a decision, and call the decision function if so.
+     * @param all_planets All planets of the current game.
+     * @param map Accessibility map of the current game.
+     */
     public void process(ArrayList<Planet> all_planets, HashMap<Point2D, Boolean> map) {
         if (currentTime == Utils.AI_ACTION_TIME) {
             shipSendingDecision(all_planets, map);
@@ -32,6 +46,11 @@ public class ComputerController extends Controller {
         }
     }
 
+    /**
+     * Choose which percentage of ships will be send given the AI type then send them to the nearest ennemy target.
+     * @param all_planets All planets of the current game.
+     * @param map Accessibility map of the current game.
+     */
     public void shipSendingDecision(ArrayList<Planet> all_planets, HashMap<Point2D, Boolean> map) {
         int ratio;
         switch (type) {
@@ -54,17 +73,4 @@ public class ComputerController extends Controller {
             p.addWaitingShips(ratio * p.getAvailable_ships() / 100, target, map);
         }
     }
-
-/*
-    @Override
-    public void writeObject(ObjectOutputStream oos) {
-
-    }
-
-    @Override
-    public void readObject(ObjectInputStream ois) {
-
-    }
-
-*/
-    }
+}
