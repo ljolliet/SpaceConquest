@@ -456,11 +456,6 @@ public class Planet implements Serializable{
         return waiting_for_launch;
     }
 
-    public void setWaiting_for_launch(int waiting_for_launch) {
-        this.waiting_for_launch = waiting_for_launch;
-    }
-
-
     public Planet getTarget() {
         return target;
     }

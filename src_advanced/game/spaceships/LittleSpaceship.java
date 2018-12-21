@@ -2,8 +2,6 @@ package game.spaceships;
 
 import game.Spaceship;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Polygon;
-import javafx.scene.transform.Rotate;
 import utils.Utils;
 
 public class LittleSpaceship extends Spaceship {
@@ -25,19 +23,5 @@ public class LittleSpaceship extends Spaceship {
         return new LittleSpaceship(color);
     }
 
-    /**
-     * Initialize spaceship shape
-     * @return a Polygon initialized as a spaceship.
-     */
-    @Override
-    public Polygon initPolygon() {
-        Polygon polygon = new Polygon();
-        polygon.getPoints().addAll(pos.getX(), pos.getY()+(2./3.*length),
-                pos.getX()-(1./3.*length), pos.getY()-(1./3.*length),
-                pos.getX(), pos.getY(),
-                pos.getX()+(1./3.*length), pos.getY()-(1./3.*length));
-        polygon.getTransforms().add(new Rotate(angle, pos.getX(),pos.getY()));
-        return polygon;
 
-    }
 }

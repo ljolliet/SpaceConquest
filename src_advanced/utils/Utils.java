@@ -9,6 +9,7 @@ import java.util.List;
 public class Utils {
 
 
+
     //------------GAME-------------//
 
     /**
@@ -21,7 +22,7 @@ public class Utils {
      */
     public static int WINDOW_WIDTH = 1920;
 
-	/**
+    /**
      * If true the game will run optimized code on some functions.
      */
     public static boolean OPTIMIZED = true;
@@ -35,9 +36,14 @@ public class Utils {
     public static final Point2D SPACESHIP_DIRECTION = new Point2D(0, 1);
 
     /**
-     * Necessary production to create a Spaceship.
+     * Necessary production to create a little spaceship.
      */
     public static final int LITTLE_SPACESHIP_NEC_PROD = 10;
+
+    /**
+     * Necessary production to create a big spaceship.
+     */
+    public static final int BIG_SPACESHIP_NEC_PROD = 15;
 
     /**
      *  Length of a little spaceship in px.
@@ -45,17 +51,31 @@ public class Utils {
     public static final int LITTLE_SPACESHIP_LENGTH = 25;
 
     /**
-     * Damage made by the little spaceship when they land on an enemy planet.
+     *  Length of a big spaceship in px.
+     */
+    public static final double BIG_SPACESHIP_LENGTH = 35;
+
+    /**
+     * Damage made by a little spaceship when it crashes on an enemy planet.
      */
     public static final int LITTLE_SPACESHIP_DAMAGE = 1;
+
+    /**
+     * Damage made by a big spaceship when it crashes on an enemy planet.
+     */
+    public static final int BIG_SPACESHIP_DAMAGE = 2;
 
     /**
      *  Speed of a little spaceship in px/frame.
      */
     public static final double LITTLE_SPACESHIP_SPEED = 2.; // Not more than 3
 
-    /******************************/
+    /**
+     *  Speed of a big spaceship in px/frame.
+     */
+    public static final double BIG_SPACESHIP_SPEED = 1;
 
+//-----------------------------//
 
     /**
      * Production added by frame (=/= number of ship).

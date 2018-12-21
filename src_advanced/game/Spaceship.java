@@ -5,6 +5,7 @@ import javafx.scene.Group;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
+import javafx.scene.transform.Rotate;
 import utils.MathUtils;
 
 import java.io.IOException;
@@ -113,6 +114,20 @@ public abstract class  Spaceship implements Serializable{
         return  polygon.contains(point);
     }
 
+    /**
+     * Initialize spaceship shape
+     * @return a Polygon initialized as a spaceship.
+     */
+    public Polygon initPolygon() {
+        Polygon polygon = new Polygon();
+        polygon.getPoints().addAll(pos.getX(), pos.getY()+(2./3.*length),
+                pos.getX()-(1./3.*length), pos.getY()-(1./3.*length),
+                pos.getX(), pos.getY(),
+                pos.getX()+(1./3.*length), pos.getY()-(1./3.*length));
+        polygon.getTransforms().add(new Rotate(angle, pos.getX(),pos.getY()));
+        return polygon;
+
+    }
 
     @Override
     public String toString(){
@@ -146,12 +161,15 @@ public abstract class  Spaceship implements Serializable{
         return damage;
     }
 
-    public abstract Polygon initPolygon();
 
     public void setColor(Color color) {
         this.color = color;
     }
 
+    /**
+     * Write the spaceship in "save.ser"
+     * @param oos the stream in which the spaceship is written.
+     */
     private void writeObject(ObjectOutputStream oos){
         try {
             oos.writeObject(damage);
@@ -183,6 +201,10 @@ public abstract class  Spaceship implements Serializable{
         }
     }
 
+    /**
+     * Read spaceship from "save.ser"
+     * @param ois the stream from which the spaceship is read.
+     */
     private void readObject(ObjectInputStream ois){
         try {
             damage = (int)ois.readObject();

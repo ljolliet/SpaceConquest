@@ -179,7 +179,6 @@ public class Squadron implements Serializable{
         return spaceships;
     }
 
-
     public void setSelected(boolean selected) {
         this.selected = selected;
     }
@@ -187,8 +186,6 @@ public class Squadron implements Serializable{
     public Controller getOwner() { //ONly for test -> should we keep it ?
         return owner;
     }
-
-
 
     public Planet getTarget() {
         return target;
