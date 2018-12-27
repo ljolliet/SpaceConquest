@@ -119,7 +119,7 @@ public class GUIController {
     /**
      * ChoiceBox controlling the screen size.
      */
-    private static ChoiceBox screenSizeController = new ChoiceBox();
+    private static ChoiceBox<String> screenSizeController = new ChoiceBox<>();
 
     /**
      * Alert sent after saving.
@@ -465,8 +465,15 @@ public class GUIController {
 
 
             });
+            MenuItem backMenuItem = new MenuItem("Exit", new ImageView(new Image("file:resources/images/blackhole1.png")));
+            loadItem.setOnAction(e -> {
+                        vboxMenu.setVisible(true);
+                        //TODO @GUEDONZ
+                    });
+
             menu.getItems().add(saveItem);
             menu.getItems().add(loadItem);
+            menu.getItems().add(backMenuItem);
 
             MenuBar menuBar = new MenuBar();
             menuBar.getMenus().addAll(menu);

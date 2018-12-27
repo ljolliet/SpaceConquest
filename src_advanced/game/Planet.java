@@ -20,7 +20,6 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 public class Planet implements Serializable {
 
@@ -84,11 +83,51 @@ public class Planet implements Serializable {
      */
     private boolean selected = false;
 
+    private class Collision {
+        /**
+         * Position of the collision.
+         */
+        Point2D position;
+        /**
+         * Color of the shock wave
+         */
+        Color color;
+        /**
+         * Radius of the shock wave
+         */
+        int radius;
+
+        Collision(Point2D position, Color color) {
+            this.position = position;
+            this.color = color;
+            this.radius = Utils.COLLISION_WAVE_START;
+        }
+
+        /**
+         * Increase the shock wave radius.
+         */
+        void increase() { radius += Utils.COLLISION_WAVE_INC; }
+        /**
+         * True if the radius is over the limit.
+         */
+        boolean overLimit() { return this.radius >= Utils.COLLISION_WAVE_LIMIT;}
+
+        /**
+         * Draw the collision materialise by a shock wave.
+         * @param root Group on which the collision is drawn.
+         */
+        public void draw(Group root) {
+            Circle arc = new Circle(position.getX(), position.getY(), radius);
+            arc.setFill(Color.TRANSPARENT);
+            arc.setStroke(color);
+            root.getChildren().add(arc);
+        }
+    }
+    
     /**
-     * TODO
+     * All the collisions the planet needs to manage.
      */
-    private Map<Point2D, Integer> collisionPoints = new HashMap<Point2D, Integer>();
-    private Color collisionColor = Color.RED; //TODO
+    private ArrayList<Collision> collisions = new ArrayList<>();
 
 
     /**
@@ -261,9 +300,8 @@ public class Planet implements Serializable {
         if (contains(spaceship.getPos())) {
             if (this.getOwner() != spaceShipOwner) {
                 this.setHit(spaceship.getDamage());
-                if(!Utils.OPTIMIZED){
-                    this.collisionPoints.put(spaceship.getPos(), Utils.COLLISION_WAVE_START);
-                }
+                if(!Utils.OPTIMIZED)
+                    this.collisions.add( new Collision(spaceship.getPos(), spaceship.getColor()));
                 if (this.available_ships <= 0)
                     this.changeOwner(spaceShipOwner, spaceship);
             } else
@@ -325,7 +363,7 @@ public class Planet implements Serializable {
      * @param root Group on which the planet is drawn.
      */
     public void draw(Group root) {
-         Map<Point2D, Integer> toDelete = new HashMap<Point2D, Integer>();
+         ArrayList<Collision> toDelete = new ArrayList();
         if (selected) {
             Circle c = new Circle(center.getX(), center.getY(), radius + Utils.SELECTED_HALO_SIZE);
             Point2D pScreen = new Point2D(MouseInfo.getPointerInfo().getLocation().getX(), MouseInfo.getPointerInfo().getLocation().getY());
@@ -339,18 +377,15 @@ public class Planet implements Serializable {
             root.getChildren().addAll(c, l);
         }
         if(!Utils.OPTIMIZED){
-            for(Map.Entry<Point2D, Integer>  entry : collisionPoints.entrySet())
+            for(Collision c : collisions)
             {
-                Circle arc = new Circle(entry.getKey().getX(), entry.getKey().getY(), entry.getValue());
-                arc.setFill(Color.TRANSPARENT);
-                arc.setStroke(collisionColor);
-                root.getChildren().add(arc);
-                entry.setValue(entry.getValue() + Utils.COLLISION_WAVE_INC);
-                if(entry.getValue() >= Utils.COLLISION_WAVE_LIMIT)
-                    toDelete.put(entry.getKey(),entry.getValue());
+                c.draw(root);
+                c.increase();
+                if(c.overLimit())
+                    toDelete.add(c);
             }
-            for(Point2D p  : toDelete.keySet()) {
-                collisionPoints.remove(p);
+            for(Collision d  : toDelete) {
+                collisions.remove(d);
             }
         }
 
