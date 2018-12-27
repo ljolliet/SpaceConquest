@@ -123,7 +123,7 @@ public class Planet implements Serializable {
             root.getChildren().add(arc);
         }
     }
-    
+
     /**
      * All the collisions the planet needs to manage.
      */

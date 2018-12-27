@@ -65,18 +65,18 @@ You cannot send too much spaceships at a time, so when you try to send a lot of 
  - There is the same problem with a planet receiving spaceships.
  - The game end when a player win, so when the human player looses, he has to see his ennemies take over the galaxy during approximately two minutes.
 
- 
 #### Possible improvements :
  - Adding different types of spaceships. (advanced 21/12) **DONE**
- - Making a better selection of spaceships. (advanced 21/12)  **TO FINISH**
- - Making the optimization option relevant, with better graphics when not activated for example. 
- - Less precise pathfinding for spaceships when optimization is activated.
+ - Pirate spaceships (owner-less that are attacking randomly) **DONE**
+ - Making the optimization option relevant, with better graphics when not activated for example. **DONE**
+ - Less precise pathfinding for spaceships when optimization is activated. **DONE**
+ - Adding small explosion when a spaceships hit a planet. **DONE**
+ - Making a better selection of spaceships. (advanced 21/12)  **TO FINISH** 
  - Ending the game when the human player looses.
- - Adding small explosion when a spaceships hit a planet. **IN DEVELOPMENT @ljolliet**
  - Using color variation combined with sprite for spaceships.
  - Sick planets ( non-constant production)
- - Pirate spaceships (owner-less that are attacking randomly)
  - Different spaceship shape (not only simple triangles)
  - Choose spaceship's  type production 
+ - Back to menu 
 
 Copyright (c) 2018 Thomas Guesdon & Louis Jolliet
