@@ -24,7 +24,7 @@ public class HumanController extends Controller {
      * Controller. Set the color of the controller.
      *
      * @param color Color of the controller.
-     */
+     * */
     public HumanController(Color color) {
         super(color);
     }

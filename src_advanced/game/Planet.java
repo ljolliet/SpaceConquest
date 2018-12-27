@@ -20,6 +20,7 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class Planet implements Serializable {
 
@@ -84,6 +85,13 @@ public class Planet implements Serializable {
     private boolean selected = false;
 
     /**
+     * TODO
+     */
+    private Map<Point2D, Integer> collisionPoints = new HashMap<Point2D, Integer>();
+    private Color collisionColor = Color.RED; //TODO
+    private int collisionIncreasing = 10; //TODO
+
+    /**
      * Constructor.
      *
      * @param center          Center of the planet as a Point2D.
@@ -100,7 +108,6 @@ public class Planet implements Serializable {
         this.color = model.getColor();
 
         initSlider();
-
     }
 
     /**
@@ -258,6 +265,7 @@ public class Planet implements Serializable {
                     this.changeOwner(spaceShipOwner, spaceship);
             } else
                 this.addSpaceship();
+            this.collisionPoints.put(spaceship.getPos(), 10); // TODO
             return spaceship;
         }
         return null;
@@ -315,7 +323,7 @@ public class Planet implements Serializable {
      * @param root Group on which the planet is drawn.
      */
     public void draw(Group root) {
-
+         Map<Point2D, Integer> toDelete = new HashMap<Point2D, Integer>();
         if (selected) {
             Circle c = new Circle(center.getX(), center.getY(), radius + Utils.SELECTED_HALO_SIZE);
             Point2D pScreen = new Point2D(MouseInfo.getPointerInfo().getLocation().getX(), MouseInfo.getPointerInfo().getLocation().getY());
@@ -327,6 +335,18 @@ public class Planet implements Serializable {
 
             c.setFill(Utils.HALO_COLOR);
             root.getChildren().addAll(c, l);
+        }
+        for(Map.Entry<Point2D, Integer>  entry : collisionPoints.entrySet())
+        {
+            Circle arc = new Circle(entry.getKey().getX(), entry.getKey().getY(), entry.getValue());
+            arc.setFill(Color.TRANSPARENT);
+            arc.setStroke(collisionColor);
+            root.getChildren().add(arc);
+            entry.setValue(entry.getValue()+collisionIncreasing);
+            toDelete.put(entry.getKey(),entry.getValue());
+        }
+        for(Map.Entry<Point2D, Integer>  entry : toDelete.entrySet()) {
+            // delete collisionPoints.get(entry.getKey()).
         }
 
         Circle c = new Circle(0, 0, radius);

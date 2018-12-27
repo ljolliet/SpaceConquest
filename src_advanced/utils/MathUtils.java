@@ -183,11 +183,11 @@ public class MathUtils {
     }
 
     /**
-     * @param center
-     * @param spaceshipPos
-     * @param spaceshipDirection
-     * @param on
-     * @return
+     * @param center Center of the planet.
+     * @param spaceshipPos Position of the spaceship.
+     * @param spaceshipDirection Direction vector of spaceship.
+     * @param on True to point on the planet, false to point off the planet.
+     * @return Rotation angle to apply to spaceship to point on/off the planet.
      */
     public static double pointOnOffPlanet(Point2D center, Point2D spaceshipPos, Point2D spaceshipDirection, boolean on) {
         Point2D vectorPlanet;

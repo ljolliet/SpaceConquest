@@ -32,6 +32,7 @@ public abstract class Controller implements Serializable {
      */
     protected Color color;
 
+
     /**
      * Controller constructor.
      *
@@ -95,10 +96,6 @@ public abstract class Controller implements Serializable {
 
     public ArrayList<Planet> getPlanets() {
         return planets;
-    }
-
-    public void setPlanets(ArrayList<Planet> planets) {
-        this.planets = planets;
     }
 
     public Color getColor() {

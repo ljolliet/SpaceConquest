@@ -89,6 +89,7 @@ public abstract class Spaceship implements Serializable {
             borderGlow.setOffsetY(0f);
             polygon.setEffect(borderGlow);
         }
+
         root.getChildren().add(polygon);
     }
 
@@ -250,4 +251,6 @@ public abstract class Spaceship implements Serializable {
         }
 
     }
+
+
 }

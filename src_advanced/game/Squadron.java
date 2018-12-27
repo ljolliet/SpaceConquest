@@ -88,6 +88,8 @@ public class Squadron implements Serializable {
                 s.moveForward();
                 if ((tmpShip = this.target.checkCollision(s, this.owner)) != null)
                     spaceShipToRemove.add(tmpShip);
+
+
             }
             for (Spaceship s : spaceShipToRemove)
                 spaceships.remove(s);

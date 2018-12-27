@@ -1,3 +1,4 @@
+package gameloop;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;

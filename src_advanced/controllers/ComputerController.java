@@ -1,12 +1,12 @@
 package controllers;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
 import game.Planet;
 import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
 import utils.Utils;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class ComputerController extends Controller {
 
@@ -25,6 +25,7 @@ public class ComputerController extends Controller {
      *
      * @param color Color of the controller.
      * @param type  AI type of the controller. (CLASSIC, SAFE, AGGRESSIVE).
+
      */
     public ComputerController(Color color, TypeAI type) {
         super(color);
