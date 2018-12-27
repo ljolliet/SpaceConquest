@@ -14,6 +14,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.NoSuchElementException;
 
 public class Squadron implements Serializable {
 
@@ -88,8 +89,6 @@ public class Squadron implements Serializable {
                 s.moveForward();
                 if ((tmpShip = this.target.checkCollision(s, this.owner)) != null)
                     spaceShipToRemove.add(tmpShip);
-
-
             }
             for (Spaceship s : spaceShipToRemove)
                 spaceships.remove(s);

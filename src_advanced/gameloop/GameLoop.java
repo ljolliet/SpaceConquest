@@ -1,5 +1,6 @@
 package gameloop;
 
+import game.Spaceship;
 import game.Squadron;
 import controllers.ComputerController;
 import controllers.Controller;
@@ -47,6 +48,10 @@ public class GameLoop extends AnimationTimer implements Serializable {
      * List of all planets in the game.
      */
     private ArrayList<Planet> planets = new ArrayList<>();
+    /**
+     * List of all pirate squadron in the game.
+     */
+    private ArrayList<Squadron> pirateSquadrons = new ArrayList<>();
 
     /**
      * Accessibility map. If accessibilityMap.get(Point p) is true, it means that p is accessible.
@@ -101,6 +106,8 @@ public class GameLoop extends AnimationTimer implements Serializable {
             actualizeShipPos();
             actualizeShipSending();
             actualizeActionsAI();
+            pirateSpawn();
+            pirateActualize();
             gameWon = checkWin();
         } else {
             drawWin();
@@ -146,7 +153,6 @@ public class GameLoop extends AnimationTimer implements Serializable {
                     type = TypeAI.CLASSIC;
                     break;
             }
-
             controllers.add(new ComputerController(Utils.PLANET_COLOR.get(i), type));
         }
     }
@@ -467,12 +473,73 @@ public class GameLoop extends AnimationTimer implements Serializable {
 
 
     /**
+     * Randomly add pirate squadron.
+     */
+    private void pirateSpawn() {
+        int rand = (int) (Math.random() * Utils.MAX_RAND_PIRATE);
+
+        if (rand == 0) {
+            int randTarget = (int) (Math.random() * planets.size());
+            int randSP = (int) (Math.random() * 2);
+            ArrayList<Spaceship> pirates = new ArrayList<>();
+            switch (randSP) {
+                case 0:
+                    pirates.add(new LittleSpaceship(Utils.NEUTRAL_PLANET_COLOR));
+                    break;
+                case 1:
+                    pirates.add(new BigSpaceship(Utils.NEUTRAL_PLANET_COLOR));
+                    break;
+                default:
+                    pirates.add(new LittleSpaceship(Utils.NEUTRAL_PLANET_COLOR));
+                    break;
+            }
+
+            Point2D pos;
+            switch ((int) (Math.random() * 4)) {
+                case 0:
+                    pos = new Point2D(0, (Math.random() * Utils.WINDOW_HEIGHT));
+                    break;
+                case 1:
+                    pos = new Point2D(Utils.WINDOW_WIDTH - 1, (Math.random() * Utils.WINDOW_HEIGHT));
+                    break;
+                case 2:
+                    pos = new Point2D((Math.random() * Utils.WINDOW_WIDTH), 0);
+                    break;
+                case 3:
+                    pos = new Point2D((Math.random() * Utils.WINDOW_WIDTH), Utils.WINDOW_HEIGHT - 1);
+                    break;
+                default:
+                    pos = new Point2D(0,0);
+                    break;
+            }
+
+            pirates.get(0).setPos(pos);
+            Squadron squad = new Squadron(pirates, null);
+            if(squad.getTarget() == null)
+                squad.setTarget(planets.get(randTarget), accessibilityMap);
+
+            pirateSquadrons.add(squad);
+        }
+    }
+
+    /**
+     * Actualize pirate squadron position.
+     */
+    private void pirateActualize() {
+        for (Squadron s : pirateSquadrons) {
+                s.sendToTarget();
+        }
+    }
+
+    //--------------------------------------DRAWING-----------------------//
+
+    /**
      * Call every draw function of the game's elements
      */
     private void draw() {
         Main.GROUP.getChildren().removeAll(Main.GROUP.getChildren()); // clear root
 
-        if(!Utils.OPTIMIZED)
+        if (!Utils.OPTIMIZED)
             GUIController.drawBackground(Main.GROUP, false);
 
         for (Planet p : planets) // draw all planets
@@ -482,6 +549,11 @@ public class GameLoop extends AnimationTimer implements Serializable {
             for (Squadron s : c.getSquadrons()) {
                 s.draw(Main.GROUP);
             }
+
+        for (Squadron s : pirateSquadrons) {
+            s.draw(Main.GROUP);
+        }
+
         GUIController.displayMenuBar(Main.GROUP);
 
         if (startSelection != null) {

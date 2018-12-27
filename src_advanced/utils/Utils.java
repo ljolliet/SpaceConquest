@@ -25,10 +25,15 @@ public class Utils {
     /**
      * If true the game will run optimized code on some functions.
      */
-    public static boolean OPTIMIZED = true;
+    public static boolean OPTIMIZED = false;
 
 
     //------------SPACESHIPS-------------//
+
+    /**
+     * Pirate ship's probability to spawn is 1 on MAX_RAND_PIRATE.
+     */
+    public static final int MAX_RAND_PIRATE = 100;
 
     /**
      * Spaceship default direction vector
