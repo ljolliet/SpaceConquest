@@ -273,18 +273,19 @@ public class Utils {
     //-----------------------COLLISIONS-------------------------//
 
     /**
-     * TODO
+     * Collision shock wave minimum radius.
+     */
+    public static int COLLISION_WAVE_START = 10;
+
+    /**
+     * Collision shock wave's radius increasing.
      */
     public static  int COLLISION_WAVE_INC = 2;
 
     /**
-     * TODO
+     *  Collision shock wave maximum radius.
      */
     public static  int COLLISION_WAVE_LIMIT = 40;
 
-    /**
-     * TODO
-     */
-    public static int COLLISION_WAVE_START = 10;
 
 }

@@ -261,11 +261,11 @@ public class Planet implements Serializable {
         if (contains(spaceship.getPos())) {
             if (this.getOwner() != spaceShipOwner) {
                 this.setHit(spaceship.getDamage());
+                this.collisionPoints.put(spaceship.getPos(), Utils.COLLISION_WAVE_START);
                 if (this.available_ships <= 0)
                     this.changeOwner(spaceShipOwner, spaceship);
             } else
                 this.addSpaceship();
-            this.collisionPoints.put(spaceship.getPos(), Utils.COLLISION_WAVE_START);
             return spaceship;
         }
         return null;
@@ -344,7 +344,7 @@ public class Planet implements Serializable {
             root.getChildren().add(arc);
             entry.setValue(entry.getValue() + Utils.COLLISION_WAVE_INC);
             if(entry.getValue() >= Utils.COLLISION_WAVE_LIMIT)
-            toDelete.put(entry.getKey(),entry.getValue());
+                toDelete.put(entry.getKey(),entry.getValue());
         }
         for(Point2D p  : toDelete.keySet()) {
             collisionPoints.remove(p);
@@ -477,10 +477,6 @@ public class Planet implements Serializable {
     }
 
 
-    public boolean isSelected() {
-        return selected;
-    }
-
     public void setSelected(boolean selected) {
         this.selected = selected;
     }
@@ -493,16 +489,8 @@ public class Planet implements Serializable {
         return target;
     }
 
-    public void setTarget(Planet target) {
-        this.target = target;
-    }
-
     public HashMap<Point2D, Boolean> getMap() {
         return map;
-    }
-
-    public void setMap(HashMap<Point2D, Boolean> map) {
-        this.map = map;
     }
 
     public Slider getSending_quantity() {
