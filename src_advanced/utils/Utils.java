@@ -199,6 +199,12 @@ public class Utils {
      */
     public static int COLUMN_SIZE = 5;
 
+    /**
+     * Distance between points used for the path finding algorithm. Smaller number increase time needed for calculation but increase precision.
+     * Less precise but less laggy.
+     */
+    public static int COLUMN_SIZE_OPTIMIZED = 2 * COLUMN_SIZE;
+
     //--------------------------------------AI-------------------
 
     /**

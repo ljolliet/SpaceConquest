@@ -261,7 +261,9 @@ public class Planet implements Serializable {
         if (contains(spaceship.getPos())) {
             if (this.getOwner() != spaceShipOwner) {
                 this.setHit(spaceship.getDamage());
-                this.collisionPoints.put(spaceship.getPos(), Utils.COLLISION_WAVE_START);
+                if(!Utils.OPTIMIZED){
+                    this.collisionPoints.put(spaceship.getPos(), Utils.COLLISION_WAVE_START);
+                }
                 if (this.available_ships <= 0)
                     this.changeOwner(spaceShipOwner, spaceship);
             } else
@@ -336,19 +338,22 @@ public class Planet implements Serializable {
             c.setFill(Utils.HALO_COLOR);
             root.getChildren().addAll(c, l);
         }
-        for(Map.Entry<Point2D, Integer>  entry : collisionPoints.entrySet())
-        {
-            Circle arc = new Circle(entry.getKey().getX(), entry.getKey().getY(), entry.getValue());
-            arc.setFill(Color.TRANSPARENT);
-            arc.setStroke(collisionColor);
-            root.getChildren().add(arc);
-            entry.setValue(entry.getValue() + Utils.COLLISION_WAVE_INC);
-            if(entry.getValue() >= Utils.COLLISION_WAVE_LIMIT)
-                toDelete.put(entry.getKey(),entry.getValue());
+        if(!Utils.OPTIMIZED){
+            for(Map.Entry<Point2D, Integer>  entry : collisionPoints.entrySet())
+            {
+                Circle arc = new Circle(entry.getKey().getX(), entry.getKey().getY(), entry.getValue());
+                arc.setFill(Color.TRANSPARENT);
+                arc.setStroke(collisionColor);
+                root.getChildren().add(arc);
+                entry.setValue(entry.getValue() + Utils.COLLISION_WAVE_INC);
+                if(entry.getValue() >= Utils.COLLISION_WAVE_LIMIT)
+                    toDelete.put(entry.getKey(),entry.getValue());
+            }
+            for(Point2D p  : toDelete.keySet()) {
+                collisionPoints.remove(p);
+            }
         }
-        for(Point2D p  : toDelete.keySet()) {
-            collisionPoints.remove(p);
-        }
+
 
         Circle c = new Circle(0, 0, radius);
         c.setFill(color);

@@ -138,8 +138,15 @@ public class MathUtils {
      * @return The neighbour of start on the grid that is less distant of destination.
      */
     private static Point2D firstPoint(Point2D start, Point2D destination, HashMap<Point2D, Boolean> map) {
-        int x = (int) (Math.floor(start.getX() / Utils.COLUMN_SIZE) * Utils.COLUMN_SIZE);
-        int y = (int) (Math.floor(start.getY() / Utils.COLUMN_SIZE) * Utils.COLUMN_SIZE);
+        int column;
+        if(Utils.OPTIMIZED){
+            column = Utils.COLUMN_SIZE;
+        }else{
+            column = Utils.COLUMN_SIZE_OPTIMIZED;
+        }
+
+        int x = (int) (Math.floor(start.getX() / column) * column);
+        int y = (int) (Math.floor(start.getY() / column) * column);
         Point2D topLeft = null;
         Point2D topRight = null;
         Point2D bottomLeft = null;
@@ -148,12 +155,12 @@ public class MathUtils {
         //need to verify if the point is on the map in case that the ship is on the border of the screen
         if (map.containsKey(new Point2D(x, y)))
             topLeft = new Point2D(x, y);
-        else if (map.containsKey(new Point2D(x + Utils.COLUMN_SIZE, y)))
-            topRight = new Point2D(x + Utils.COLUMN_SIZE, y);
-        else if (map.containsKey(new Point2D(x, y + Utils.COLUMN_SIZE)))
-            bottomLeft = new Point2D(x, y + Utils.COLUMN_SIZE);
-        else if (map.containsKey(new Point2D(x + Utils.COLUMN_SIZE, y + Utils.COLUMN_SIZE)))
-            bottomRight = new Point2D(x + Utils.COLUMN_SIZE, y + Utils.COLUMN_SIZE);
+        else if (map.containsKey(new Point2D(x + column, y)))
+            topRight = new Point2D(x + column, y);
+        else if (map.containsKey(new Point2D(x, y + column)))
+            bottomLeft = new Point2D(x, y + column);
+        else if (map.containsKey(new Point2D(x + column, y + column)))
+            bottomRight = new Point2D(x + column, y + column);
 
         TreeSet<Point2D> points = new TreeSet<>((o1, o2) -> {
             double disto1Dest = Math.sqrt(Math.pow(o1.getX() - destination.getX(), 2) + Math.pow(o1.getY() - destination.getY(), 2));

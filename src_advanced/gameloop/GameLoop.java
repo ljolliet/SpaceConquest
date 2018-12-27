@@ -471,8 +471,9 @@ public class GameLoop extends AnimationTimer implements Serializable {
      */
     private void draw() {
         Main.GROUP.getChildren().removeAll(Main.GROUP.getChildren()); // clear root
-        //if(!Utils.OPTIMIZED)
-        GUIController.drawBackground(Main.GROUP, false);
+
+        if(!Utils.OPTIMIZED)
+            GUIController.drawBackground(Main.GROUP, false);
 
         for (Planet p : planets) // draw all planets
             p.draw(Main.GROUP);
