@@ -89,7 +89,7 @@ public class Planet implements Serializable {
      */
     private Map<Point2D, Integer> collisionPoints = new HashMap<Point2D, Integer>();
     private Color collisionColor = Color.RED; //TODO
-    private int collisionIncreasing = 10; //TODO
+
 
     /**
      * Constructor.
@@ -265,7 +265,7 @@ public class Planet implements Serializable {
                     this.changeOwner(spaceShipOwner, spaceship);
             } else
                 this.addSpaceship();
-            this.collisionPoints.put(spaceship.getPos(), 10); // TODO
+            this.collisionPoints.put(spaceship.getPos(), Utils.COLLISION_WAVE_START);
             return spaceship;
         }
         return null;
@@ -342,11 +342,12 @@ public class Planet implements Serializable {
             arc.setFill(Color.TRANSPARENT);
             arc.setStroke(collisionColor);
             root.getChildren().add(arc);
-            entry.setValue(entry.getValue()+collisionIncreasing);
+            entry.setValue(entry.getValue() + Utils.COLLISION_WAVE_INC);
+            if(entry.getValue() >= Utils.COLLISION_WAVE_LIMIT)
             toDelete.put(entry.getKey(),entry.getValue());
         }
-        for(Map.Entry<Point2D, Integer>  entry : toDelete.entrySet()) {
-            // delete collisionPoints.get(entry.getKey()).
+        for(Point2D p  : toDelete.keySet()) {
+            collisionPoints.remove(p);
         }
 
         Circle c = new Circle(0, 0, radius);

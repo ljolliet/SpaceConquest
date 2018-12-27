@@ -75,27 +75,17 @@ public class Utils {
      */
     public static final double BIG_SPACESHIP_SPEED = 1;
 
-//-----------------------------//
+    /**
+     * Max size for a wave.
+     */
+    public static int WAVE_SIZE_MAX = 50;
 
     /**
-     * Production added by frame (=/= number of ship).
+     * Number of ships per wave (for the player).
      */
-    public static final float PLAYER_PRODUCTION_RATE = 1;
+    public static int WAVE_SIZE = 25;
 
-    /**
-     * Maximal percentage of production that can be withdrawn or added to the production
-     */
-    public static final int PRODUCTION_VARIATION = 20;
-
-    /**
-     * Number of player.
-     */
-    public static int NB_PLAYER = 5;
-
-    /**
-     * Max number of player, will be changed depending on the resolution
-     */
-    public static int MAX_NB_PLAYER = 5;
+    //-----------------PLANETS------------//
 
     /**
      * Number of neutral planets.
@@ -148,6 +138,11 @@ public class Utils {
     public static int DISTANCE_BETWEEN_NEUTRAL = 2 * PLAYER_PLANET_RADIUS;
 
     /**
+     * Maximal percentage of production that can be withdrawn or added to the production
+     */
+    public static final int PRODUCTION_VARIATION = 20;
+
+    /**
      * Distance between the ship and the planet at ship's spawn.
      */
     public static int DISTANCE_PLANET_SHIPS = 15;
@@ -173,29 +168,36 @@ public class Utils {
     public static Paint HALO_COLOR = PLANET_COLOR.get(0).darker();
 
     /**
-     * Distance between points used for the path finding algorithm. Smaller number increase time needed for calculation but increase precision.
-     */
-    public static int COLUMN_SIZE = 5;
-
-    /**
      * Size added to the radius of a planet when selected.
      */
     public static int SELECTED_HALO_SIZE = 5;
 
     /**
-     * Max size for a wave.
-     */
-    public static int WAVE_SIZE_MAX = 50;
-
-    /**
-     * Number of ships per wave (for the player).
-     */
-    public static int WAVE_SIZE = 25;
-
-    /**
      * Distance around a planet that needs to be empty for spaceships to take off.
      */
     public static int ALLOWED_RANGE_TAKE_OFF = 25;
+
+    //-----------------PLAYERS------------//
+
+    /**
+     * Production added by frame (=/= number of ship).
+     */
+    public static final float PLAYER_PRODUCTION_RATE = 1;
+
+    /**
+     * Number of player.
+     */
+    public static int NB_PLAYER = 5;
+
+    /**
+     * Max number of player, will be changed depending on the resolution
+     */
+    public static int MAX_NB_PLAYER = 5;
+
+    /**
+     * Distance between points used for the path finding algorithm. Smaller number increase time needed for calculation but increase precision.
+     */
+    public static int COLUMN_SIZE = 5;
 
     //--------------------------------------AI-------------------
 
@@ -216,7 +218,7 @@ public class Utils {
      */
     public static boolean TESTING = false;
 
-    //-----------------------USER INTERFACE-------------------------
+    //-----------------------USER INTERFACE-------------------------//
 
     /**
      * Number of decorative sprites in the background
@@ -267,5 +269,22 @@ public class Utils {
      * Option text color
      */
     public static Color TEXT_COLOR = Color.WHITE;
+
+    //-----------------------COLLISIONS-------------------------//
+
+    /**
+     * TODO
+     */
+    public static  int COLLISION_WAVE_INC = 2;
+
+    /**
+     * TODO
+     */
+    public static  int COLLISION_WAVE_LIMIT = 40;
+
+    /**
+     * TODO
+     */
+    public static int COLLISION_WAVE_START = 10;
 
 }
