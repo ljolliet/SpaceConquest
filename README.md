@@ -1,4 +1,4 @@
-# SpaceConquest : Basic
+# SpaceConquest : Advanced
  
 #### Java Project
 
@@ -17,18 +17,19 @@ To conquest another planet you'll have to send spaceships on it. You also can ch
 To win a game you need to take every planets belonging to users, it is not necessary to take all neutral planets.
 You cannot send too much spaceships at a time, so when you try to send a lot of spaceships they will be withdrawn from your spaceships and sent periodically in waves if there is no allied spaceships in orbit.
 
-#####Controls :
+##### Controls :
  - Use the option tab in the main menu to configure the game as you like.
  - Use drag and drop from one of your planet to an enemy planet to attack this planet with your spaceships.
  - Use drag and drop from one of your planet to another one to send spaceships on this planet.
  - Use the slider below your planets to choose which percentage of spaceships will go when sending spaceships.
- - Clic on a ship to select its squadron.
+ - Click on a ship to select its squadron.
+ - CLick and create a rectangle to select multiple squadrons.
  - If a squadron is selected (highlighted in white), you can click on a planet to change its destination.
- - During a game, use the menu at the left top of the screen to save or restore your game.
+ - During a game, use the menu at the left top of the screen to save, restore or exit the game.
  - You can select spaceships with a drag and drop movements, it will display a selection area.
  
 
-##### Functionnalities :
+##### Functionalities :
  - Planet :
     - Planet are generated with random size, speed production and position.
     - A planet produces spaceships. The number of available spaceships is displayed on the planet.
@@ -37,13 +38,14 @@ You cannot send too much spaceships at a time, so when you try to send a lot of 
     - There is a minimal distance between each player's starting planet to balance the game.
     - There is also a minimal distance, smaller, between any planet and a neutral planet.
  - Spaceships :
-    - There is only one type of spaceship.
+    - There is two different type of spaceship, with different speed, damage and length.
     - Spaceships must be launched from a planet.
     - A spaceships hitting an enemy planet will withdraw one spaceship to the planet's available spaceships.
     - A spaceships arriving on an allied planet will add one spaceship to the planet's available spaceships.
     - A spaceship being part of a selected squadron will be highlighted in white.
     - Selected spaceships can have their target changed.
     - Spaceships automatically follow a path without obstacle when getting from a planet A to a planet B.
+    - If a spaceship crash on a enemy planet, an explosion appears. 
  - AI :
     - It is possible to play against 1 to 4 AI.
     - AI have a simple behaviour, they attack the nearest planet.
@@ -61,25 +63,30 @@ You cannot send too much spaceships at a time, so when you try to send a lot of 
     - Possibility to choose between 5 to 20 neutral planets.
     - Possibility to choose the screen size.
     - Possibility to optimize the game.
+ - Optimization :
+    - This mode can be activated if your computer is to slow to run this game.
+    - There is no images in this mode.
+    - Pathfinder is less precise.
+    - There is no collision drawing.
+
+### New Functionalities :
+ - Adding different types of spaceships. (advanced 21/12)
+ - Making a better selection of spaceships. (advanced 21/12)
+ - Pirates spaceships
+ - Explosions when a spaceships hit a planet.
+ - Making the optimization option relevant, with better graphics and better pathfinding when not activated. 
+ - Ending the game when the human player looses. 
+ - Different spaceships shapes. 
+ - Back to menu.
 
 
 #### Known flaws or bugs :
  - A planet cannot send ships when allied spaceships are in its orbit, so when allied spaceships fly near the planet, it is impossible to send spaceships.
  - There is the same problem with a planet receiving spaceships.
 
-
 #### Possible improvements :
- - Adding different types of spaceships. (advanced 21/12) **DONE**
- - Pirate spaceships (owner-less that are attacking randomly) **DONE**
- - Making the optimization option relevant, with better graphics when not activated for example. **DONE**
- - Less precise pathfinding for spaceships when optimization is activated. **DONE**
- - Adding small explosion when a spaceships hit a planet. **DONE**
- - Making a better selection of spaceships. (advanced 21/12)  **TO FINISH** 
- - Ending the game when the human player looses. **DONE**
  - Using color variation combined with sprite for spaceships.
  - Sick planets ( non-constant production)
- - Different spaceship shape (not only simple triangles)
  - Choose spaceship's  type production 
- - Back to menu **DONE**
 
 Copyright (c) 2018 Thomas Guesdon & Louis Jolliet
