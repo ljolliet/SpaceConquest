@@ -280,13 +280,21 @@ public class Planet implements Serializable {
      */
     public void changeOwner(Controller owner, Spaceship spaceship) {
         this.waiting_for_launch = 0;
-        if (this.owner != null)
+        if (this.owner != null) {
             this.owner.getPlanets().remove(this);
-        setOwner(owner);
-        this.color = owner.getColor();
-        this.model = spaceship;
-        this.production_rate = Utils.PLAYER_PRODUCTION_RATE;
-        owner.addPlanet(this);
+        }
+
+        if(owner == null){
+            //pirate
+            this.color = Utils.NEUTRAL_PLANET_COLOR;
+            this.production_rate = 0;
+        }else {
+            setOwner(owner);
+            this.color = owner.getColor();
+            this.model = spaceship;
+            this.production_rate = Utils.PLAYER_PRODUCTION_RATE;
+            owner.addPlanet(this);
+        }
     }
 
     /**
@@ -298,13 +306,17 @@ public class Planet implements Serializable {
      */
     public Spaceship checkCollision(Spaceship spaceship, Controller spaceShipOwner) {
         if (contains(spaceship.getPos())) {
-            if (this.getOwner() != spaceShipOwner) {
+            if (this.getOwner() != spaceShipOwner){
                 this.setHit(spaceship.getDamage());
                 if(!Utils.OPTIMIZED)
                     this.collisions.add( new Collision(spaceship.getPos(), spaceship.getColor()));
                 if (this.available_ships <= 0)
-                    this.changeOwner(spaceShipOwner, spaceship);
-            } else
+                    if(spaceship.getColor() == Utils.NEUTRAL_PLANET_COLOR){
+                        this.changeOwner(null, spaceship);
+                    }else{
+                        this.changeOwner(spaceShipOwner, spaceship);
+                    }
+            }else
                 this.addSpaceship();
             return spaceship;
         }
