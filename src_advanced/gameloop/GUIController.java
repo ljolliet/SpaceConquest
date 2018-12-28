@@ -436,6 +436,7 @@ public class GUIController {
                     i.printStackTrace();
                 }
             });
+
             MenuItem loadItem = new MenuItem("Load", new ImageView(new Image("file:resources/images/planet2.png")));
             loadItem.setOnAction(e -> {
                 vboxMenu.setVisible(true);
@@ -465,10 +466,14 @@ public class GUIController {
 
 
             });
+
+
             MenuItem backMenuItem = new MenuItem("Exit", new ImageView(new Image("file:resources/images/blackhole1.png")));
-            loadItem.setOnAction(e -> {
+            backMenuItem.setOnAction(e -> {
                         vboxMenu.setVisible(true);
-                        //TODO @GUEDONZ
+                        Main.GROUP.getChildren().removeAll(Main.GROUP.getChildren());
+                        GUIController.drawBackground(Main.GROUP, true);
+                        Main.GAMELOOP.stop();
                     });
 
             menu.getItems().add(saveItem);
