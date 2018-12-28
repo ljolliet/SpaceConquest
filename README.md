@@ -19,7 +19,7 @@ You cannot send too much spaceships at a time, so when you try to send a lot of 
 
 #####Controls :
  - Use the option tab in the main menu to configure the game as you like.
- - Use drag and drop from one of your planet to an ennemy planet to attack this planet with your spaceships.
+ - Use drag and drop from one of your planet to an enemy planet to attack this planet with your spaceships.
  - Use drag and drop from one of your planet to another one to send spaceships on this planet.
  - Use the slider below your planets to choose which percentage of spaceships will go when sending spaceships.
  - Clic on a ship to select its squadron.
@@ -38,7 +38,7 @@ You cannot send too much spaceships at a time, so when you try to send a lot of 
  - Spaceships :
     - There is only one type of spaceship.
     - Spaceships must be launched from a planet.
-    - A spaceships hitting an ennemy planet will withdraw one spaceship to the planet's available spaceships.
+    - A spaceships hitting an enemy planet will withdraw one spaceship to the planet's available spaceships.
     - A spaceships arriving on an allied planet will add one spaceship to the planet's available spaceships.
     - A spaceship being part of a selected squadron will be highlighted in white.
     - Selected spaceships can have their target changed.
@@ -46,7 +46,7 @@ You cannot send too much spaceships at a time, so when you try to send a lot of 
  - AI :
     - It is possible to play against 1 to 4 AI.
     - AI have a simple behaviour, they attack the nearest planet.
-    - There is three differents type of AI : Classic, Safe and Aggressive AI. They will send more or less ships depending on their type.
+    - There is three different type of AI : Classic, Safe and Aggressive AI. They will send more or less ships depending on their type.
  - Save / Restore :
     - It is possible to save/restore your game using the menu at the top left of the screen during a game.
     - The save is stored in "res/save.ser".
@@ -63,7 +63,7 @@ You cannot send too much spaceships at a time, so when you try to send a lot of 
 #### Known flaws or bugs :
  - A planet cannot send ships when allied spaceships are in its orbit, so when allied spaceships fly near the planet, it is impossible to send spaceships.
  - There is the same problem with a planet receiving spaceships.
- - The game end when a player win, so when the human player looses, he has to see his ennemies take over the galaxy during approximately two minutes.
+ - The game end when a player win, so when the human player looses, he has to see his enemies take over the galaxy during approximately two minutes.
 
 #### Possible improvements :
  - Adding different types of spaceships. (advanced 21/12) **DONE**
