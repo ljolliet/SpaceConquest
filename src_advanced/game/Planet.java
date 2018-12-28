@@ -206,11 +206,8 @@ public class Planet implements Serializable {
             s.rotate(angle);
         }
 
-        if (map == null) {
-            System.out.println("MAP NULLE");
-        } else {
+        if (map != null) {
             squad.setTarget(target, map);
-
         }
         owner.getSquadrons().add(squad);
 

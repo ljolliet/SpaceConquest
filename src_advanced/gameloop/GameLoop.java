@@ -51,7 +51,7 @@ public class GameLoop extends AnimationTimer implements Serializable {
     /**
      * List of all pirate squadron in the game.
      */
-    private ArrayList<Squadron> pirateSquadrons = new ArrayList<>();
+    private transient ArrayList<Squadron> pirateSquadrons = new ArrayList<>();
 
     /**
      * Accessibility map. If accessibilityMap.get(Point p) is true, it means that p is accessible.
