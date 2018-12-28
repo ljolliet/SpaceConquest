@@ -25,6 +25,7 @@ You cannot send too much spaceships at a time, so when you try to send a lot of 
  - Clic on a ship to select its squadron.
  - If a squadron is selected (highlighted in white), you can click on a planet to change its destination.
  - During a game, use the menu at the left top of the screen to save or restore your game.
+ - You can select spaceships with a drag and drop movements, it will display a selection area.
  
 
 ##### Functionnalities :
@@ -46,7 +47,9 @@ You cannot send too much spaceships at a time, so when you try to send a lot of 
  - AI :
     - It is possible to play against 1 to 4 AI.
     - AI have a simple behaviour, they attack the nearest planet.
-    - There is three different type of AI : Classic, Safe and Aggressive AI. They will send more or less ships depending on their type.
+    - There is three differents type of AI : Classic, Safe and Aggressive AI. They will send more or less ships depending on their type.
+ - Pirates :
+    - During the game, neutral spaceships will spawn on the border of the screen and attack randomly players and neutral planets.
  - Save / Restore :
     - It is possible to save/restore your game using the menu at the top left of the screen during a game.
     - The save is stored in "res/save.ser".
@@ -63,7 +66,7 @@ You cannot send too much spaceships at a time, so when you try to send a lot of 
 #### Known flaws or bugs :
  - A planet cannot send ships when allied spaceships are in its orbit, so when allied spaceships fly near the planet, it is impossible to send spaceships.
  - There is the same problem with a planet receiving spaceships.
- - The game end when a player win, so when the human player looses, he has to see his enemies take over the galaxy during approximately two minutes.
+
 
 #### Possible improvements :
  - Adding different types of spaceships. (advanced 21/12) **DONE**
@@ -72,11 +75,11 @@ You cannot send too much spaceships at a time, so when you try to send a lot of 
  - Less precise pathfinding for spaceships when optimization is activated. **DONE**
  - Adding small explosion when a spaceships hit a planet. **DONE**
  - Making a better selection of spaceships. (advanced 21/12)  **TO FINISH** 
- - Ending the game when the human player looses.
+ - Ending the game when the human player looses. **DONE**
  - Using color variation combined with sprite for spaceships.
  - Sick planets ( non-constant production)
  - Different spaceship shape (not only simple triangles)
  - Choose spaceship's  type production 
- - Back to menu 
+ - Back to menu **DONE**
 
 Copyright (c) 2018 Thomas Guesdon & Louis Jolliet

@@ -12,9 +12,10 @@ import java.util.HashMap;
 public class HumanController extends Controller {
 
     /**
-     * Currently selected squadron.
+     * Currently selected squadrons.
      */
-    private Squadron selectedSquadron = null;
+    private transient ArrayList<Squadron> selectedSquadrons = new ArrayList<>();
+
     /**
      * Currently selected planet.
      */
@@ -119,22 +120,25 @@ public class HumanController extends Controller {
      * @param accessibilityMap Accessibility map of the squadron.
      */
     public void setTarget(Planet p, HashMap<Point2D, Boolean> accessibilityMap) {
-        if (this.selectedSquadron != null)
-            selectedSquadron.setTarget(p, accessibilityMap);
+        for(Squadron s : selectedSquadrons)
+            s.setTarget(p, accessibilityMap);
 
     }
 
     /**
-     * Change the selected squadron. Change the selected boolean of this squadron.
+     * Change the selected squadrons. Change the selected boolean of this squadron.
      *
-     * @param selectedSquadron
+     * @param squadrons
      */
-    public void setSelectedSquadron(Squadron selectedSquadron) {
-        if (this.selectedSquadron != null)
-            this.selectedSquadron.setSelected(false);
+    public void changeSelectedSquadron(ArrayList<Squadron> squadrons){
+        for(Squadron s : selectedSquadrons)
+            s.setSelected(false);
 
-        this.selectedSquadron = selectedSquadron;
-        selectedSquadron.setSelected(true);
+        selectedSquadrons = squadrons;
+
+        for(Squadron s : selectedSquadrons){
+            s.setSelected(true);
+        }
     }
 
     public Planet getSelectedPlanet() {
@@ -143,9 +147,5 @@ public class HumanController extends Controller {
 
     public void setSelectedPlanet(Planet selectedPlanet) {
         this.selectedPlanet = selectedPlanet;
-    }
-
-    public Squadron getSelectedSquadron() {
-        return selectedSquadron;
     }
 }

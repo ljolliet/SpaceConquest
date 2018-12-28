@@ -26,6 +26,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Random;
 
@@ -51,7 +52,7 @@ public class GameLoop extends AnimationTimer implements Serializable {
     /**
      * List of all pirate squadron in the game.
      */
-    private ArrayList<Squadron> pirateSquadrons = new ArrayList<>();
+    private transient ArrayList<Squadron> pirateSquadrons = new ArrayList<>();
 
     /**
      * Accessibility map. If accessibilityMap.get(Point p) is true, it means that p is accessible.
@@ -316,7 +317,7 @@ public class GameLoop extends AnimationTimer implements Serializable {
             if (!gameWon) {
                 for (Squadron s : hc.getSquadrons()) {
                     if (s.contains(new Point2D(event.getX(), event.getY()))) {
-                        hc.setSelectedSquadron(s);
+                        hc.changeSelectedSquadron(new ArrayList<Squadron>(Arrays.asList(s)));
                     }
 
                 }
@@ -352,9 +353,7 @@ public class GameLoop extends AnimationTimer implements Serializable {
                         hc.getSelectedPlanet().addWaitingShips((int) (hc.getSelectedPlanet().getAvailable_ships() * (hc.getSelectedPlanet().getSending_quantity().getValue() / 100)), hc.getPlanetClic(event.getX(), event.getY(), planets), accessibilityMap);
                         dragging = false;
                     } else { //if mouse was released not during a drag action
-                        if (hc.getSelectedSquadron() != null) {
-                            hc.setTarget(hc.getPlanetClic(event.getX(), event.getY(), planets), accessibilityMap);
-                        }
+                        hc.setTarget(hc.getPlanetClic(event.getX(), event.getY(), planets), accessibilityMap);
                     }
                 }
 
@@ -363,12 +362,13 @@ public class GameLoop extends AnimationTimer implements Serializable {
 
                 if (startSelection != null) {
                     int actual = 0;
+                    ArrayList<Squadron> tmp = new ArrayList<>();
                     for (Squadron s : controllers.get(0).getSquadrons()) {
                         if (s.shipsInRectangle(selectionRect) > actual) {
-                            ((HumanController) controllers.get(0)).setSelectedSquadron(s);
-                            s.setSelected(true);
+                            tmp.add(s);
                         }
                     }
+                    ((HumanController) controllers.get(0)).changeSelectedSquadron(tmp);
 
                     startSelection = null;
                 }
@@ -397,6 +397,11 @@ public class GameLoop extends AnimationTimer implements Serializable {
             System.out.println("WIN");
             return true;
         } else {
+            if(controllers.get(0).getPlanets().isEmpty()){
+                System.out.println("Player loose");
+                winner = null;
+                return true;
+            }
             winner = null;
             return false;
         }
@@ -581,14 +586,20 @@ public class GameLoop extends AnimationTimer implements Serializable {
      */
     private void drawWin() {
         Main.GROUP.getChildren().removeAll(Main.GROUP.getChildren());
+        if(winner != null){
+            winText.setText("The winner is the " + Utils.COLOR_STRING.get(Utils.PLANET_COLOR.indexOf(winner.getColor())) + " player ! ");
+            winText.setFill(winner.getColor());
 
-        winText.setText("The winner is the " + Utils.COLOR_STRING.get(Utils.PLANET_COLOR.indexOf(winner.getColor())) + " player ! ");
-        winText.setFill(winner.getColor());
+        }else{
+            winText.setText("You lost :( !");
+            winText.setFill(controllers.get(0).getColor());
+        }
+
         winText.setFont(Font.font("Verdana", FontWeight.BOLD, 40));
         winText.setTextAlignment(TextAlignment.CENTER);
         winText.setX(Utils.WINDOW_WIDTH / 2 - winText.getLayoutBounds().getWidth() / 2);
         winText.setY(Utils.WINDOW_HEIGHT / 3 - winText.getLayoutBounds().getHeight() / 2);
-        winText.setStroke(winner.getColor().darker());
+        winText.setStroke(((Color) winText.getFill()).darker());
         winText.setStrokeWidth(2.);
 
         menuButton.setLayoutX(Utils.WINDOW_WIDTH / 2 - menuButton.getWidth() / 2);
@@ -598,6 +609,7 @@ public class GameLoop extends AnimationTimer implements Serializable {
 
         Main.GROUP.getChildren().add(winText);
         Main.GROUP.getChildren().add(menuButton);
+
     }
 
     /**
