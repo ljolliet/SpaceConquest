@@ -69,7 +69,7 @@ You cannot send too much spaceships at a time, so when you try to send a lot of 
     - Pathfinder is less precise.
     - There is no collision drawing.
 
-### New Functionalities :
+#### New Functionalities :
  - Adding different types of spaceships. (advanced 21/12)
  - Making a better selection of spaceships. (advanced 21/12)
  - Pirates spaceships
