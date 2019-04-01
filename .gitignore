@@ -6,8 +6,7 @@
 ### Added  by ljolliet ###
 
 spaceconquest.xml
-.idea/artifacts/SpaceConquest_jar.xml
-.idea/module_spaceconquest.xml
+.idea/*
 spaceconquest.properties
 
 ### Eclipse ###
